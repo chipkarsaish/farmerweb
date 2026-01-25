@@ -1,3 +1,17 @@
+
+// Import Firebase module
+import { auth, db } from './firebase-config.js';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged
+} from "firebase/auth";
+import {
+    doc,
+    setDoc,
+    getDoc
+} from "firebase/firestore";
+
 // Modal and Authentication State Management
 let currentAuthMode = 'login'; // 'login' or 'register'
 let selectedRole = null; // 'farmer', 'administrator', or 'buyer'
@@ -98,6 +112,9 @@ function resetModal() {
     selectedRole = null;
     hideAllSteps();
     roleSelection.classList.remove('hidden');
+    // Clear forms
+    document.querySelector('#loginForm .auth-form').reset();
+    document.getElementById('registrationForm').reset();
 }
 
 function hideAllSteps() {
@@ -140,41 +157,84 @@ function showRoleSpecificFields() {
     }
 }
 
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault();
+
+    // UI Feedback: Disable button, show loading state can be added here
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = 'Logging in...';
+    submitBtn.disabled = true;
 
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     const rememberMe = document.getElementById('rememberMe').checked;
 
-    // TODO: Implement actual login logic
-    console.log('Login attempt:', {
-        role: selectedRole,
-        email,
-        password,
-        rememberMe
-    });
+    try {
+        // Sign in with Firebase Auth
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-    // Store user data in localStorage (demo)
-    const userData = {
-        role: selectedRole,
-        email: email,
-        name: email.split('@')[0], // Use email prefix as name for demo
-        loginTime: new Date().toISOString()
-    };
-    localStorage.setItem('farmerConnectUser', JSON.stringify(userData));
+        // Fetch User Data from Firestore
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
 
-    // Redirect based on role
-    if (selectedRole === 'farmer') {
-        window.location.href = './html/farmer-dashboard.html';
-    } else if (selectedRole === 'administrator') {
-        // Dashboard created by Sanket
-        window.location.href = './html/admin/dashboard.html';
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+
+            // Allow login only if the role matches the selected role or if we don't enforce role selection at login (currently we do enforce it via UI flow)
+            // Ideally, we should just redirect based on the role in the DB, but the UI forces a selection first.
+            // Let's verify if the selected role matches the DB role to prevent confusion.
+            if (userData.role !== selectedRole) {
+                alert(`This account is registered as a ${userData.role}, not a ${selectedRole}. Please switch roles.`);
+                auth.signOut(); // Sign out the mis-matched user
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            console.log('Login successful:', userData);
+
+            // Store user data in localStorage for simple access in other pages (optional but keeps existing pattern)
+            // Note: Firebase Auth persists session automatically, so this is just for easy redundant access
+            localStorage.setItem('farmerConnectUser', JSON.stringify({
+                uid: user.uid,
+                ...userData,
+                loginTime: new Date().toISOString()
+            }));
+
+            // Redirect based on role
+            if (userData.role === 'farmer') {
+                window.location.href = './html/farmer-dashboard.html';
+            } else if (userData.role === 'administrator') {
+                window.location.href = './html/admin/dashboard.html';
+            }
+        } else {
+            console.error("No such user document!");
+            alert("User profile not found. Please contact support.");
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
+        }
+
+    } catch (error) {
+        console.error("Login error:", error);
+        let errorMessage = "Failed to login. Please check your credentials.";
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+            errorMessage = "Invalid email or password.";
+        }
+        alert(errorMessage);
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
     }
 }
 
-function handleRegister(e) {
+async function handleRegister(e) {
     e.preventDefault();
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = 'Creating Account...';
+    submitBtn.disabled = true;
 
     const name = document.getElementById('registerName').value;
     const email = document.getElementById('registerEmail').value;
@@ -186,12 +246,16 @@ function handleRegister(e) {
     // Validate passwords match
     if (password !== confirmPassword) {
         alert('Passwords do not match!');
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
         return;
     }
 
     // Validate terms agreement
     if (!agreeTerms) {
         alert('Please agree to the Terms & Conditions');
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
         return;
     }
 
@@ -210,34 +274,51 @@ function handleRegister(e) {
         };
     }
 
+    try {
+        // Create Authentication User
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-    // TODO: Implement actual registration logic
-    console.log('Registration attempt:', {
-        role: selectedRole,
-        name,
-        email,
-        phone,
-        password,
-        ...roleSpecificData
-    });
+        // Prepare User Data for Firestore
+        const userData = {
+            uid: user.uid,
+            role: selectedRole,
+            name: name,
+            email: email,
+            phone: phone,
+            registrationTime: new Date().toISOString(),
+            ...roleSpecificData
+        };
 
-    // Store user data in localStorage (demo)
-    const userData = {
-        role: selectedRole,
-        name: name,
-        email: email,
-        phone: phone,
-        registrationTime: new Date().toISOString(),
-        ...roleSpecificData
-    };
-    localStorage.setItem('farmerConnectUser', JSON.stringify(userData));
+        // Save User Data to Firestore
+        // Using setDoc with specific ID (user.uid)
+        await setDoc(doc(db, "users", user.uid), userData);
 
-    // Redirect based on role
-    if (selectedRole === 'farmer') {
-        window.location.href = './html/farmer-dashboard.html';
-    } else if (selectedRole === 'administrator') {
-        window.location.href = './html/admin/dashboard.html';
+        console.log('Registration successful:', userData);
 
+        // Store user data in localStorage (optional)
+        localStorage.setItem('farmerConnectUser', JSON.stringify(userData));
+
+        alert('Account created successfully!');
+
+        // Redirect based on role
+        if (selectedRole === 'farmer') {
+            window.location.href = './html/farmer-dashboard.html';
+        } else if (selectedRole === 'administrator') {
+            window.location.href = './html/admin/dashboard.html';
+        }
+
+    } catch (error) {
+        console.error("Registration error:", error);
+        let errorMessage = "Failed to register. Please try again.";
+        if (error.code === 'auth/email-already-in-use') {
+            errorMessage = "Email is already in use.";
+        } else if (error.code === 'auth/weak-password') {
+            errorMessage = "Password should be at least 6 characters.";
+        }
+        alert(errorMessage);
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
     }
 }
 
