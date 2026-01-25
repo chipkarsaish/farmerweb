@@ -4,7 +4,8 @@ import { auth, db } from './firebase-config.js';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
 } from "firebase/auth";
 import {
     doc,
@@ -296,27 +297,43 @@ async function handleRegister(e) {
 
         console.log('Registration successful:', userData);
 
-        // Store user data in localStorage (optional)
-        localStorage.setItem('farmerConnectUser', JSON.stringify(userData));
+        // Sign out the automatically logged-in user
+        await signOut(auth);
 
-        alert('Account created successfully!');
+        // Switch to login view
+        currentAuthMode = 'login';
+        showAuthForm();
 
-        // Redirect based on role
-        if (selectedRole === 'farmer') {
-            window.location.href = './html/farmer-dashboard.html';
-        } else if (selectedRole === 'administrator') {
-            window.location.href = './html/admin/dashboard.html';
+        // Show inline success message
+        const loginFormContainer = document.querySelector('#loginForm');
+
+        // Remove any existing alerts
+        const existingAlert = loginFormContainer.querySelector('.alert');
+        if (existingAlert) existingAlert.remove();
+
+        const successAlert = document.createElement('div');
+        successAlert.className = 'alert alert-success';
+        successAlert.innerHTML = `
+            <div>✅</div>
+            <div>Registration successful! Please login.</div>
+        `;
+
+        // Insert after back button (as second element)
+        const backBtn = loginFormContainer.querySelector('.back-btn');
+        if (backBtn && backBtn.nextSibling) {
+            loginFormContainer.insertBefore(successAlert, backBtn.nextSibling);
+        } else {
+            loginFormContainer.prepend(successAlert);
         }
+
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
 
     } catch (error) {
         console.error("Registration error:", error);
-        let errorMessage = "Failed to register. Please try again.";
-        if (error.code === 'auth/email-already-in-use') {
-            errorMessage = "Email is already in use.";
-        } else if (error.code === 'auth/weak-password') {
-            errorMessage = "Password should be at least 6 characters.";
-        }
-        alert(errorMessage);
+        // Show the actual error message for debugging
+        alert(`Registration Failed:\n${error.message}\n(Code: ${error.code})`);
+
         submitBtn.textContent = originalBtnText;
         submitBtn.disabled = false;
     }
