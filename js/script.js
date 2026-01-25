@@ -234,7 +234,7 @@ async function handleRegister(e) {
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.textContent;
-    submitBtn.textContent = 'Creating Account...';
+    submitBtn.textContent = 'Initializing...';
     submitBtn.disabled = true;
 
     const name = document.getElementById('registerName').value;
@@ -276,10 +276,12 @@ async function handleRegister(e) {
     }
 
     try {
+        submitBtn.textContent = 'Creating User...';
         // Create Authentication User
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
+        submitBtn.textContent = 'Saving Profile...';
         // Prepare User Data for Firestore
         const userData = {
             uid: user.uid,
@@ -295,6 +297,7 @@ async function handleRegister(e) {
         // Using setDoc with specific ID (user.uid)
         await setDoc(doc(db, "users", user.uid), userData);
 
+        submitBtn.textContent = 'Finalizing...';
         console.log('Registration successful:', userData);
 
         // Sign out the automatically logged-in user
