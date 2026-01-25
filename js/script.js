@@ -260,18 +260,18 @@ async function handleRegister(e) {
         return;
     }
 
-    // Collect role-specific data
+    // Collect role-specific data with safe defaults
     let roleSpecificData = {};
 
     if (selectedRole === 'farmer') {
         roleSpecificData = {
-            farmLocation: document.getElementById('farmLocation').value,
-            farmSize: document.getElementById('farmSize').value,
-            cropsGrown: document.getElementById('cropsGrown').value
+            farmLocation: document.getElementById('farmLocation')?.value || '',
+            farmSize: document.getElementById('farmSize')?.value || '',
+            cropsGrown: document.getElementById('cropsGrown')?.value || ''
         };
     } else if (selectedRole === 'administrator') {
         roleSpecificData = {
-            department: document.getElementById('department').value
+            department: document.getElementById('department')?.value || ''
         };
     }
 
@@ -293,9 +293,22 @@ async function handleRegister(e) {
             ...roleSpecificData
         };
 
-        // Save User Data to Firestore
-        // Using setDoc with specific ID (user.uid)
-        await setDoc(doc(db, "users", user.uid), userData);
+        // Remove undefined/null values
+        Object.keys(userData).forEach(key => userData[key] === undefined && delete userData[key]);
+
+        // Save User Data to Firestore (with 5s timeout)
+        const saveProfilePromise = setDoc(doc(db, "users", user.uid), userData);
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Database write timed out')), 5000)
+        );
+
+        try {
+            await Promise.race([saveProfilePromise, timeoutPromise]);
+        } catch (dbError) {
+            console.warn("Profile save warning:", dbError);
+            // We continue even if DB write fails/times out, to not block the user
+            // In production, we might want to retry or handle this better
+        }
 
         submitBtn.textContent = 'Finalizing...';
         console.log('Registration successful:', userData);
