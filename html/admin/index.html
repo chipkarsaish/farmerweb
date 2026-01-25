@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSahay | Admin Login</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #4c7c32;
+            --dark-green: #1b4332;
+            --light-green: #d8f3dc;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.92);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            /* Using a high-quality agricultural background */
+            background: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+
+        /* Navbar styles */
+        .simple-nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .btn-outline {
+            padding: 8px 20px;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Login Card Container */
+        .login-wrapper {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            background: var(--glass);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            color: var(--dark-green);
+            margin-bottom: 10px;
+        }
+
+        .login-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: var(--dark-green);
+        }
+
+        .forgot-pwd {
+            display: block;
+            margin-top: 20px;
+            color: var(--primary-green);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero-section">
+        <div class="overlay"></div>
+
+        <nav class="simple-nav">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="nav-btns">
+                <button class="btn-outline">Register</button>
+            </div>
+        </nav>
+
+        <div class="login-wrapper">
+            <div class="login-card">
+                <h2>Admin Login</h2>
+                <p>Enter your credentials to manage the ecosystem</p>
+
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label>Admin ID</label>
+                        <input type="text" placeholder="e.g. admin_01">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+
+                    <button type="button" class="login-btn" onclick="window.location.href='dashboard.html'">
+                        Login to Dashboard
+                    </button>
+                </form>
+                <a href="#" class="forgot-pwd">Forgot password?</a>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

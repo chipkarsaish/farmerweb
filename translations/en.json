@@ -1,0 +1,205 @@
+{
+  "nav": {
+    "login": "Login",
+    "register": "Register",
+    "home": "Home",
+    "features": "Features",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Empowering Farmers, Growing Together",
+    "subtitle": "Your complete agricultural ecosystem for rentals, marketplace, sustainability, and cooperative growth",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "features": {
+    "title": "What We Offer",
+    "amenities": {
+      "title": "Amenity Rental",
+      "description": "Affordable rental of seeds, fertilizers, and equipment with flexible payment options"
+    },
+    "marketplace": {
+      "title": "Marketplace",
+      "description": "Sell your crops directly and earn 25% rental discounts"
+    },
+    "carbon": {
+      "title": "Carbon Credits",
+      "description": "Earn credits for sustainable farming and convert them to cash or discounts"
+    },
+    "group": {
+      "title": "Group Farming",
+      "description": "Form cooperatives for bulk discounts and shared resources"
+    },
+    "loans": {
+      "title": "Farmer Loans",
+      "description": "Access financial assistance for farming supplies and equipment"
+    }
+  },
+  "auth": {
+    "chooseRole": "Choose Your Role",
+    "selectRole": "Select how you want to join Farmer Connect",
+    "farmer": "Farmer",
+    "farmerDesc": "Access rentals, marketplace, and cooperative features",
+    "admin": "Administrator",
+    "adminDesc": "Manage platform operations and user accounts",
+    "loginAs": "Login as",
+    "registerAs": "Register as",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "loginBtn": "Login",
+    "registerBtn": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "registerHere": "Register here",
+    "loginHere": "Login here",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "farmLocation": "Farm Location",
+    "farmSize": "Farm Size (in acres)",
+    "cropsGrown": "Primary Crops Grown",
+    "department": "Department",
+    "agreeTerms": "I agree to the Terms & Conditions",
+    "back": "Back"
+  },
+  "dashboard": {
+    "notifications": "Notifications",
+    "myProfile": "My Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "welcomeBack": "Welcome back, Farmer! 👋",
+    "welcomeSubtitle": "Here's what's happening with your farm today",
+    "carbonCreditsLabel": "Your Carbon Credits",
+    "carbonCreditsValue": "125 Credits",
+    "progressLabel": "75% to next reward",
+    "quickAccess": "Quick Access",
+    "recentActivity": "Recent Activity",
+    "tiles": {
+      "amenities": {
+        "title": "Amenities",
+        "description": "Rent seeds, fertilizers & equipment"
+      },
+      "funds": {
+        "title": "Funds",
+        "description": "Apply for loans & financial aid"
+      },
+      "availability": {
+        "title": "Availability",
+        "description": "Manage crop availability"
+      },
+      "carbonCredits": {
+        "title": "Carbon Credits",
+        "description": "View & sell carbon credits"
+      },
+      "groupFarming": {
+        "title": "Group Farming",
+        "description": "Join farming cooperatives"
+      },
+      "myOrders": {
+        "title": "My Orders",
+        "description": "View orders & transactions"
+      }
+    },
+    "activity": {
+      "fertilizerApproved": "Fertilizer rental approved",
+      "time1": "2 hours ago",
+      "wheatMarked": "50 kg wheat marked as available",
+      "time2": "5 hours ago",
+      "carbonEarned": "Earned 25 carbon credits",
+      "time3": "1 day ago"
+    }
+  },
+  "sidebar": {
+    "amenities": "Amenities",
+    "carbonCredits": "Carbon Credits",
+    "groupFarming": "Group Farming",
+    "funds": "Funds & Loans",
+    "availability": "Availability",
+    "myOrders": "My Orders"
+  },
+  "amenities": {
+    "pageTitle": "\ud83c\udf31 Amenities Rental",
+    "pageSubtitle": "Rent seeds, fertilizers \u0026 equipment at affordable rates",
+    "incentive": {
+      "specialOffer": "Special Offer:",
+      "discount": "Sell crops via marketplace \u0026 get",
+      "discountAmount": "25% rental discount"
+    },
+    "categories": {
+      "title": "Browse by Category",
+      "all": "All Items",
+      "seeds": "Seeds",
+      "fertilizers": "Fertilizers",
+      "machinery": "Machinery",
+      "irrigation": "Irrigation",
+      "organic": "Organic",
+      "itemsCount": "items"
+    },
+    "search": {
+      "placeholder": "Search seed, tractor, fertilizer...",
+      "filters": "Filters",
+      "clearAll": "Clear All",
+      "cancel": "Cancel",
+      "applyFilters": "Apply Filters"
+    },
+    "filters": {
+      "cropType": "Crop Type",
+      "allCrops": "All Crops",
+      "wheat": "Wheat",
+      "rice": "Rice",
+      "cotton": "Cotton",
+      "sugarcane": "Sugarcane",
+      "vegetables": "Vegetables",
+      "season": "Season",
+      "allSeasons": "All Seasons",
+      "kharif": "Kharif",
+      "rabi": "Rabi",
+      "zaid": "Zaid",
+      "rentalDuration": "Rental Duration",
+      "anyDuration": "Any Duration",
+      "perDay": "Per Day",
+      "perWeek": "Per Week",
+      "perSeason": "Per Season",
+      "priceRange": "Price Range (₹)",
+      "min": "Min",
+      "max": "Max",
+      "availability": "Availability",
+      "availableNow": "Available Now",
+      "nearby": "Nearby (< 10km)",
+      "sortBy": "Sort By",
+      "mostPopular": "Most Popular",
+      "priceLowToHigh": "Price: Low to High",
+      "priceHighToLow": "Price: High to Low",
+      "highestRated": "Highest Rated",
+      "newestFirst": "Newest First"
+    },
+    "listing": {
+      "title": "Available Amenities",
+      "itemsFound": "items found",
+      "loadMore": "Load More Items"
+    }
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "close": "Close",
+    "submit": "Submit",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "error": "An error occurred",
+    "success": "Success!",
+    "backToDashboard": "Back to Dashboard"
+  }
+}

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Profile - AgriSahay</title>
+    <meta name="description" content="Manage your farmer profile">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/profile-styles.css">
+</head>
+
+<body class="profile-body">
+    <!-- Header -->
+    <header class="profile-header">
+        <div class="header-container">
+            <div class="header-top">
+                <div class="page-title-section">
+                    <h1 class="page-title">👤 Farmer Profile</h1>
+                    <p class="page-subtitle">Manage your profile & farm details</p>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="notificationBtn" title="Notifications">
+                        🔔
+                        <span class="notification-badge">2</span>
+                    </button>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userMenuBtn">
+                            <span id="userInitials">F</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="profile-main">
+        <div class="profile-container">
+            <a href="./farmer-dashboard.html" class="back-link">← Back to Dashboard</a><br><br>
+
+            <!-- Profile Header Section -->
+            <section class="profile-header-section">
+                <div class="profile-photo-container">
+                    <div class="profile-photo" id="profilePhoto">
+                        <span class="profile-photo-placeholder">F</span>
+                        <input type="file" id="photoUpload" accept="image/*" hidden>
+                        <button class="photo-upload-btn" id="uploadPhotoBtn">📷</button>
+                    </div>
+                </div>
+                <div class="profile-header-info">
+                    <h2 class="farmer-name" id="farmerName">Farmer Name</h2>
+                    <p class="farmer-id">Farmer ID: <span id="farmerId">FC-2026-001234</span></p>
+                    <div class="verification-status">
+                        <span class="status-badge status-verified" id="verificationStatus">
+                            <span class="status-icon">🟢</span>
+                            <span class="status-text">Verified</span>
+                        </span>
+                    </div>
+                    <button class="btn btn-outline btn-small" id="editProfileBtn">✏️ Edit Profile</button>
+                </div>
+            </section>
+
+            <!-- Personal Information Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">📋 Personal Information</h3>
+                    <button class="section-edit-btn" data-section="personal">Edit</button>
+                </div>
+                <div class="section-content" id="personalInfoContent">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label class="info-label">Full Name</label>
+                            <p class="info-value" id="fullName">Ramesh Kumar Patil</p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Mobile Number</label>
+                            <p class="info-value" id="mobileNumber">+91 98765 43210 <span
+                                    class="verified-badge-small">✓</span></p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Email</label>
+                            <p class="info-value" id="email">ramesh.patil@example.com</p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Gender</label>
+                            <p class="info-value" id="gender">Male</p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Preferred Language</label>
+                            <p class="info-value" id="language">Marathi</p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Age Group</label>
+                            <p class="info-value" id="ageGroup">35-45 years</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Farm Details Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">🌾 Farm Details</h3>
+                    <button class="section-edit-btn" data-section="farm">Edit</button>
+                </div>
+                <div class="section-content" id="farmDetailsContent">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label class="info-label">Farm Type</label>
+                            <p class="info-value" id="farmType">Individual</p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Total Land Area</label>
+                            <p class="info-value" id="landArea">5 acres</p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Soil Type</label>
+                            <p class="info-value" id="soilType">Black Soil (Regur)</p>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Irrigation Type</label>
+                            <p class="info-value" id="irrigationType">Borewell + Drip</p>
+                        </div>
+                        <div class="info-item info-item-full">
+                            <label class="info-label">Crops Grown</label>
+                            <div class="crops-tags">
+                                <span class="crop-tag">🌾 Wheat</span>
+                                <span class="crop-tag">🌾 Rice</span>
+                                <span class="crop-tag">🌽 Cotton</span>
+                                <span class="crop-tag">🥬 Vegetables</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <label class="info-label">Current Season Crop</label>
+                            <p class="info-value" id="currentCrop">Wheat (Rabi Season)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Farm Location Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">📍 Farm Location</h3>
+                    <button class="btn btn-outline btn-small" id="updateLocationBtn">📍 Update Location</button>
+                </div>
+                <div class="section-content">
+                    <div class="location-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label class="info-label">Village</label>
+                                <p class="info-value" id="village">Khed</p>
+                            </div>
+                            <div class="info-item">
+                                <label class="info-label">Taluka</label>
+                                <p class="info-value" id="taluka">Khed</p>
+                            </div>
+                            <div class="info-item">
+                                <label class="info-label">District</label>
+                                <p class="info-value" id="district">Pune</p>
+                            </div>
+                            <div class="info-item">
+                                <label class="info-label">State</label>
+                                <p class="info-value" id="state">Maharashtra</p>
+                            </div>
+                            <div class="info-item">
+                                <label class="info-label">Pincode</label>
+                                <p class="info-value" id="pincode">412105</p>
+                            </div>
+                        </div>
+                        <div class="map-container">
+                            <div class="map-placeholder" id="farmMap">
+                                <div class="map-icon">🗺️</div>
+                                <p>Farm Location Map</p>
+                                <p class="map-coords">Lat: 18.7248, Long: 73.9734</p>
+                            </div>
+                        </div>
+                        <p class="location-note">
+                            <span class="note-icon">ℹ️</span>
+                            Accurate location helps with nearby groups, equipment rental, and marketplace logistics
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Group Farming Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">🤝 Group Farming</h3>
+                </div>
+                <div class="section-content">
+                    <!-- If in a group -->
+                    <div class="group-membership-card">
+                        <div class="group-card-header">
+                            <div>
+                                <h4 class="group-name">Pune Farmers Cooperative</h4>
+                                <p class="group-role">Role: <span class="role-badge">Member</span></p>
+                            </div>
+                            <span class="verified-badge-small">✓ Verified</span>
+                        </div>
+                        <div class="group-benefits">
+                            <h5>Benefits Unlocked:</h5>
+                            <div class="benefits-list">
+                                <span class="benefit-tag">💰 15% Discount</span>
+                                <span class="benefit-tag">💳 ₹50,000 Loan Boost</span>
+                                <span class="benefit-tag">🌱 +20% Carbon Credits</span>
+                            </div>
+                        </div>
+                        <div class="group-actions">
+                            <button class="btn btn-outline btn-small">View Group</button>
+                            <button class="btn btn-outline-danger btn-small">Leave Group</button>
+                        </div>
+                    </div>
+
+                    <!-- If not in a group (hidden by default) -->
+                    <div class="no-group-card hidden">
+                        <div class="no-group-icon">🌾</div>
+                        <p class="no-group-text">You are not part of any farming group yet</p>
+                        <button class="btn btn-primary">Join a Farming Group</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Financial & Credit Profile Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">💳 Financial & Credit Profile</h3>
+                </div>
+                <div class="section-content">
+                    <div class="financial-grid">
+                        <div class="financial-card">
+                            <div class="financial-icon">⭐</div>
+                            <div class="financial-content">
+                                <p class="financial-label">Credit Score</p>
+                                <p class="financial-value">Good</p>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="financial-card">
+                            <div class="financial-icon">📊</div>
+                            <div class="financial-content">
+                                <p class="financial-label">Active Loans</p>
+                                <p class="financial-value">1 Loan</p>
+                                <p class="financial-detail">₹15,000 outstanding</p>
+                            </div>
+                        </div>
+                        <div class="financial-card">
+                            <div class="financial-icon">💰</div>
+                            <div class="financial-content">
+                                <p class="financial-label">Eligible Loan Limit</p>
+                                <p class="financial-value">₹50,000</p>
+                                <p class="financial-detail">Based on your profile</p>
+                            </div>
+                        </div>
+                        <div class="financial-card">
+                            <div class="financial-icon">✅</div>
+                            <div class="financial-content">
+                                <p class="financial-label">Repayment Reliability</p>
+                                <p class="financial-value">
+                                    <span class="reliability-badge badge-excellent">Excellent</span>
+                                </p>
+                                <p class="financial-detail">100% on-time payments</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Carbon & Sustainability Profile Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">🌱 Carbon & Sustainability Profile</h3>
+                </div>
+                <div class="section-content">
+                    <div class="carbon-summary">
+                        <div class="carbon-total">
+                            <div class="carbon-icon-large">🌍</div>
+                            <div class="carbon-info">
+                                <p class="carbon-label">Total Carbon Credits Earned</p>
+                                <p class="carbon-value">450 Credits</p>
+                                <p class="carbon-money">= ₹4,500</p>
+                            </div>
+                        </div>
+                        <div class="sustainable-practices">
+                            <h5>Sustainable Practices Enabled:</h5>
+                            <div class="practices-list">
+                                <div class="practice-item">
+                                    <span class="practice-icon">✓</span>
+                                    <span class="practice-name">Organic Inputs</span>
+                                </div>
+                                <div class="practice-item">
+                                    <span class="practice-icon">✓</span>
+                                    <span class="practice-name">Shared Machinery</span>
+                                </div>
+                                <div class="practice-item">
+                                    <span class="practice-icon">✓</span>
+                                    <span class="practice-name">Water-Efficient Irrigation</span>
+                                </div>
+                                <div class="practice-item">
+                                    <span class="practice-icon">○</span>
+                                    <span class="practice-name practice-disabled">Reduced Chemical Fertilizers</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="verification-info">
+                            <p class="verification-label">Carbon Verification Status:</p>
+                            <span class="status-badge status-verified">
+                                <span class="status-icon">🟢</span>
+                                <span class="status-text">Verified by Platform</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity & Usage Summary Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">📊 Activity & Usage Summary</h3>
+                </div>
+                <div class="section-content">
+                    <div class="activity-grid">
+                        <div class="activity-card">
+                            <div class="activity-icon">🧰</div>
+                            <div class="activity-content">
+                                <p class="activity-value">24</p>
+                                <p class="activity-label">Total Rentals</p>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-icon">📦</div>
+                            <div class="activity-content">
+                                <p class="activity-value">18</p>
+                                <p class="activity-label">Orders Placed</p>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-icon">🌾</div>
+                            <div class="activity-content">
+                                <p class="activity-value">1,250 kg</p>
+                                <p class="activity-label">Crops Sold</p>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-icon">💰</div>
+                            <div class="activity-content">
+                                <p class="activity-value">₹12,450</p>
+                                <p class="activity-label">Money Saved</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="platform-value-message">
+                        <p>🎉 You've saved <strong>₹12,450</strong> by using AgriSahay!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents & Verification Section -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h3 class="section-title">📄 Documents & Verification</h3>
+                </div>
+                <div class="section-content">
+                    <div class="documents-list">
+                        <div class="document-item">
+                            <div class="document-info">
+                                <div class="document-icon">🆔</div>
+                                <div class="document-details">
+                                    <p class="document-name">Aadhaar Card</p>
+                                    <p class="document-id">XXXX XXXX 1234</p>
+                                </div>
+                            </div>
+                            <div class="document-status">
+                                <span class="status-badge status-verified">
+                                    <span class="status-icon">✓</span>
+                                    <span class="status-text">Verified</span>
+                                </span>
+                                <button class="btn btn-outline btn-small">View</button>
+                            </div>
+                        </div>
+
+                        <div class="document-item">
+                            <div class="document-info">
+                                <div class="document-icon">📋</div>
+                                <div class="document-details">
+                                    <p class="document-name">Land Record (7/12)</p>
+                                    <p class="document-id">Survey No: 123/4</p>
+                                </div>
+                            </div>
+                            <div class="document-status">
+                                <span class="status-badge status-verified">
+                                    <span class="status-icon">✓</span>
+                                    <span class="status-text">Verified</span>
+                                </span>
+                                <button class="btn btn-outline btn-small">View</button>
+                            </div>
+                        </div>
+
+                        <div class="document-item">
+                            <div class="document-info">
+                                <div class="document-icon">🏦</div>
+                                <div class="document-details">
+                                    <p class="document-name">Bank Account Details</p>
+                                    <p class="document-id">XXXX XXXX 5678</p>
+                                </div>
+                            </div>
+                            <div class="document-status">
+                                <span class="status-badge status-verified">
+                                    <span class="status-icon">✓</span>
+                                    <span class="status-text">Verified</span>
+                                </span>
+                                <button class="btn btn-outline btn-small">View</button>
+                            </div>
+                        </div>
+
+                        <div class="document-item">
+                            <div class="document-info">
+                                <div class="document-icon">📑</div>
+                                <div class="document-details">
+                                    <p class="document-name">Government Scheme Documents</p>
+                                    <p class="document-id">PM-KISAN, Soil Health Card</p>
+                                </div>
+                            </div>
+                            <div class="document-status">
+                                <span class="status-badge status-pending">
+                                    <span class="status-icon">🟡</span>
+                                    <span class="status-text">Pending</span>
+                                </span>
+                                <button class="btn btn-outline btn-small">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="upload-section">
+                        <button class="btn btn-primary" id="uploadDocumentBtn">
+                            📷 Upload New Document
+                        </button>
+                        <p class="upload-note">Supported formats: JPG, PNG, PDF (Max 5MB)</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal hidden" id="editModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Edit Personal Information</h2>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic form content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelEditBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveEditBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Update Modal -->
+    <div class="modal hidden" id="locationModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Farm Location</h2>
+                <button class="modal-close" id="locationModalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="location-update-container">
+                    <div class="location-instructions">
+                        <p>📍 Drag the pin to your exact farm location or use the button below to auto-detect</p>
+                        <button class="btn btn-outline" id="autoDetectBtn">📍 Auto-Detect Current Location</button>
+                    </div>
+                    <div class="map-embed">
+                        <div class="map-placeholder-large">
+                            <p>Interactive Google Map will be embedded here</p>
+                            <p class="map-note">Drag the red pin to your farm location</p>
+                        </div>
+                    </div>
+                    <div class="location-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Village</label>
+                                <input type="text" class="form-input" value="Khed">
+                            </div>
+                            <div class="form-group">
+                                <label>Taluka</label>
+                                <input type="text" class="form-input" value="Khed">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>District</label>
+                                <input type="text" class="form-input" value="Pune">
+                            </div>
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" class="form-input" value="Maharashtra">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <input type="text" class="form-input" value="412105">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline">Cancel</button>
+                <button class="btn btn-primary">Confirm Location</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/farmer-profile.js"></script>
+</body>
+
+</html>

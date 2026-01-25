@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Credits - AgriSahay</title>
+    <meta name="description" content="View & sell carbon credits">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/farmer-sidebar.css">
+    <link rel="stylesheet" href="../css/carbon-credits-styles.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Mobile Sidebar Toggle -->
+    <button class="mobile-sidebar-toggle" style="display: none;">☰</button>
+
+    <!-- Farmer Sidebar -->
+    <aside class="farmer-sidebar">
+        <button class="sidebar-toggle">◀</button>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="amenities.html" data-tooltip="Amenities"><span class="nav-icon">🌱</span><span
+                            class="nav-text" data-i18n="sidebar.amenities">Amenities</span></a></li>
+                <li class="active"><a href="carbon-credits.html" data-tooltip="Carbon Credits"><span
+                            class="nav-icon">🌍</span><span class="nav-text" data-i18n="sidebar.carbonCredits">Carbon
+                            Credits</span></a></li>
+                <li><a href="group-farming.html" data-tooltip="Group Farming"><span class="nav-icon">🤝</span><span
+                            class="nav-text" data-i18n="sidebar.groupFarming">Group Farming</span></a></li>
+                <li><a href="funds.html" data-tooltip="Funds & Loans"><span class="nav-icon">💰</span><span
+                            class="nav-text" data-i18n="sidebar.funds">Funds & Loans</span></a></li>
+                <li><a href="availability.html" data-tooltip="Availability"><span class="nav-icon">📅</span><span
+                            class="nav-text" data-i18n="sidebar.availability">Availability</span></a></li>
+                <li><a href="my-orders.html" data-tooltip="My Orders"><span class="nav-icon">📦</span><span
+                            class="nav-text" data-i18n="sidebar.myOrders">My Orders</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="header-actions">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="mr">मराठी</button>
+                </div>
+                <button class="icon-btn" id="notificationBtn" title="Notifications">
+                    🔔
+                    <span class="notification-badge">2</span>
+                </button>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userMenuBtn">
+                        <span id="userInitials">F</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="carbon-main main-content-with-sidebar">
+        <div class="carbon-container">
+            <a href="farmer-dashboard.html" class="back-link">← Back to Dashboard</a>
+
+            <!-- Page Title Section -->
+            <section class="page-title-section-main">
+                <h1 class="page-main-title">🌍 Carbon Credits</h1>
+                <p class="page-main-subtitle">View & sell carbon credits</p>
+            </section>
+
+            <!-- Carbon Credit Summary -->
+            <section class="summary-section">
+                <div class="summary-grid">
+                    <div class="summary-card card-total">
+                        <div class="summary-icon">🌱</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Total Credits Earned</p>
+                            <p class="summary-value" id="totalCredits">450</p>
+                            <p class="summary-detail">Credits</p>
+                        </div>
+                    </div>
+                    <div class="summary-card card-value">
+                        <div class="summary-icon">💰</div>
+                        <div class="summary-content">
+                            <p class="summary-label">₹ Value Equivalent</p>
+                            <p class="summary-value" id="totalValue">₹4,500</p>
+                            <p class="summary-detail">@ ₹10 per credit</p>
+                        </div>
+                    </div>
+                    <div class="summary-card card-used">
+                        <div class="summary-icon">♻️</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Credits Used</p>
+                            <p class="summary-value" id="usedCredits">150</p>
+                            <p class="summary-detail">Credits</p>
+                        </div>
+                    </div>
+                    <div class="summary-card card-available">
+                        <div class="summary-icon">⏳</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Credits Available</p>
+                            <p class="summary-value" id="availableCredits">300</p>
+                            <p class="summary-detail">Ready to use/sell</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How Credits Are Earned -->
+            <section class="earning-section">
+                <div class="section-header">
+                    <h2 class="section-title">How You Earned Credits</h2>
+                    <p class="section-subtitle">Simple actions that help the environment</p>
+                </div>
+                <div class="earning-grid">
+                    <div class="earning-card">
+                        <div class="earning-icon">🌾</div>
+                        <h3 class="earning-title">Reduced Fertilizer Use</h3>
+                        <p class="earning-description">Using less chemical fertilizers</p>
+                        <div class="earning-stats">
+                            <div class="stat">
+                                <span class="stat-value">50</span>
+                                <span class="stat-label">Credits</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-period">Last 3 months</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="earning-card">
+                        <div class="earning-icon">♻️</div>
+                        <h3 class="earning-title">Organic Inputs</h3>
+                        <p class="earning-description">Using organic compost & manure</p>
+                        <div class="earning-stats">
+                            <div class="stat">
+                                <span class="stat-value">100</span>
+                                <span class="stat-label">Credits</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-period">Ongoing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="earning-card">
+                        <div class="earning-icon">💧</div>
+                        <h3 class="earning-title">Water-Efficient Irrigation</h3>
+                        <p class="earning-description">Drip irrigation saves water</p>
+                        <div class="earning-stats">
+                            <div class="stat">
+                                <span class="stat-value">150</span>
+                                <span class="stat-label">Credits</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-period">This season</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="earning-card">
+                        <div class="earning-icon">🚜</div>
+                        <h3 class="earning-title">Shared Machinery</h3>
+                        <p class="earning-description">Lower emissions through sharing</p>
+                        <div class="earning-stats">
+                            <div class="stat">
+                                <span class="stat-value">150</span>
+                                <span class="stat-label">Credits</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-period">Group farming</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Use Carbon Credits (Core Actions) -->
+            <section class="actions-section">
+                <div class="section-header">
+                    <h2 class="section-title">Use Your Credits</h2>
+                    <p class="section-subtitle">Choose how to use your 300 available credits</p>
+                </div>
+                <div class="actions-grid">
+                    <div class="action-card" id="useForDiscounts">
+                        <div class="action-icon">🎫</div>
+                        <h3 class="action-title">Use for Discounts</h3>
+                        <p class="action-description">Apply credits to amenity rentals, equipment, or inputs</p>
+                        <button class="action-btn">Apply Discount</button>
+                    </div>
+                    <div class="action-card" id="sellCredits">
+                        <div class="action-icon">💵</div>
+                        <h3 class="action-title">Sell Credits</h3>
+                        <p class="action-description">Current rate: ₹10 per credit</p>
+                        <button class="action-btn">Sell Now</button>
+                    </div>
+                    <div class="action-card" id="useLoanRepayment">
+                        <div class="action-icon">💳</div>
+                        <h3 class="action-title">Loan Repayment</h3>
+                        <p class="action-description">Apply credits to reduce loan dues</p>
+                        <button class="action-btn">Pay Loan</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Credit Activity Timeline -->
+            <section class="timeline-section">
+                <div class="section-header">
+                    <h2 class="section-title">My Carbon Activity</h2>
+                    <p class="section-subtitle">Recent credit transactions</p>
+                </div>
+                <div class="timeline-list">
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <span class="date-day">12</span>
+                            <span class="date-month">Jan</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Organic farming verified</h4>
+                            <p class="timeline-description">Compost usage confirmed</p>
+                        </div>
+                        <div class="timeline-credits positive">
+                            <span class="credits-value">+50</span>
+                            <span class="credits-label">Credits</span>
+                        </div>
+                        <div class="timeline-status verified">
+                            <span class="status-icon">🟢</span>
+                            <span class="status-label">Verified</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <span class="date-day">10</span>
+                            <span class="date-month">Jan</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Water-efficient irrigation</h4>
+                            <p class="timeline-description">Drip system installed</p>
+                        </div>
+                        <div class="timeline-credits positive">
+                            <span class="credits-value">+100</span>
+                            <span class="credits-label">Credits</span>
+                        </div>
+                        <div class="timeline-status verified">
+                            <span class="status-icon">🟢</span>
+                            <span class="status-label">Verified</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <span class="date-day">08</span>
+                            <span class="date-month">Jan</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Credits used for discount</h4>
+                            <p class="timeline-description">Tractor rental discount</p>
+                        </div>
+                        <div class="timeline-credits negative">
+                            <span class="credits-value">-50</span>
+                            <span class="credits-label">Credits</span>
+                        </div>
+                        <div class="timeline-status verified">
+                            <span class="status-icon">🟢</span>
+                            <span class="status-label">Verified</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <span class="date-day">05</span>
+                            <span class="date-month">Jan</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Reduced fertilizer use</h4>
+                            <p class="timeline-description">Awaiting verification</p>
+                        </div>
+                        <div class="timeline-credits pending">
+                            <span class="credits-value">+50</span>
+                            <span class="credits-label">Credits</span>
+                        </div>
+                        <div class="timeline-status pending">
+                            <span class="status-icon">🟡</span>
+                            <span class="status-label">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Verification & Trust -->
+            <section class="verification-section">
+                <div class="section-header">
+                    <h2 class="section-title">Verification & Trust</h2>
+                </div>
+                <div class="verification-grid">
+                    <div class="verification-card">
+                        <h3 class="verification-title">Verification Status</h3>
+                        <div class="verification-stats">
+                            <div class="verification-stat">
+                                <span class="status-icon">🟢</span>
+                                <span class="status-text">Verified: 400 credits</span>
+                            </div>
+                            <div class="verification-stat">
+                                <span class="status-icon">🟡</span>
+                                <span class="status-text">Under review: 50 credits</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="verification-card">
+                        <h3 class="verification-title">Verified By</h3>
+                        <div class="verification-partners">
+                            <div class="partner-item">
+                                <span class="partner-icon">✓</span>
+                                <span class="partner-name">Platform Verification</span>
+                            </div>
+                            <div class="partner-item">
+                                <span class="partner-icon">✓</span>
+                                <span class="partner-name">NABARD Partner</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="verification-card">
+                        <h3 class="verification-title">Last Verification</h3>
+                        <p class="verification-date">January 12, 2026</p>
+                        <p class="verification-detail">Next verification: Jan 26, 2026</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learn More -->
+            <section class="learn-section">
+                <div class="learn-header" id="learnToggle">
+                    <h2 class="learn-title">Why This Matters</h2>
+                    <span class="learn-icon">▼</span>
+                </div>
+                <div class="learn-content hidden" id="learnContent">
+                    <div class="learn-grid">
+                        <div class="learn-card">
+                            <div class="learn-card-icon">🌍</div>
+                            <p class="learn-text">Sustainable farming reduces pollution and helps the environment</p>
+                        </div>
+                        <div class="learn-card">
+                            <div class="learn-card-icon">💼</div>
+                            <p class="learn-text">Companies buy these credits to offset their carbon footprint</p>
+                        </div>
+                        <div class="learn-card">
+                            <div class="learn-card-icon">💰</div>
+                            <p class="learn-text">You earn extra income while farming sustainably</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alerts & Notifications -->
+            <section class="alerts-section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Notifications</h2>
+                </div>
+                <div class="alerts-list">
+                    <div class="alert-item alert-success">
+                        <span class="alert-icon">✅</span>
+                        <div class="alert-content">
+                            <p class="alert-title">Credits Added</p>
+                            <p class="alert-detail">+50 credits for organic farming</p>
+                        </div>
+                        <span class="alert-time">2 hours ago</span>
+                    </div>
+                    <div class="alert-item alert-info">
+                        <span class="alert-icon">🔍</span>
+                        <div class="alert-content">
+                            <p class="alert-title">Verification Complete</p>
+                            <p class="alert-detail">Water-efficient irrigation verified</p>
+                        </div>
+                        <span class="alert-time">1 day ago</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Credit Conversion Modal -->
+    <div class="modal hidden" id="conversionModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Use Credits</h2>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="conversion-preview">
+                    <div class="preview-row">
+                        <label class="preview-label">Credits to Use</label>
+                        <input type="number" class="preview-input" id="creditsInput" min="1" max="300" value="100">
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">₹ Value</span>
+                        <span class="preview-value" id="previewValue">₹1,000</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Remaining Balance</span>
+                        <span class="preview-value" id="remainingBalance">200 credits</span>
+                    </div>
+                    <div class="preview-summary" id="actionSummary">
+                        <!-- Dynamic content based on action -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="confirmBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/i18n.js"></script>
+    <script src="../js/farmer-sidebar.js"></script>
+    <script src="../js/carbon-credits.js"></script>
+    <script src="../js/common.js"></script>
+</body>
+
+</html>

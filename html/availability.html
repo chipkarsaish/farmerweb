@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Availability - AgriSahay</title>
+    <meta name="description" content="Manage crop & resource availability">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/farmer-sidebar.css">
+    <link rel="stylesheet" href="../css/availability-styles.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Mobile Sidebar Toggle -->
+    <button class="mobile-sidebar-toggle" style="display: none;">☰</button>
+
+    <!-- Farmer Sidebar -->
+    <aside class="farmer-sidebar">
+        <button class="sidebar-toggle">◀</button>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="amenities.html" data-tooltip="Amenities"><span class="nav-icon">🌱</span><span
+                            class="nav-text" data-i18n="sidebar.amenities">Amenities</span></a></li>
+                <li><a href="carbon-credits.html" data-tooltip="Carbon Credits"><span class="nav-icon">🌍</span><span
+                            class="nav-text" data-i18n="sidebar.carbonCredits">Carbon Credits</span></a></li>
+                <li><a href="group-farming.html" data-tooltip="Group Farming"><span class="nav-icon">🤝</span><span
+                            class="nav-text" data-i18n="sidebar.groupFarming">Group Farming</span></a></li>
+                <li><a href="funds.html" data-tooltip="Funds & Loans"><span class="nav-icon">💰</span><span
+                            class="nav-text" data-i18n="sidebar.funds">Funds & Loans</span></a></li>
+                <li class="active"><a href="availability.html" data-tooltip="Availability"><span
+                            class="nav-icon">📅</span><span class="nav-text"
+                            data-i18n="sidebar.availability">Availability</span></a></li>
+                <li><a href="my-orders.html" data-tooltip="My Orders"><span class="nav-icon">📦</span><span
+                            class="nav-text" data-i18n="sidebar.myOrders">My Orders</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="header-actions">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="mr">मराठी</button>
+                </div>
+                <button class="icon-btn" id="notificationBtn" title="Notifications">
+                    🔔
+                    <span class="notification-badge">4</span>
+                </button>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userMenuBtn">
+                        <span id="userInitials">F</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="availability-main main-content-with-sidebar">
+        <div class="availability-container">
+            <a href="farmer-dashboard.html" class="back-link">← Back to Dashboard</a>
+
+            <!-- Page Title Section -->
+            <section class="page-title-section-main">
+                <h1 class="page-main-title">📅 Crop Availability</h1>
+                <p class="page-main-subtitle">Manage your crop listings & availability</p>
+            </section>
+            <!-- Live Summary Cards (KPIs) -->
+            <section class="summary-section">
+                <div class="summary-grid">
+                    <div class="summary-card card-crops" data-filter="crops">
+                        <div class="summary-icon">🌾</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Crops Available</p>
+                            <p class="summary-value">2,450 kg</p>
+                            <p class="summary-detail">5 types • 3 ready to sell</p>
+                        </div>
+                    </div>
+                    <div class="summary-card card-equipment" data-filter="equipment">
+                        <div class="summary-icon">🚜</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Equipment Available</p>
+                            <p class="summary-value">8/12</p>
+                            <p class="summary-detail">67% utilization</p>
+                        </div>
+                    </div>
+                    <div class="summary-card card-inputs" data-filter="inputs">
+                        <div class="summary-icon">🧪</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Inputs in Stock</p>
+                            <p class="summary-value">24 items</p>
+                            <p class="summary-detail">3 low stock • 2 expiring</p>
+                        </div>
+                    </div>
+                    <div class="summary-card card-group" data-filter="group">
+                        <div class="summary-icon">👥</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Group Resources</p>
+                            <p class="summary-value">4/6</p>
+                            <p class="summary-detail">18 shared items</p>
+                        </div>
+                    </div>
+                    <div class="summary-card card-alerts" data-filter="alerts">
+                        <div class="summary-icon">🔴</div>
+                        <div class="summary-content">
+                            <p class="summary-label">Low Stock Alerts</p>
+                            <p class="summary-value">7 items</p>
+                            <p class="summary-detail">2 critical • 5 warning</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search and View Controls -->
+            <section class="controls-section">
+                <div class="search-bar-container">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="searchInput" placeholder="Search resources, crops, equipment..."
+                            class="search-input">
+                        <button class="voice-search-btn" title="Voice Search">🎤</button>
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-toggle-btn active" data-view="grid" title="Grid View">
+                            <span>⊞</span>
+                        </button>
+                        <button class="view-toggle-btn" data-view="list" title="List View">
+                            <span>☰</span>
+                        </button>
+                        <button class="filter-toggle-btn" id="filterToggleBtn">
+                            <span>⚙️</span> Filters
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resource Type Tabs -->
+            <section class="tabs-section">
+                <div class="tabs-container">
+                    <button class="tab-btn active" data-tab="crops">
+                        <span class="tab-icon">🌾</span>
+                        <span class="tab-label">Crops</span>
+                    </button>
+                    <button class="tab-btn" data-tab="equipment">
+                        <span class="tab-icon">🚜</span>
+                        <span class="tab-label">Equipment</span>
+                    </button>
+                    <button class="tab-btn" data-tab="inputs">
+                        <span class="tab-icon">🌱</span>
+                        <span class="tab-label">Seeds & Inputs</span>
+                    </button>
+                    <button class="tab-btn" data-tab="group">
+                        <span class="tab-icon">👥</span>
+                        <span class="tab-label">Group Resources</span>
+                    </button>
+                    <button class="tab-btn" data-tab="platform">
+                        <span class="tab-icon">🏢</span>
+                        <span class="tab-label">Platform Assets</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Filter Sidebar -->
+            <div class="filter-sidebar hidden" id="filterSidebar">
+                <div class="filter-header">
+                    <h3>Filters</h3>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="clear-filters-btn" id="clearFiltersBtn">Clear All</button>
+                        <button class="filter-close-btn" id="filterCloseBtn">×</button>
+                    </div>
+                </div>
+                <div class="filter-content">
+                    <div class="filter-group">
+                        <label class="filter-label">Availability Status</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="available" checked> Available Now
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="reserved"> Reserved
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="unavailable"> Unavailable
+                            </label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Condition</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="good" checked> 🟢 Good
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="maintenance"> 🟡 Maintenance Soon
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="poor"> 🔴 Poor
+                            </label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Ownership</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="individual" checked> Individual
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="group" checked> Group
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="platform"> Platform
+                            </label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Sustainability</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="organic"> ♻️ Organic
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="eco"> 🌱 Eco-friendly
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="content-wrapper">
+                <!-- Crops Tab Content -->
+                <div class="tab-content active" id="cropsTab">
+                    <div class="tab-header">
+                        <h2 class="tab-title">🌾 Crop Inventory</h2>
+                        <p class="last-updated">Last updated: 5 minutes ago</p>
+                    </div>
+                    <div class="resources-grid" id="cropsGrid">
+                        <!-- Crop cards will be dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- Equipment Tab Content -->
+                <div class="tab-content hidden" id="equipmentTab">
+                    <div class="tab-header">
+                        <h2 class="tab-title">🚜 Equipment & Machinery</h2>
+                        <p class="last-updated">Last updated: 2 minutes ago</p>
+                    </div>
+                    <div class="resources-grid" id="equipmentGrid">
+                        <!-- Equipment cards will be dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- Inputs Tab Content -->
+                <div class="tab-content hidden" id="inputsTab">
+                    <div class="tab-header">
+                        <h2 class="tab-title">🌱 Seeds & Inputs Stock</h2>
+                        <p class="last-updated">Last updated: 10 minutes ago</p>
+                    </div>
+                    <div class="resources-grid" id="inputsGrid">
+                        <!-- Input cards will be dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- Group Resources Tab Content -->
+                <div class="tab-content hidden" id="groupTab">
+                    <div class="tab-header">
+                        <h2 class="tab-title">👥 Group-Owned Resources</h2>
+                        <p class="last-updated">Last updated: 1 minute ago</p>
+                    </div>
+                    <div class="resources-grid" id="groupGrid">
+                        <!-- Group resource cards will be dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- Platform Assets Tab Content -->
+                <div class="tab-content hidden" id="platformTab">
+                    <div class="tab-header">
+                        <h2 class="tab-title">🏢 Platform-Owned Assets</h2>
+                        <p class="last-updated">Last updated: 3 minutes ago</p>
+                    </div>
+                    <div class="resources-grid" id="platformGrid">
+                        <!-- Platform asset cards will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecast Section -->
+            <section class="forecast-section">
+                <div class="section-header">
+                    <h2 class="section-title">📈 Demand-Supply Forecast</h2>
+                    <p class="section-subtitle">Plan ahead with predictive insights</p>
+                </div>
+                <div class="forecast-grid">
+                    <div class="forecast-card">
+                        <h3 class="forecast-title">Expected Crop Availability</h3>
+                        <div class="forecast-timeline">
+                            <div class="timeline-item">
+                                <span class="timeline-date">Next 7 days</span>
+                                <span class="timeline-value">+450 kg</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="timeline-date">Next 30 days</span>
+                                <span class="timeline-value">+1,200 kg</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="forecast-card">
+                        <h3 class="forecast-title">Expected Equipment Demand</h3>
+                        <div class="forecast-timeline">
+                            <div class="timeline-item">
+                                <span class="timeline-date">This Week</span>
+                                <span class="timeline-value trend-high">High</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="timeline-date">Next Week</span>
+                                <span class="timeline-value trend-medium">Medium</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="forecast-card">
+                        <h3 class="forecast-title">Seasonal Trends</h3>
+                        <p class="forecast-insight">🌾 Peak sowing season approaching - high equipment demand expected
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alerts Panel -->
+            <section class="alerts-section">
+                <div class="section-header">
+                    <h2 class="section-title">🔔 Active Alerts</h2>
+                </div>
+                <div class="alerts-list">
+                    <div class="alert-item alert-critical">
+                        <span class="alert-icon">🔴</span>
+                        <div class="alert-content">
+                            <p class="alert-title">Critical: Fertilizer stock low</p>
+                            <p class="alert-detail">NPK 10-26-26 - Only 15 kg remaining</p>
+                        </div>
+                        <button class="alert-action-btn">Restock</button>
+                    </div>
+                    <div class="alert-item alert-warning">
+                        <span class="alert-icon">🟡</span>
+                        <div class="alert-content">
+                            <p class="alert-title">Warning: Seeds expiring soon</p>
+                            <p class="alert-detail">Tomato seeds - Expires in 12 days</p>
+                        </div>
+                        <button class="alert-action-btn">View</button>
+                    </div>
+                    <div class="alert-item alert-info">
+                        <span class="alert-icon">🔧</span>
+                        <div class="alert-content">
+                            <p class="alert-title">Maintenance: Tractor service due</p>
+                            <p class="alert-detail">Mahindra 575 - Service due in 5 days</p>
+                        </div>
+                        <button class="alert-action-btn">Schedule</button>
+                    </div>
+                    <div class="alert-item alert-success">
+                        <span class="alert-icon">🟢</span>
+                        <div class="alert-content">
+                            <p class="alert-title">Overstock: Consider selling</p>
+                            <p class="alert-detail">Wheat - 800 kg available, high demand</p>
+                        </div>
+                        <button class="alert-action-btn">Sell Now</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Reservation Modal -->
+    <div class="modal hidden" id="reservationModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Reserve Resource</h2>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="reservation-step active" id="reservationStep1">
+                    <h3 class="step-title">Resource Details</h3>
+                    <div class="resource-summary" id="resourceSummary">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="reservation-step hidden" id="reservationStep2">
+                    <h3 class="step-title">Select Date & Time</h3>
+                    <div class="date-picker-container">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" id="startDate">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" id="endDate">
+                        <label class="form-label">Duration</label>
+                        <select class="form-select" id="duration">
+                            <option value="1">1 Day</option>
+                            <option value="3">3 Days</option>
+                            <option value="7">1 Week</option>
+                            <option value="14">2 Weeks</option>
+                            <option value="30">1 Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="reservation-step hidden" id="reservationStep3">
+                    <h3 class="step-title">Link to Activity</h3>
+                    <div class="activity-options">
+                        <label class="radio-label">
+                            <input type="radio" name="activity" value="crop-plan" checked>
+                            <span>Crop Planning</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="activity" value="loan">
+                            <span>Linked to Loan</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="activity" value="group">
+                            <span>Group Activity</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="activity" value="other">
+                            <span>Other</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="reservation-step hidden" id="reservationStep4">
+                    <h3 class="step-title">Confirm Reservation</h3>
+                    <div class="confirmation-summary">
+                        <div class="summary-row">
+                            <span>Resource:</span>
+                            <span id="confirmResource">-</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Duration:</span>
+                            <span id="confirmDuration">-</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Activity:</span>
+                            <span id="confirmActivity">-</span>
+                        </div>
+                        <div class="summary-row summary-total">
+                            <span>Total Cost:</span>
+                            <span id="confirmCost">₹0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="prevReservationBtn">Previous</button>
+                <button class="btn btn-primary" id="nextReservationBtn">Next</button>
+                <button class="btn btn-primary hidden" id="confirmReservationBtn">Confirm Reservation</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/i18n.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/availability.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriAdmin | Marketplace Approval</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-green: #2d5016;
+            --primary-green: #4a7c2c;
+            --accent-green: #95d5b2;
+            --soft-green: #d8f3dc;
+            --danger-red: #e63946;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --white: #ffffff;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: var(--bg-light);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- PERSISTENT SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: var(--dark-green);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 15px;
+        }
+
+        .nav-links a {
+            color: var(--accent-green);
+            text-decoration: none;
+            padding: 12px;
+            display: block;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .nav-links li.active a,
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        /* --- FILTER BAR --- */
+        .filter-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .filter-card select,
+        .filter-card input {
+            padding: 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid #ddd;
+            outline: none;
+            flex: 1;
+        }
+
+        /* --- CROP LISTING GRID --- */
+        .crop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .crop-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .crop-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+        }
+
+        .crop-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .crop-details {
+            padding: 20px;
+        }
+
+        .crop-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .crop-title h3 {
+            color: var(--dark-green);
+            font-size: 1.1rem;
+        }
+
+        .farmer-tag {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .price {
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .approve-btn,
+        .reject-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .approve-btn {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .reject-btn {
+            background: #fee2e2;
+            color: var(--danger-red);
+        }
+
+        .approve-btn:hover {
+            background: var(--dark-green);
+        }
+
+        .reject-btn:hover {
+            background: #fecaca;
+        }
+
+        /* Status Badge */
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #f0f0f0;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo-text"
+                style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.2rem; letter-spacing: -1px;">
+                <span style="color: #E67E22; position: relative;">Agr<span
+                        style="position: absolute; top: -6px; left: 28px; font-size: 0.9rem;">🌿</span>i</span><span
+                    style="color: #5DBAAA;">Sahay</span>
+            </span>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-links">
+                <li><a href="./dashboard.html">📊 Dashboard</a></li>
+                <li><a href="./management.html">👨‍🌾 Management</a></li>
+                <li><a href="./resources.html">📦 Resources</a></li>
+                <li><a href="./carbon.html">💎 Carbon Credits</a></li>
+                <li class="active"><a href="./marketplace.html">🛍 Marketplace</a></li>
+                <li><a href="#" onclick="handleLogout(event)">🚺 Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="header-flex">
+            <h1>Marketplace Approvals</h1>
+            <p style="color:#666">Pending quality checks: <strong>14</strong></p>
+        </header>
+
+        <section class="filter-card">
+            <input type="text" placeholder="Search by Farmer or Crop...">
+            <select>
+                <option>All Crop Types</option>
+                <option>Grains</option>
+                <option>Vegetables</option>
+                <option>Organic Fruits</option>
+            </select>
+            <select>
+                <option>Sort By: Newest First</option>
+                <option>Price: High to Low</option>
+                <option>Price: Low to High</option>
+            </select>
+        </section>
+
+        <div class="crop-grid">
+
+            <div class="crop-card">
+                <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80"
+                    alt="Wheat" class="crop-img">
+                <div class="crop-details">
+                    <div class="crop-title">
+                        <h3>Golden Durum Wheat</h3>
+                        <span class="status-pill">Pending</span>
+                    </div>
+                    <span class="farmer-tag">By: Rajesh Kumar • #FC-9921</span>
+                    <div class="meta-info">
+                        <span>Qty: <strong>1,200 KG</strong></span>
+                        <span class="price">₹40/KG</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color:#888; margin-bottom: 15px;">Harvest Date: Oct 12, 2025</p>
+                    <div class="action-btns">
+                        <button class="approve-btn" onclick="handleAction(this, 'Approved')">Approve</button>
+                        <button class="reject-btn" onclick="handleAction(this, 'Rejected')">Reject</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="crop-card">
+                <img src="https://naturebiofoods.organic/wp-content/uploads/2020/10/Traditional-Basmati-White-Rice_Rect-2.jpg"
+                    alt="Rice" class="crop-img">
+                <div class="crop-details">
+                    <div class="crop-title">
+                        <h3>Organic Basmati Rice</h3>
+                        <span class="status-pill">Pending</span>
+                    </div>
+                    <span class="farmer-tag">By: Maria Garcia • #FC-3302</span>
+                    <div class="meta-info">
+                        <span>Qty: <strong>850 KG</strong></span>
+                        <span class="price">₹30/KG</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color:#888; margin-bottom: 15px;">Harvest Date: Sept 28, 2025</p>
+                    <div class="action-btns">
+                        <button class="approve-btn" onclick="handleAction(this, 'Approved')">Approve</button>
+                        <button class="reject-btn" onclick="handleAction(this, 'Rejected')">Reject</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="crop-card">
+                <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=600&q=80"
+                    alt="Carrots" class="crop-img">
+                <div class="crop-details">
+                    <div class="crop-title">
+                        <h3>Fresh Carrots</h3>
+                        <span class="status-pill">Pending</span>
+                    </div>
+                    <span class="farmer-tag">By: John Doe • #FC-1109</span>
+                    <div class="meta-info">
+                        <span>Qty: <strong>500 KG</strong></span>
+                        <span class="price">₹80/KG</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color:#888; margin-bottom: 15px;">Harvest Date: Oct 01, 2025</p>
+                    <div class="action-btns">
+                        <button class="approve-btn" onclick="handleAction(this, 'Approved')">Approve</button>
+                        <button class="reject-btn" onclick="handleAction(this, 'Rejected')">Reject</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function handleAction(btn, status) {
+            const card = btn.closest('.crop-card');
+            const pill = card.querySelector('.status-pill');
+
+            pill.innerText = status;
+            pill.style.background = status === 'Approved' ? '#d8f3dc' : '#fee2e2';
+            pill.style.color = status === 'Approved' ? '#1b4332' : '#e63946';
+
+            // Disable buttons after action
+            const btns = card.querySelectorAll('button');
+            btns.forEach(b => b.style.display = 'none');
+
+            // Visual feedback
+            card.style.opacity = "0.7";
+        }
+
+        // Logout function
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = '../../index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

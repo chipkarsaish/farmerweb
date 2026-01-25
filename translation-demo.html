@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Demo - FarmerConnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/language-switcher.css">
+    <style>
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .demo-title {
+            font-size: 2rem;
+            color: var(--primary-green);
+        }
+
+        .demo-content {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .demo-item {
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .demo-label {
+            font-weight: 600;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-text {
+            font-size: 1.125rem;
+            color: #111827;
+        }
+
+        .current-lang-display {
+            padding: 0.5rem 1rem;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-section">
+        <div class="demo-header">
+            <h1 class="demo-title">🌐 Translation System Demo</h1>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="hi">हिंदी</button>
+                <button class="lang-btn" data-lang="mr">मराठी</button>
+            </div>
+        </div>
+
+        <div class="demo-content">
+            <div class="demo-item">
+                <div class="demo-label">Navigation - Login Button</div>
+                <div class="demo-text" data-i18n="nav.login">Login</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Navigation - Register Button</div>
+                <div class="demo-text" data-i18n="nav.register">Register</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Hero Title</div>
+                <div class="demo-text" data-i18n="hero.title">Empowering Farmers, Growing Together</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Hero Subtitle</div>
+                <div class="demo-text" data-i18n="hero.subtitle">Your complete agricultural ecosystem for rentals,
+                    marketplace, sustainability, and cooperative growth</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Features - Amenities Title</div>
+                <div class="demo-text" data-i18n="features.amenities.title">Amenity Rental</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Features - Amenities Description</div>
+                <div class="demo-text" data-i18n="features.amenities.description">Affordable rental of seeds,
+                    fertilizers, and equipment with flexible payment options</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Dashboard - Welcome Message</div>
+                <div class="demo-text" data-i18n="dashboard.welcome">Welcome back</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Common - Search</div>
+                <div class="demo-text" data-i18n="common.search">Search</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Common - Submit</div>
+                <div class="demo-text" data-i18n="common.submit">Submit</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Auth - Choose Role</div>
+                <div class="demo-text" data-i18n="auth.chooseRole">Choose Your Role</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Auth - Farmer</div>
+                <div class="demo-text" data-i18n="auth.farmer">Farmer</div>
+            </div>
+
+            <div class="demo-item">
+                <div class="demo-label">Auth - Administrator</div>
+                <div class="demo-text" data-i18n="auth.admin">Administrator</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2 style="margin-bottom: 1rem;">📝 How to Use Translation System</h2>
+        <ol style="line-height: 2;">
+            <li>Add <code>data-i18n="key.path"</code> attribute to any HTML element</li>
+            <li>The key path corresponds to the JSON structure in translation files</li>
+            <li>Click language buttons above to see translations in action</li>
+            <li>Language preference is saved in localStorage</li>
+            <li>Works completely offline after initial load</li>
+        </ol>
+
+        <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Translation File Structure:</h3>
+        <pre style="background: #f3f4f6; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+{
+  "nav": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "hero": {
+    "title": "Empowering Farmers, Growing Together",
+    "subtitle": "Your complete agricultural ecosystem..."
+  },
+  "dashboard": {
+    "welcome": "Welcome back"
+  }
+}
+        </pre>
+    </div>
+
+    <script src="js/i18n.js"></script>
+</body>
+
+</html>

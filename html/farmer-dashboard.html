@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Dashboard - AgriSahay</title>
+    <meta name="description" content="Farmer dashboard for managing amenities, funds, crops, and more">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="header-actions">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="mr">मराठी</button>
+                </div>
+                <button class="icon-btn" id="notificationBtn" title="Notifications">
+                    🔔
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userMenuBtn">
+                        <span id="userInitials">F</span>
+                    </div>
+                    <div class="user-dropdown hidden" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar">
+                                <span id="dropdownInitials">F</span>
+                            </div>
+                            <div class="dropdown-info">
+                                <p class="dropdown-name" id="dropdownName">Farmer Name</p>
+                                <p class="dropdown-email" id="dropdownEmail">farmer@example.com</p>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <span>👤</span> <span data-i18n="dashboard.myProfile">My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <span>⚙️</span> <span data-i18n="dashboard.settings">Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" id="logoutBtn">
+                            <span>🚪</span> <span data-i18n="dashboard.logout">Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <h1 class="welcome-title" data-i18n="dashboard.welcomeBack">Welcome back, <span
+                        id="welcomeName">Farmer</span>! 👋</h1>
+                <p class="welcome-subtitle" data-i18n="dashboard.welcomeSubtitle">Here's what's happening with your farm
+                    today</p>
+            </section>
+
+            <!-- Carbon Credits Progress Bar -->
+            <section class="carbon-credits-section">
+                <div class="carbon-credits-card">
+                    <div class="carbon-credits-header">
+                        <div class="carbon-credits-info">
+                            <p class="carbon-credits-label" data-i18n="dashboard.carbonCreditsLabel">Your Carbon Credits
+                            </p>
+                            <h2 class="carbon-credits-value"><span data-i18n="dashboard.carbonCreditsValue">125
+                                    Credits</span></h2>
+                        </div>
+                        <div class="carbon-credits-icon">
+                            🌱
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 75%;"></div>
+                    </div>
+                    <p class="progress-label" data-i18n="dashboard.progressLabel">75% to next reward</p>
+                </div>
+            </section>
+
+            <!-- Main Features Grid -->
+            <section class="features-section">
+                <h2 class="section-heading" data-i18n="dashboard.quickAccess">Quick Access</h2>
+                <div class="dashboard-grid">
+                    <!-- Amenities Tile -->
+                    <div class="dashboard-tile tile-green" data-feature="amenities">
+                        <div class="tile-icon">🌱</div>
+                        <h3 class="tile-title" data-i18n="dashboard.tiles.amenities.title">Amenities</h3>
+                        <p class="tile-description" data-i18n="dashboard.tiles.amenities.description">Rent seeds,
+                            fertilizers & equipment</p>
+                        <div class="tile-arrow">→</div>
+                    </div>
+
+                    <!-- Funds Tile -->
+                    <div class="dashboard-tile tile-peach" data-feature="funds">
+                        <div class="tile-icon">💰</div>
+                        <h3 class="tile-title" data-i18n="dashboard.tiles.funds.title">Funds</h3>
+                        <p class="tile-description" data-i18n="dashboard.tiles.funds.description">Apply for loans &
+                            financial aid</p>
+                        <div class="tile-arrow">→</div>
+                    </div>
+
+                    <!-- Availability Tile -->
+                    <div class="dashboard-tile tile-blue" data-feature="availability">
+                        <div class="tile-icon">📊</div>
+                        <h3 class="tile-title" data-i18n="dashboard.tiles.availability.title">Availability</h3>
+                        <p class="tile-description" data-i18n="dashboard.tiles.availability.description">Manage crop
+                            availability</p>
+                        <div class="tile-arrow">→</div>
+                    </div>
+
+                    <!-- Carbon Credit Selling Tile -->
+                    <div class="dashboard-tile tile-cyan" data-feature="carbon-credits">
+                        <div class="tile-icon">🌍</div>
+                        <h3 class="tile-title" data-i18n="dashboard.tiles.carbonCredits.title">Carbon Credits</h3>
+                        <p class="tile-description" data-i18n="dashboard.tiles.carbonCredits.description">View & sell
+                            carbon credits</p>
+                        <div class="tile-arrow">→</div>
+                    </div>
+
+                    <!-- Group Farming Tile -->
+                    <div class="dashboard-tile tile-purple" data-feature="group-farming">
+                        <div class="tile-icon">🤝</div>
+                        <h3 class="tile-title" data-i18n="dashboard.tiles.groupFarming.title">Group Farming</h3>
+                        <p class="tile-description" data-i18n="dashboard.tiles.groupFarming.description">Join farming
+                            cooperatives</p>
+                        <div class="tile-arrow">→</div>
+                    </div>
+
+                    <!-- My Orders Tile -->
+                    <div class="dashboard-tile tile-pink" data-feature="my-orders">
+                        <div class="tile-icon">📦</div>
+                        <h3 class="tile-title" data-i18n="dashboard.tiles.myOrders.title">My Orders</h3>
+                        <p class="tile-description" data-i18n="dashboard.tiles.myOrders.description">View orders &
+                            transactions</p>
+                        <div class="tile-arrow">→</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <h2 class="section-heading" data-i18n="dashboard.recentActivity">Recent Activity</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon activity-success">✓</div>
+                        <div class="activity-content">
+                            <p class="activity-title" data-i18n="dashboard.activity.fertilizerApproved">Fertilizer
+                                rental approved</p>
+                            <p class="activity-time" data-i18n="dashboard.activity.time1">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon activity-info">📊</div>
+                        <div class="activity-content">
+                            <p class="activity-title" data-i18n="dashboard.activity.wheatMarked">50 kg wheat marked as
+                                available</p>
+                            <p class="activity-time" data-i18n="dashboard.activity.time2">5 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon activity-warning">🌍</div>
+                        <div class="activity-content">
+                            <p class="activity-title" data-i18n="dashboard.activity.carbonEarned">Earned 25 carbon
+                                credits</p>
+                            <p class="activity-time" data-i18n="dashboard.activity.time3">1 day ago</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../js/i18n.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+
+</html>

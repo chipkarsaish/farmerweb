@@ -1,0 +1,100 @@
+/* Management Specific Styles */
+.card-smooth {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.filter-bar input {
+    flex: 2;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+}
+
+.filter-bar select {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+.view-btn {
+    background: var(--light-green);
+    color: var(--dark-green);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.view-btn:hover {
+    background: var(--primary-green);
+    color: white;
+}
+
+/* Side Drawer Styling */
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen */
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 2000;
+    transition: 0.4s;
+}
+
+.drawer-overlay.active {
+    right: 0;
+}
+
+.drawer-content {
+    position: absolute;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    background: #f4f7f6;
+    padding: 30px;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.info-box {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.transaction-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.transaction-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}

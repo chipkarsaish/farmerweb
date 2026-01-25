@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriAdmin | Farmer Audit Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-green: #2d5016;
+            --primary-green: #4a7c2c;
+            --accent-green: #95d5b2;
+            --soft-green: #d8f3dc;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: var(--bg-light);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- STABLE SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: var(--dark-green);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 15px;
+        }
+
+        .nav-links a {
+            color: var(--accent-green);
+            text-decoration: none;
+            padding: 12px;
+            display: block;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .nav-links li.active a {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* --- PROFILE HEADER CARD --- */
+        .profile-header {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--soft-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--dark-green);
+        }
+
+        .header-info h1 {
+            color: var(--dark-green);
+            margin-bottom: 5px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: var(--soft-green);
+            color: var(--dark-green);
+        }
+
+        /* --- DATA GRID --- */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card-smooth {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .card-smooth h3 {
+            margin-bottom: 20px;
+            color: var(--dark-green);
+            font-size: 1.1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .info-row span {
+            color: #666;
+        }
+
+        .info-row strong {
+            color: #333;
+        }
+
+        /* --- STATS BOXES --- */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .stat-box small {
+            font-size: 0.7rem;
+            color: #777;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .stat-box p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-top: 5px;
+        }
+
+        /* --- HISTORY TABLE --- */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 12px;
+            font-size: 0.8rem;
+            color: #888;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-table td {
+            padding: 12px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        .amount-pos {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo-text"
+                style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.2rem; letter-spacing: -1px;">
+                <span style="color: #E67E22; position: relative;">Agr<span
+                        style="position: absolute; top: -6px; left: 28px; font-size: 0.9rem;">🌿</span>i</span><span
+                    style="color: #5DBAAA;">Sahay</span>
+            </span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">📊 Dashboard</a></li>
+            <li class="active"><a href="management.html">👨‍🌾 Management</a></li>
+            <li><a href="resources.html">📦 Resources</a></li>
+            <li><a href="carbon.html">💎 Carbon Credits</a></li>
+            <li><a href="marketplace.html">🛍 Marketplace</a></li>
+            <li><a href="#" onclick="handleLogout(event)">🚺 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <a href="management.html" class="back-link">← Back to Management</a>
+
+        <div class="profile-header">
+            <div class="avatar">👨‍🌾</div>
+            <div class="header-info">
+                <h1>Rajesh Kumar</h1>
+                <p style="color:#666; margin-bottom: 10px;">Farmer ID: <strong>#FC-9921</strong></p>
+                <span class="status-pill">✅ ACCOUNT VERIFIED</span>
+            </div>
+            <div style="margin-left: auto;">
+                <button
+                    style="padding: 12px 25px; border-radius: var(--radius-md); border: none; background: var(--dark-green); color: white; font-weight: 600; cursor: pointer;">Edit
+                    Profile</button>
+            </div>
+        </div>
+
+        <div class="detail-grid">
+            <div class="card-smooth">
+                <h3>Identity Information</h3>
+                <div class="info-row"><span>ID Type:</span> <strong>National Aadhaar Card</strong></div>
+                <div class="info-row"><span>Mobile:</span> <strong>+91 98XXX XXX21</strong></div>
+                <div class="info-row"><span>Region:</span> <strong>North Valley, Sector 4</strong></div>
+                <div class="info-row"><span>Group Membership:</span> <strong>Lakeside Cooperative</strong></div>
+                <div class="info-row"><span>Farm Size:</span> <strong>12.4 Hectares</strong></div>
+            </div>
+
+            <div class="card-smooth">
+                <h3>Sustainability Impact</h3>
+                <div class="stats-row">
+                    <div class="stat-box"><small>Credits</small>
+                        <p>142</p>
+                    </div>
+                    <div class="stat-box"><small>Efficiency</small>
+                        <p>94%</p>
+                    </div>
+                    <div class="stat-box"><small>Crops Sold</small>
+                        <p>12.5T</p>
+                    </div>
+                    <div class="stat-box"><small>Discounts</small>
+                        <p>15%</p>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.85rem; color: #666;">
+                    Rajesh has consistently used regenerative soil techniques, increasing his carbon credit generation
+                    by 12% this quarter.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-smooth">
+            <h3>Audit Log & Transaction History</h3>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Activity / Item</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Oct 12, 2025</td>
+                        <td>Organic Wheat Marketplace Sale</td>
+                        <td>Income</td>
+                        <td class="amount-pos">+$450.00</td>
+                        <td>Completed</td>
+                    </tr>
+                    <tr>
+                        <td>Oct 05, 2025</td>
+                        <td>Nitrogen Fertilizer Request</td>
+                        <td>Resource</td>
+                        <td>-500 KG</td>
+                        <td>Approved</td>
+                    </tr>
+                    <tr>
+                        <td>Sept 28, 2025</td>
+                        <td>Carbon Credit Quarterly Payout</td>
+                        <td>Impact</td>
+                        <td class="amount-pos">+$1,200.00</td>
+                        <td>Completed</td>
+                    </tr>
+                    <tr>
+                        <td>Sept 15, 2025</td>
+                        <td>Soil Health Audit (Grade A)</td>
+                        <td>Log</td>
+                        <td>--</td>
+                        <td>Verified</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = '../../index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

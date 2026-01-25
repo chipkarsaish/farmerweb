@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriAdmin | Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-green: #2d5016;
+            --primary-green: #4a7c2c;
+            --accent-green: #95d5b2;
+            --soft-green: #d8f3dc;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --radius-lg: 20px;
+            /* Smooth edge instruction */
+            --radius-md: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: var(--bg-light);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- STABLE SIDEBAR NAVIGATION --- */
+        .sidebar {
+            width: 260px;
+            background: var(--dark-green);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 15px;
+        }
+
+        .nav-links a {
+            color: var(--accent-green);
+            text-decoration: none;
+            padding: 12px;
+            display: block;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        /* Connecting the pages: Active state for Management */
+        .nav-links li.active a,
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .card-smooth {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            margin-bottom: 25px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+        }
+
+        .filter-bar input,
+        .filter-bar select {
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        .filter-bar input {
+            flex: 2;
+        }
+
+        .filter-bar select {
+            flex: 1;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: #666;
+            border-bottom: 2px solid var(--bg-light);
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--bg-light);
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .success {
+            background: var(--soft-green);
+            color: var(--dark-green);
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .view-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+
+        /* --- DRAWER (Audit View) --- */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .drawer-overlay.active {
+            right: 0;
+        }
+
+        .drawer-content {
+            position: absolute;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            background: var(--white);
+            padding: 40px;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo-text"
+                style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.2rem; letter-spacing: -1px;">
+                <span style="color: #E67E22; position: relative;">Agr<span
+                        style="position: absolute; top: -6px; left: 28px; font-size: 0.9rem;">🌿</span>i</span><span
+                    style="color: #5DBAAA;">Sahay</span>
+            </span>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-links">
+                <li><a href="./dashboard.html">📊 Dashboard</a></li>
+                <li class="active"><a href="./management.html">👨‍🌾 Management</a></li>
+                <li><a href="./resources.html">📦 Resources</a></li>
+                <li><a href="./carbon.html">💎 Carbon Credits</a></li>
+                <li><a href="./marketplace.html">🛍 Marketplace</a></li>
+                <li><a href="#" onclick="handleLogout(event)">🚺 Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="dash-header">
+            <h1>Farmer Management</h1>
+        </header>
+
+        <section class="filter-bar card-smooth">
+            <input type="text" id="farmerSearch" placeholder="Search by Name, ID, or Crop...">
+            <select>
+                <option>All Regions</option>
+            </select>
+            <select>
+                <option>All Statuses</option>
+            </select>
+        </section>
+
+        <section class="table-container card-smooth">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Farmer Name</th>
+                        <th>Farmer ID</th>
+                        <th>Type</th>
+                        <th>Crops</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="farmerTableBody">
+                    <tr>
+                        <td><strong>Rajesh Kumar</strong></td>
+                        <td>#FC-9921</td>
+                        <td>Individual</td>
+                        <td>Wheat, Corn</td>
+                        <td><span class="badge success">Verified</span></td>
+                        <td><button class="view-btn" onclick="toggleDrawer(true, 'Rajesh Kumar', '#FC-9921')">View
+                                Details</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lakeside Coop</strong></td>
+                        <td>#GP-4402</td>
+                        <td>Group</td>
+                        <td>Rice, Soy</td>
+                        <td><span class="badge warning">Pending</span></td>
+                        <td><button class="view-btn" onclick="toggleDrawer(true, 'Lakeside Coop', '#GP-4402')">View
+                                Details</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <div id="profileDrawer" class="drawer-overlay" onclick="toggleDrawer(false)">
+        <div class="drawer-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="toggleDrawer(false)">&times;</button>
+            <h2 id="pName" style="margin-bottom: 10px;">Farmer Profile</h2>
+            <p id="pID" style="color: #666; margin-bottom: 30px;">ID: #0000</p>
+
+            <div style="background: var(--bg-light); padding: 20px; border-radius: var(--radius-md);">
+                <h4 style="margin-bottom: 10px; color: var(--dark-green);">Audit Checklist</h4>
+                <p>✅ Land Title Verified</p>
+                <p>✅ Past Resource Audit: High Yield</p>
+                <p>✅ Carbon Credits: 14.2 Tons</p>
+            </div>
+            <button class="view-btn" style="width: 100%; margin-top: 30px; padding: 15px;">Approve Resource
+                Grant</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleDrawer(show, name = '', id = '') {
+            const drawer = document.getElementById('profileDrawer');
+            if (show) {
+                document.getElementById('pName').innerText = name;
+                document.getElementById('pID').innerText = "ID: " + id;
+                drawer.classList.add('active');
+            } else {
+                drawer.classList.remove('active');
+            }
+        }
+
+        // Search Logic
+        document.getElementById('farmerSearch').addEventListener('keyup', function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#farmerTableBody tr");
+            rows.forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
+            });
+        });
+
+        // Logout function
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = '../../index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

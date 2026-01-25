@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriAdmin | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --dark-green: #2d5016;
+            --primary-green: #4a7c2c;
+            --accent-green: #95d5b2;
+            --soft-green: #d8f3dc;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: var(--bg-light);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- STICKY SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: var(--dark-green);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-nav a {
+            color: var(--accent-green);
+            text-decoration: none;
+            padding: 14px 18px;
+            display: block;
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar-nav li.active a,
+        .sidebar-nav a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .dashboard-main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        /* SEARCH BAR STYLING */
+        .search-container {
+            display: flex;
+            background: var(--white);
+            padding: 10px 20px;
+            border-radius: 50px;
+            /* Smooth rounded pill shape */
+            box-shadow: var(--shadow);
+            width: 400px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .search-container:focus-within {
+            border-color: var(--primary-green);
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            width: 100%;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        /* Table UI */
+        .table-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--bg-light);
+            color: #888;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--bg-light);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .success {
+            background: #d8f3dc;
+            color: #1b4332;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .add-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Modal Settings */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-card {
+            background: var(--white);
+            width: 450px;
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo-text"
+                style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.4rem; letter-spacing: -1px;">
+                <span style="color: #E67E22; position: relative;">Agr<span
+                        style="position: absolute; top: -8px; left: 32px; font-size: 1rem;">🌿</span>i</span><span
+                    style="color: #5DBAAA;">Sahay</span>
+            </span>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active"><a href="./dashboard.html">📊 Dashboard</a></li>
+                <li><a href="./management.html">👨‍🌾 Management</a></li>
+                <li><a href="./resources.html">📦 Resources</a></li>
+                <li><a href="./carbon.html">💎 Carbon Credits</a></li>
+                <li><a href="./marketplace.html">🛒 Marketplace</a></li>
+                <li><a href="#" onclick="handleLogout(event)">🚪 Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="dashboard-main">
+        <header class="dash-header">
+            <h1>Admin Overview</h1>
+            <div class="search-container">
+                <span>🔍</span>
+                <input type="text" id="dashboardSearch" placeholder="Search farmers, regions, or activity...">
+            </div>
+        </header>
+
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <span style="font-size:0.8rem; color:#666; font-weight:600;">TOTAL FARMERS</span>
+                <div class="kpi-value">1,284</div>
+                <span style="color:var(--primary-green); font-weight:600;">↑ 12%</span>
+            </div>
+            <div class="kpi-card">
+                <span style="font-size:0.8rem; color:#666; font-weight:600;">ACTIVE CROPS</span>
+                <div class="kpi-value">3,420</div>
+                <span style="color:#666;">Healthy Status</span>
+            </div>
+            <div class="kpi-card">
+                <span style="font-size:0.8rem; color:#666; font-weight:600;">CARBON CREDITS</span>
+                <div class="kpi-value">84.5k</div>
+                <span style="color:var(--primary-green); font-weight:600;">↑ 24%</span>
+            </div>
+            <div class="kpi-card">
+                <span style="font-size:0.8rem; color:#666; font-weight:600;">REVENUE</span>
+                <div class="kpi-value">₹ 12.2k </div>
+                <span style="color:var(--primary-green); font-weight:600;">↑ 8%</span>
+            </div>
+        </section>
+
+        <section class="charts-section">
+            <div class="chart-container">
+                <h3 style="margin-bottom:20px;">Carbon Credit Growth</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3 style="margin-bottom:20px;">Resource Distribution</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </section>
+
+        <section class="table-card">
+            <div class="table-header">
+                <h3>Recent Farmer Activity</h3>
+                <button class="add-btn" id="openModalBtn">+ Register Farmer</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Farmer Name</th>
+                        <th>Region</th>
+                        <th>Activity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="farmerTableBody">
+                    <tr>
+                        <td>Aman Sharma</td>
+                        <td>North Zone</td>
+                        <td>Crop Update</td>
+                        <td><span class="status-badge success">Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>West Plains</td>
+                        <td>New Registration</td>
+                        <td><span class="status-badge warning">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Maria Garcia</td>
+                        <td>East Wetlands</td>
+                        <td>Carbon Audit</td>
+                        <td><span class="status-badge success">Verified</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // CHARTS INITIALIZATION
+            const lineCtx = document.getElementById('lineChart').getContext('2d');
+            new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Credits',
+                        data: [12, 19, 15, 25, 22, 30],
+                        borderColor: '#4a7c2c',
+                        tension: 0.4,
+                        fill: true,
+                        backgroundColor: 'rgba(45, 106, 79, 0.1)'
+                    }]
+                }
+            });
+
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Seeds', 'Water', 'Labor'],
+                    datasets: [{
+                        data: [40, 35, 25],
+                        backgroundColor: ['#2d5016', '#4a7c2c', '#95d5b2']
+                    }]
+                }
+            });
+
+            // SEARCH LOGIC
+            const searchInput = document.getElementById('dashboardSearch');
+            const tableRows = document.querySelectorAll('#farmerTableBody tr');
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                tableRows.forEach(row => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(query) ? '' : 'none';
+                });
+            });
+        });
+
+        // Logout function
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear any stored session data
+                localStorage.clear();
+                sessionStorage.clear();
+                // Redirect to login page
+                window.location.href = '../../index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

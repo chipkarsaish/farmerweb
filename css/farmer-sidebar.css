@@ -1,0 +1,252 @@
+/* ========================================
+   FARMER SIDEBAR STYLES
+   ======================================== */
+
+/* Sidebar Container - Always Minimized */
+.farmer-sidebar {
+    width: 80px;
+    background: var(--dark-green, #2d5016);
+    color: white;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 70px;
+    /* Start below header */
+    height: calc(100vh - 70px);
+    /* Full height minus header */
+    z-index: 999;
+    transition: all 0.3s ease;
+    overflow-y: hidden;
+}
+
+.farmer-sidebar.minimized {
+    width: 80px;
+    padding: 30px 10px;
+}
+
+/* Sidebar Brand */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+
+.sidebar-brand .brand-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.sidebar-brand .brand-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+.farmer-sidebar.minimized .brand-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+/* Toggle Button - Hidden */
+.sidebar-toggle {
+    display: none;
+}
+
+/* Navigation Links - Icon Only */
+.sidebar-nav {
+    flex-grow: 1;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 8px;
+}
+
+.sidebar-nav a {
+    color: #95d5b2;
+    text-decoration: none;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+}
+
+.sidebar-nav a .nav-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.sidebar-nav a .nav-text {
+    display: none;
+}
+
+.sidebar-nav li.active a {
+    background: var(--primary-green, #4a7c2c);
+    color: white;
+    box-shadow: 0 2px 8px rgba(74, 124, 44, 0.3);
+    border-left: 3px solid var(--accent-green, #95d5b2);
+}
+
+.sidebar-nav li.active a .nav-icon {
+    transform: scale(1.1);
+}
+
+.sidebar-nav a:hover {
+    background: rgba(74, 124, 44, 0.2);
+    color: white;
+}
+
+/* Tooltip for icons */
+.sidebar-nav a::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 15px;
+    padding: 8px 12px;
+    background: var(--dark-green, #2d5016);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1002;
+}
+
+.sidebar-nav a:hover::after {
+    opacity: 1;
+}
+
+/* User Section */
+.sidebar-user {
+    padding: 20px 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+.sidebar-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.sidebar-user-info:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar-sidebar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-green, #4a7c2c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.user-details {
+    flex: 1;
+    min-width: 0;
+    transition: opacity 0.3s ease;
+}
+
+.farmer-sidebar.minimized .user-details {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: #95d5b2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Main Content Adjustment - Always with narrow sidebar */
+.main-content-with-sidebar {
+    margin-left: 80px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .farmer-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .farmer-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .main-content-with-sidebar {
+        margin-left: 0;
+    }
+
+    .mobile-sidebar-toggle {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 999;
+        background: var(--primary-green, #4a7c2c);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+}
+
+/* Scrollbar for sidebar */
+.farmer-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.farmer-sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.farmer-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.farmer-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

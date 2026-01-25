@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriAdmin | Carbon Credits</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --dark-green: #2d5016;
+            --primary-green: #4a7c2c;
+            --accent-green: #95d5b2;
+            --soft-green: #d8f3dc;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --radius-md: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-sizing;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f4f7f6;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- PERSISTENT SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: var(--dark-green);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 15px;
+        }
+
+        .nav-links a {
+            color: var(--accent-green);
+            text-decoration: none;
+            padding: 12px;
+            display: block;
+            border-radius: var(--radius-md);
+            transition: 0.3s;
+        }
+
+        .nav-links li.active a {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Simulated Data Label */
+        .sim-label {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #e9ecef;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6c757d;
+        }
+
+        .header-section {
+            margin-bottom: 30px;
+        }
+
+        .header-section h1 {
+            color: var(--dark-green);
+        }
+
+        /* Impact Highlights */
+        .impact-hero {
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .impact-value h2 {
+            font-size: 3rem;
+            margin-top: 10px;
+            color: var(--accent-green);
+        }
+
+        .revenue-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            text-align: right;
+        }
+
+        /* Layout Grids */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card-smooth {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Control Panel */
+        .control-panel label {
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: var(--soft-green);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .discount-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo-text"
+                style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.2rem; letter-spacing: -1px;">
+                <span style="color: #E67E22; position: relative;">Agr<span
+                        style="position: absolute; top: -6px; left: 28px; font-size: 0.9rem;">🌿</span>i</span><span
+                    style="color: #5DBAAA;">Sahay</span>
+            </span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="./dashboard.html">📊 Dashboard</a></li>
+            <li><a href="./management.html">👨‍🌾 Management</a></li>
+            <li><a href="./resources.html">📦 Resources</a></li>
+            <li class="active"><a href="./carbon.html">💎 Carbon Credits</a></li>
+            <li><a href="./marketplace.html">🛒 Marketplace</a></li>
+            <li><a href="#" onclick="handleLogout(event)">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <span class="sim-label">SIMULATED DATA</span>
+
+        <header class="header-section">
+            <h1>Carbon Credit Analytics</h1>
+            <p>Environmental Impact & Revenue Generation</p>
+        </header>
+
+        <section class="impact-hero">
+            <div class="impact-value">
+                <p>Total Carbon Credits Generated</p>
+                <h2>142,850.40 <span style="font-size: 1.2rem;">MTCO2e</span></h2>
+            </div>
+            <div class="revenue-box">
+                <p>Estimated Market Revenue</p>
+                <h2 style="color:white">₹2,142,750</h2>
+            </div>
+        </section>
+
+        <div class="dashboard-grid">
+            <div class="card-smooth">
+                <h3>Credits by Crop Type</h3>
+                <canvas id="cropChart" height="150"></canvas>
+            </div>
+
+            <div class="card-smooth control-panel">
+                <h3>Revenue Controls</h3>
+                <p style="font-size: 0.85rem; color:#666; margin-bottom: 20px;">Adjust farmer payout discount percentage
+                </p>
+
+                <label>Farmer Payout Discount</label>
+                <div class="discount-display"><span id="discountVal">15</span>%</div>
+                <input type="range" min="0" max="50" value="15" class="slider" id="discountSlider">
+
+                <p style="margin-top:20px; font-size: 0.85rem;">Platform Fee: <strong>2.5%</strong></p>
+                <button
+                    style="width:100%; padding:12px; margin-top:20px; border-radius:12px; border:none; background:var(--dark-green); color:white; font-weight:600; cursor:pointer;">Apply
+                    Changes</button>
+            </div>
+        </div>
+
+        <div class="card-smooth">
+            <h3>Farming Method Efficiency</h3>
+            <canvas id="methodChart" height="100"></canvas>
+        </div>
+    </main>
+
+    <script>
+        // Update Discount Slider Display
+        const slider = document.getElementById('discountSlider');
+        const output = document.getElementById('discountVal');
+        slider.oninput = function () { output.innerHTML = this.value; }
+
+        // Chart 1: Crop Type
+        new Chart(document.getElementById('cropChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Wheat', 'Rice', 'Soybeans', 'Maize', 'Coffee'],
+                datasets: [{
+                    label: 'Carbon Offset (Tons)',
+                    data: [4500, 7200, 3100, 5800, 2400],
+                    backgroundColor: '#2d6a4f',
+                    borderRadius: 8
+                }]
+            }
+        });
+
+        // Chart 2: Farming Method
+        new Chart(document.getElementById('methodChart'), {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [
+                    { label: 'Regenerative Agriculture', data: [400, 600, 850, 1100], borderColor: '#2d6a4f', tension: 0.4 },
+                    { label: 'Traditional Farming', data: [100, 150, 140, 180], borderColor: '#95d5b2', tension: 0.4 }
+                ]
+            }
+        });
+
+        // Logout function
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = '../../index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

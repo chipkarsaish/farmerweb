@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSahay - Empowering Agriculture Together</title>
+    <meta name="description"
+        content="AgriSahay - A comprehensive platform for amenity rental, marketplace, carbon credits, and cooperative farming">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/language-switcher.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="nav-buttons">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="mr">मराठी</button>
+                </div>
+                <button class="btn btn-outline" id="loginBtn" data-i18n="nav.login">Login</button>
+                <button class="btn btn-primary" id="registerBtn" data-i18n="nav.register">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="hero.title">Empowering Farmers, <span class="highlight">Growing
+                    Together</span></h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Your complete agricultural ecosystem for rentals,
+                marketplace, sustainability, and
+                cooperative growth</p>
+            <div class="hero-cta">
+                <button class="btn btn-large btn-primary" id="heroRegisterBtn" data-i18n="hero.getStarted">Get
+                    Started</button>
+                <button class="btn btn-large btn-outline-light" id="heroLearnBtn" data-i18n="hero.learnMore">Learn
+                    More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Overview -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title" data-i18n="features.title">What We Offer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌱</div>
+                    <h3 data-i18n="features.amenities.title">Amenity Rental</h3>
+                    <p data-i18n="features.amenities.description">Affordable rental of seeds, fertilizers, and equipment
+                        with flexible payment options</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛒</div>
+                    <h3 data-i18n="features.marketplace.title">Marketplace</h3>
+                    <p data-i18n="features.marketplace.description">Sell your crops directly and earn 25% rental
+                        discounts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 data-i18n="features.carbon.title">Carbon Credits</h3>
+                    <p data-i18n="features.carbon.description">Earn credits for sustainable farming and convert them to
+                        cash or discounts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3 data-i18n="features.group.title">Group Farming</h3>
+                    <p data-i18n="features.group.description">Form cooperatives for bulk discounts and shared resources
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 data-i18n="features.loans.title">Farmer Loans</h3>
+                    <p data-i18n="features.loans.description">Access financial assistance for farming supplies and
+                        equipment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+
+            <!-- Role Selection -->
+            <div class="auth-step" id="roleSelection">
+                <h2 class="modal-title" data-i18n="auth.chooseRole">Choose Your Role</h2>
+                <p class="modal-subtitle" data-i18n="auth.selectRole">Select how you want to join AgriSahay</p>
+                <div class="role-cards">
+                    <div class="role-card" data-role="farmer">
+                        <div class="role-icon">👨‍🌾</div>
+                        <h3 data-i18n="auth.farmer">Farmer</h3>
+                        <p data-i18n="auth.farmerDesc">Access rentals, marketplace, and cooperative features</p>
+                    </div>
+                    <div class="role-card" data-role="administrator">
+                        <div class="role-icon">👔</div>
+                        <h3 data-i18n="auth.admin">Administrator</h3>
+                        <p data-i18n="auth.adminDesc">Manage platform operations and user accounts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-step hidden" id="loginForm">
+                <button class="back-btn" id="backToRoleFromLogin" data-i18n="auth.back">← Back</button>
+                <h2 class="modal-title">Login as <span id="loginRoleText"></span></h2>
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail" data-i18n="auth.email">Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" data-i18n="auth.password">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Login</button>
+                </form>
+                <p class="form-footer">Don't have an account? <a href="#" id="switchToRegister">Register here</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-step hidden" id="registerForm">
+                <button class="back-btn" id="backToRoleFromRegister">← Back</button>
+                <h2 class="modal-title">Register as <span id="registerRoleText"></span></h2>
+                <form class="auth-form" id="registrationForm">
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input type="text" id="registerName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email Address</label>
+                        <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone">Phone Number</label>
+                        <input type="tel" id="registerPhone" placeholder="+91 1234567890" required>
+                    </div>
+
+                    <!-- Farmer-specific fields -->
+                    <div id="farmerFields" class="hidden">
+                        <div class="form-group">
+                            <label for="farmLocation">Farm Location</label>
+                            <input type="text" id="farmLocation" placeholder="Village, District, State">
+                        </div>
+                        <div class="form-group">
+                            <label for="farmSize">Farm Size (in acres)</label>
+                            <input type="number" id="farmSize" placeholder="e.g., 5" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="cropsGrown">Primary Crops Grown</label>
+                            <input type="text" id="cropsGrown" placeholder="e.g., Wheat, Rice, Cotton">
+                        </div>
+                    </div>
+
+                    <!-- Administrator-specific fields -->
+                    <div id="adminFields" class="hidden">
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <input type="text" id="department" placeholder="e.g., Operations, Support">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" placeholder="Create a strong password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span>I agree to the Terms & Conditions</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                </form>
+                <p class="form-footer">Already have an account? <a href="#" id="switchToLogin">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

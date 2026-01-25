@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funds & Financial Support - AgriSahay</title>
+    <meta name="description" content="Access loans, subsidies & financial help tailored for farmers">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/farmer-sidebar.css">
+    <link rel="stylesheet" href="../css/funds-styles.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Mobile Sidebar Toggle -->
+    <button class="mobile-sidebar-toggle" style="display: none;">☰</button>
+
+    <!-- Farmer Sidebar -->
+    <aside class="farmer-sidebar">
+        <button class="sidebar-toggle">◀</button>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="amenities.html" data-tooltip="Amenities"><span class="nav-icon">🌱</span><span
+                            class="nav-text" data-i18n="sidebar.amenities">Amenities</span></a></li>
+                <li><a href="carbon-credits.html" data-tooltip="Carbon Credits"><span class="nav-icon">🌍</span><span
+                            class="nav-text" data-i18n="sidebar.carbonCredits">Carbon Credits</span></a></li>
+                <li><a href="group-farming.html" data-tooltip="Group Farming"><span class="nav-icon">🤝</span><span
+                            class="nav-text" data-i18n="sidebar.groupFarming">Group Farming</span></a></li>
+                <li class="active"><a href="funds.html" data-tooltip="Funds & Loans"><span
+                            class="nav-icon">💰</span><span class="nav-text" data-i18n="sidebar.funds">Funds &
+                            Loans</span></a></li>
+                <li><a href="availability.html" data-tooltip="Availability"><span class="nav-icon">📅</span><span
+                            class="nav-text" data-i18n="sidebar.availability">Availability</span></a></li>
+                <li><a href="my-orders.html" data-tooltip="My Orders"><span class="nav-icon">📦</span><span
+                            class="nav-text" data-i18n="sidebar.myOrders">My Orders</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="header-actions">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="mr">मराठी</button>
+                </div>
+                <button class="icon-btn" id="notificationBtn" title="Notifications">
+                    🔔
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userMenuBtn">
+                        <span id="userInitials">F</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="funds-main main-content-with-sidebar">
+        <div class="funds-container">
+            <a href="./farmer-dashboard.html" class="back-link">← Back to Dashboard</a>
+
+            <!-- Page Title Section -->
+            <section class="page-title-section-main">
+                <h1 class="page-main-title">💰 Funds & Loans</h1>
+                <p class="page-main-subtitle">Apply for loans & financial aid</p>
+            </section>
+            <!-- Financial Snapshot -->
+            <section class="financial-snapshot">
+                <h2 class="section-title">Your Financial Overview</h2>
+                <div class="snapshot-grid">
+                    <div class="snapshot-card card-credit">
+                        <div class="snapshot-icon">💳</div>
+                        <div class="snapshot-content">
+                            <p class="snapshot-label">Available Credit Limit</p>
+                            <p class="snapshot-value">₹50,000</p>
+                        </div>
+                    </div>
+                    <div class="snapshot-card card-loans">
+                        <div class="snapshot-icon">📊</div>
+                        <div class="snapshot-content">
+                            <p class="snapshot-label">Active Loans</p>
+                            <p class="snapshot-value">1 Loan</p>
+                            <p class="snapshot-detail">₹15,000 outstanding</p>
+                        </div>
+                    </div>
+                    <div class="snapshot-card card-subsidies">
+                        <div class="snapshot-icon">🎯</div>
+                        <div class="snapshot-content">
+                            <p class="snapshot-label">Eligible Subsidies</p>
+                            <p class="snapshot-value">3 Schemes</p>
+                            <p class="snapshot-detail">Apply now</p>
+                        </div>
+                    </div>
+                    <div class="snapshot-card card-carbon">
+                        <div class="snapshot-icon">🌱</div>
+                        <div class="snapshot-content">
+                            <p class="snapshot-label">Carbon Credits</p>
+                            <p class="snapshot-value">450 Credits</p>
+                            <p class="snapshot-detail">= ₹4,500</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Primary Funds Options -->
+            <section class="primary-options">
+                <h2 class="section-title">Financial Services</h2>
+                <div class="options-grid">
+                    <div class="option-card" id="applyLoanCard">
+                        <div class="option-icon">🏦</div>
+                        <h3 class="option-title">Apply for Loan</h3>
+                        <p class="option-description">Low-interest, flexible repayment options</p>
+                        <span class="option-badge">No collateral required</span>
+                    </div>
+                    <div class="option-card" id="schemesCard">
+                        <div class="option-icon">🎯</div>
+                        <h3 class="option-title">Government Schemes</h3>
+                        <p class="option-description">Auto-matched subsidies based on your profile</p>
+                        <span class="option-badge badge-success">3 Available</span>
+                    </div>
+                    <div class="option-card" id="groupFundingCard">
+                        <div class="option-icon">🤝</div>
+                        <h3 class="option-title">Group Funding</h3>
+                        <p class="option-description">Loans for cooperative farming clusters</p>
+                        <span class="option-badge">Lower interest</span>
+                    </div>
+                    <div class="option-card" id="carbonCreditsCard">
+                        <div class="option-icon">🌱</div>
+                        <h3 class="option-title">Carbon Credit Earnings</h3>
+                        <p class="option-description">Convert credits to cash or discounts</p>
+                        <span class="option-badge badge-success">₹4,500 available</span>
+                    </div>
+                    <div class="option-card" id="loanStatusCard">
+                        <div class="option-icon">📋</div>
+                        <h3 class="option-title">Loan Status & Repayments</h3>
+                        <p class="option-description">Track ongoing loans and dues</p>
+                        <span class="option-badge badge-warning">1 Active</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Government Schemes Section -->
+            <section class="schemes-section" id="schemesSection">
+                <div class="section-header">
+                    <h2 class="section-title">🎯 Government Schemes & Subsidies</h2>
+                    <p class="section-subtitle">Auto-matched schemes based on your profile</p>
+                </div>
+                <div class="schemes-grid">
+                    <div class="scheme-card">
+                        <div class="scheme-header">
+                            <h3 class="scheme-name">PM-KISAN Scheme</h3>
+                            <span class="eligibility-badge badge-eligible">✓ Eligible</span>
+                        </div>
+                        <p class="scheme-benefit">₹6,000/year in 3 installments</p>
+                        <p class="scheme-description">Direct income support for all landholding farmers</p>
+                        <div class="scheme-requirements">
+                            <p class="requirements-title">Required Documents:</p>
+                            <ul class="requirements-list">
+                                <li>✓ Aadhaar Card</li>
+                                <li>✓ Land Records</li>
+                                <li>✓ Bank Account</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary">Apply Now</button>
+                    </div>
+                    <div class="scheme-card">
+                        <div class="scheme-header">
+                            <h3 class="scheme-name">Soil Health Card Scheme</h3>
+                            <span class="eligibility-badge badge-eligible">✓ Eligible</span>
+                        </div>
+                        <p class="scheme-benefit">Free soil testing & recommendations</p>
+                        <p class="scheme-description">Get detailed soil nutrient status and fertilizer recommendations
+                        </p>
+                        <div class="scheme-requirements">
+                            <p class="requirements-title">Required Documents:</p>
+                            <ul class="requirements-list">
+                                <li>✓ Land Records</li>
+                                <li>✓ Farmer ID</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary">Apply Now</button>
+                    </div>
+                    <div class="scheme-card">
+                        <div class="scheme-header">
+                            <h3 class="scheme-name">Crop Insurance Scheme</h3>
+                            <span class="eligibility-badge badge-eligible">✓ Eligible</span>
+                        </div>
+                        <p class="scheme-benefit">Up to 90% premium subsidy</p>
+                        <p class="scheme-description">Protection against crop loss due to natural calamities</p>
+                        <div class="scheme-requirements">
+                            <p class="requirements-title">Required Documents:</p>
+                            <ul class="requirements-list">
+                                <li>✓ Land Records</li>
+                                <li>✓ Crop Details</li>
+                                <li>✓ Bank Account</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary">Apply Now</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Group Funding Section -->
+            <section class="group-funding-section" id="groupFundingSection">
+                <div class="section-header">
+                    <h2 class="section-title">🤝 Group Farming Financial Benefits</h2>
+                    <p class="section-subtitle">Cooperative funding with better terms</p>
+                </div>
+                <div class="group-dashboard">
+                    <div class="group-info-card">
+                        <h3 class="group-name">Pune Farmers Cooperative</h3>
+                        <div class="group-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Members</span>
+                                <span class="stat-value">24</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Total Credit Limit</span>
+                                <span class="stat-value">₹12,00,000</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Your Share</span>
+                                <span class="stat-value">₹50,000</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Interest Rate</span>
+                                <span class="stat-value">6.5%</span>
+                                <span class="stat-discount">(-2% discount)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-benefits-card">
+                        <h3 class="benefits-title">Group Loan Benefits</h3>
+                        <ul class="benefits-list">
+                            <li>✓ Lower interest rates (6.5% vs 8.5%)</li>
+                            <li>✓ Higher loan limits</li>
+                            <li>✓ Shared liability reduces individual risk</li>
+                            <li>✓ Faster approval process</li>
+                            <li>✓ Bulk purchase discounts on inputs</li>
+                        </ul>
+                        <button class="btn btn-primary">Apply for Group Loan</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Carbon Credits Section -->
+            <section class="carbon-section" id="carbonSection">
+                <div class="section-header">
+                    <h2 class="section-title">🌱 Carbon Credit Wallet</h2>
+                    <p class="section-subtitle">Monetize your sustainable farming practices</p>
+                </div>
+                <div class="carbon-dashboard">
+                    <div class="carbon-balance-card">
+                        <div class="carbon-icon-large">🌱</div>
+                        <h3 class="carbon-balance-title">Total Carbon Credits</h3>
+                        <p class="carbon-balance-value">450 Credits</p>
+                        <p class="carbon-balance-money">= ₹4,500</p>
+                        <p class="carbon-rate">Current rate: ₹10 per credit</p>
+                    </div>
+                    <div class="carbon-actions-card">
+                        <h3 class="actions-title">Use Your Credits</h3>
+                        <div class="carbon-action-buttons">
+                            <button class="carbon-action-btn">
+                                <span class="action-icon">🏦</span>
+                                <span class="action-text">Withdraw to Bank</span>
+                            </button>
+                            <button class="carbon-action-btn">
+                                <span class="action-icon">🎫</span>
+                                <span class="action-text">Get Rental Discount</span>
+                            </button>
+                            <button class="carbon-action-btn">
+                                <span class="action-icon">💳</span>
+                                <span class="action-text">Pay Loan EMI</span>
+                            </button>
+                        </div>
+                        <div class="carbon-earnings-info">
+                            <p class="earnings-title">How to Earn More Credits:</p>
+                            <ul class="earnings-list">
+                                <li>🌾 Practice organic farming</li>
+                                <li>💧 Use drip irrigation</li>
+                                <li>🌳 Plant trees on farmland</li>
+                                <li>♻️ Reduce chemical fertilizer use</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loan Status & Repayment Section -->
+            <section class="repayment-section" id="repaymentSection">
+                <div class="section-header">
+                    <h2 class="section-title">📋 Active Loans & Repayments</h2>
+                    <p class="section-subtitle">Track and manage your loan obligations</p>
+                </div>
+                <div class="loans-grid">
+                    <div class="loan-card">
+                        <div class="loan-header">
+                            <div class="loan-type">
+                                <span class="loan-icon">🌾</span>
+                                <h3 class="loan-name">Seasonal Crop Loan</h3>
+                            </div>
+                            <span class="loan-status-badge badge-active">Active</span>
+                        </div>
+                        <div class="loan-details">
+                            <div class="loan-detail-row">
+                                <span class="detail-label">Loan Amount</span>
+                                <span class="detail-value">₹20,000</span>
+                            </div>
+                            <div class="loan-detail-row">
+                                <span class="detail-label">Amount Repaid</span>
+                                <span class="detail-value text-success">₹5,000</span>
+                            </div>
+                            <div class="loan-detail-row">
+                                <span class="detail-label">Outstanding</span>
+                                <span class="detail-value text-warning">₹15,000</span>
+                            </div>
+                            <div class="loan-detail-row">
+                                <span class="detail-label">Next Due Date</span>
+                                <span class="detail-value">15 Feb 2026</span>
+                            </div>
+                            <div class="loan-detail-row">
+                                <span class="detail-label">Next EMI</span>
+                                <span class="detail-value">₹5,000</span>
+                            </div>
+                        </div>
+                        <div class="loan-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%"></div>
+                            </div>
+                            <p class="progress-text">25% repaid</p>
+                        </div>
+                        <div class="loan-actions">
+                            <button class="btn btn-outline">View Details</button>
+                            <button class="btn btn-primary">Pay Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="repayment-options-info">
+                    <h3 class="repayment-title">💡 Flexible Repayment Options</h3>
+                    <div class="repayment-methods">
+                        <div class="method-card">
+                            <span class="method-icon">📱</span>
+                            <p class="method-name">UPI / Bank Transfer</p>
+                        </div>
+                        <div class="method-card">
+                            <span class="method-icon">🌾</span>
+                            <p class="method-name">Crop Produce Adjustment</p>
+                        </div>
+                        <div class="method-card">
+                            <span class="method-icon">🌱</span>
+                            <p class="method-name">Carbon Credits</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Financial Literacy Section -->
+            <section class="literacy-section">
+                <div class="section-header">
+                    <h2 class="section-title">🧠 Financial Literacy</h2>
+                    <p class="section-subtitle">Learn to make better financial decisions</p>
+                </div>
+                <div class="literacy-grid">
+                    <div class="literacy-card">
+                        <div class="literacy-icon">📊</div>
+                        <h3 class="literacy-title">Understanding Interest Rates</h3>
+                        <p class="literacy-description">Learn how interest is calculated and how to minimize costs</p>
+                        <button class="btn btn-outline btn-sm">Read More</button>
+                    </div>
+                    <div class="literacy-card">
+                        <div class="literacy-icon">🌾</div>
+                        <h3 class="literacy-title">Crop-Based Repayment</h3>
+                        <p class="literacy-description">How paying with produce can reduce your cash burden</p>
+                        <button class="btn btn-outline btn-sm">Read More</button>
+                    </div>
+                    <div class="literacy-card">
+                        <div class="literacy-icon">🤝</div>
+                        <h3 class="literacy-title">Benefits of Group Loans</h3>
+                        <p class="literacy-description">Why cooperative farming improves loan terms</p>
+                        <button class="btn btn-outline btn-sm">Read More</button>
+                    </div>
+                    <div class="literacy-card">
+                        <div class="literacy-icon">🌱</div>
+                        <h3 class="literacy-title">Maximizing Carbon Credits</h3>
+                        <p class="literacy-description">Sustainable practices that earn you money</p>
+                        <button class="btn btn-outline btn-sm">Read More</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Help & Support Section -->
+            <section class="support-section">
+                <div class="support-card">
+                    <h3 class="support-title">Need Help?</h3>
+                    <p class="support-description">Our financial advisors are here to assist you</p>
+                    <div class="support-options">
+                        <button class="support-btn">
+                            <span class="support-icon">💬</span>
+                            <span>Chat with Advisor</span>
+                        </button>
+                        <button class="support-btn">
+                            <span class="support-icon">📞</span>
+                            <span>Call Support</span>
+                        </button>
+                        <button class="support-btn">
+                            <span class="support-icon">📍</span>
+                            <span>Find Help Center</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="trust-indicators">
+                    <h3 class="trust-title">🔐 Trusted Partners</h3>
+                    <div class="partner-logos">
+                        <div class="partner-logo">SBI</div>
+                        <div class="partner-logo">NABARD</div>
+                        <div class="partner-logo">PM-KISAN</div>
+                        <div class="partner-logo">HDFC Bank</div>
+                    </div>
+                    <p class="trust-message">✓ Transparent rates • No hidden charges • Secure transactions</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Loan Application Modal -->
+    <div class="modal hidden" id="loanModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Apply for Loan</h2>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Step 1: Loan Type Selection -->
+                <div class="loan-step active" id="step1">
+                    <h3 class="step-title">Select Loan Type</h3>
+                    <div class="loan-types-grid">
+                        <div class="loan-type-card" data-type="seasonal">
+                            <div class="loan-type-icon">🌾</div>
+                            <h4 class="loan-type-name">Seasonal Crop Loan</h4>
+                            <p class="loan-type-desc">For seeds, fertilizers & crop cultivation</p>
+                        </div>
+                        <div class="loan-type-card" data-type="equipment">
+                            <div class="loan-type-icon">🚜</div>
+                            <h4 class="loan-type-name">Equipment Rental Loan</h4>
+                            <p class="loan-type-desc">For machinery & equipment needs</p>
+                        </div>
+                        <div class="loan-type-card" data-type="emergency">
+                            <div class="loan-type-icon">⚡</div>
+                            <h4 class="loan-type-name">Emergency Loan</h4>
+                            <p class="loan-type-desc">Quick approval for urgent needs</p>
+                        </div>
+                        <div class="loan-type-card" data-type="group">
+                            <div class="loan-type-icon">🤝</div>
+                            <h4 class="loan-type-name">Group Farming Loan</h4>
+                            <p class="loan-type-desc">Cooperative loans with lower rates</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Application Form -->
+                <div class="loan-step hidden" id="step2">
+                    <h3 class="step-title">Loan Application</h3>
+                    <form class="loan-form" id="loanForm">
+                        <div class="form-group">
+                            <label class="form-label">Loan Amount</label>
+                            <div class="slider-container">
+                                <input type="range" class="loan-slider" id="loanAmount" min="5000" max="100000"
+                                    step="5000" value="20000">
+                                <div class="slider-value">₹<span id="loanAmountValue">20,000</span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Purpose</label>
+                            <select class="form-select" id="loanPurpose">
+                                <option value="">Select purpose</option>
+                                <option value="seeds">Seeds Purchase</option>
+                                <option value="fertilizers">Fertilizers</option>
+                                <option value="equipment">Equipment Rental</option>
+                                <option value="irrigation">Irrigation Setup</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Repayment Mode</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="repaymentMode" value="cash" checked>
+                                    <span>Cash Only</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="repaymentMode" value="cash-crop">
+                                    <span>Cash + Crop Produce</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="repaymentMode" value="cash-carbon">
+                                    <span>Cash + Carbon Credits</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Repayment Timeline</label>
+                            <select class="form-select" id="repaymentTimeline">
+                                <option value="harvest">After Harvest</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="seasonal">Seasonal</option>
+                            </select>
+                        </div>
+                        <div class="auto-fetched-info">
+                            <h4 class="info-title">Auto-Fetched Information</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Land Size</span>
+                                    <span class="info-value">5 acres</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Crop Type</span>
+                                    <span class="info-value">Wheat</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Past Yield</span>
+                                    <span class="info-value">Good</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Platform Score</span>
+                                    <span class="info-value">⭐ 4.5/5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Eligibility Check -->
+                <div class="loan-step hidden" id="step3">
+                    <h3 class="step-title">Eligibility Assessment</h3>
+                    <div class="eligibility-container">
+                        <div class="eligibility-meter">
+                            <div class="meter-label">Approval Probability</div>
+                            <div class="meter-bar">
+                                <div class="meter-fill meter-high" style="width: 85%"></div>
+                            </div>
+                            <div class="meter-status">
+                                <span class="status-icon">🟢</span>
+                                <span class="status-text">High Chance of Approval (85%)</span>
+                            </div>
+                        </div>
+                        <div class="eligibility-details">
+                            <h4 class="details-title">Assessment Factors</h4>
+                            <ul class="factors-list">
+                                <li class="factor-item factor-positive">✓ Good credit history</li>
+                                <li class="factor-item factor-positive">✓ Active platform user</li>
+                                <li class="factor-item factor-positive">✓ Verified land ownership</li>
+                                <li class="factor-item factor-positive">✓ Part of farming cooperative</li>
+                            </ul>
+                        </div>
+                        <div class="approval-timeline">
+                            <h4 class="timeline-title">Expected Timeline</h4>
+                            <p class="timeline-text">📅 Approval within <strong>2-3 business days</strong></p>
+                            <p class="timeline-text">💰 Funds disbursed within <strong>5 business days</strong></p>
+                        </div>
+                        <div class="loan-summary">
+                            <h4 class="summary-title">Loan Summary</h4>
+                            <div class="summary-details">
+                                <div class="summary-row">
+                                    <span>Loan Amount:</span>
+                                    <span class="summary-value">₹<span id="summaryAmount">20,000</span></span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Interest Rate:</span>
+                                    <span class="summary-value">6.5% p.a.</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Processing Fee:</span>
+                                    <span class="summary-value">₹0 (Waived)</span>
+                                </div>
+                                <div class="summary-row summary-total">
+                                    <span>Total Payable:</span>
+                                    <span class="summary-value">₹<span id="summaryTotal">21,300</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="prevStepBtn">Previous</button>
+                <button class="btn btn-primary" id="nextStepBtn">Next</button>
+                <button class="btn btn-primary hidden" id="submitLoanBtn">Submit Application</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/i18n.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/funds.js"></script>
+</body>
+
+</html>
