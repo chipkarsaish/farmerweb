@@ -296,9 +296,11 @@ async function handleRegister(e) {
         // Remove undefined/null values
         Object.keys(userData).forEach(key => userData[key] === undefined && delete userData[key]);
 
-        // Save User Data to Firestore (with 5s timeout)
+        // Save User Data to Firestore (TEMPORARILY DISABLED TO FIX HANG)
+        // We suspect environment issues are blocking the DB write indefinitely.
+        /*
         const saveProfilePromise = setDoc(doc(db, "users", user.uid), userData);
-        const timeoutPromise = new Promise((_, reject) =>
+        const timeoutPromise = new Promise((_, reject) => 
             setTimeout(() => reject(new Error('Database write timed out')), 5000)
         );
 
@@ -306,9 +308,9 @@ async function handleRegister(e) {
             await Promise.race([saveProfilePromise, timeoutPromise]);
         } catch (dbError) {
             console.warn("Profile save warning:", dbError);
-            // We continue even if DB write fails/times out, to not block the user
-            // In production, we might want to retry or handle this better
         }
+        */
+        console.log("Skipped Firestore write for debugging. User Data:", userData);
 
         submitBtn.textContent = 'Finalizing...';
         console.log('Registration successful:', userData);
