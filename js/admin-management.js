@@ -36,29 +36,36 @@ window.toggleDrawer = function (show, name = '', id = '', role = '', crop = '', 
 }
 
 async function fetchFarmers() {
+    console.log("Starting fetchFarmers...");
     try {
-        farmerTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Loading farmers...</td></tr>';
+        if (!farmerTableBody) {
+            console.error("Critical Error: farmerTableBody element not found!");
+            return;
+        }
 
+        farmerTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Loading farmers from Firestore...</td></tr>';
+
+        console.log("Querying users collection where role == 'farmer'...");
         const q = query(collection(db, "users"), where("role", "==", "farmer"));
         const querySnapshot = await getDocs(q);
 
+        console.log(`Query completed. Documents found: ${querySnapshot.size}`);
         farmerTableBody.innerHTML = ''; // Clear loading message
 
         if (querySnapshot.empty) {
-            farmerTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No farmers found.</td></tr>';
+            console.warn("No farmers found matching the query.");
+            farmerTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No farmers found in the database.</td></tr>';
             return;
         }
 
         querySnapshot.forEach((doc) => {
             const data = doc.data();
+            console.log("Processing doc:", doc.id, data);
+
             const row = document.createElement('tr');
 
             // Format ID for display (first 6 chars)
             const displayId = data.uid ? '#' + data.uid.substring(0, 6).toUpperCase() : '#UNKNOWN';
-
-            // Determine status badge (mock logic for now, or use data.status if available)
-            // Defaulting to "Verified" for UI consistency
-            const statusBadge = `<span class="badge success">Verified</span>`;
 
             row.innerHTML = `
                 <td><strong>${data.name || 'Unknown Name'}</strong></td>
@@ -83,7 +90,17 @@ async function fetchFarmers() {
 
     } catch (error) {
         console.error("Error fetching farmers:", error);
-        farmerTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Error loading data: ${error.message}</td></tr>`;
+
+        let errorMsg = `Error loading data: ${error.message}`;
+        if (error.code === 'permission-denied' || error.message.includes('permission-denied')) {
+            errorMsg = `<strong>Permission Denied</strong><br>
+            1. Check Firestore Rules (allow read/write).<br>
+            2. Ensure you are logged in (if rules require auth).`;
+        } else if (error.code === 'unavailable') {
+            errorMsg = `<strong>Network Error</strong><br>Check your internet connection or Firestore quotas.`;
+        }
+
+        farmerTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; padding:20px; line-height:1.5;">${errorMsg}</td></tr>`;
     }
 }
 
