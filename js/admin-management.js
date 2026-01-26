@@ -1,4 +1,4 @@
-import { db } from '../firebase-config.js';
+import { db } from './firebase-config.js';
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 const farmerTableBody = document.getElementById('farmerTableBody');
@@ -63,9 +63,9 @@ async function fetchFarmers() {
             row.innerHTML = `
                 <td><strong>${data.name || 'Unknown Name'}</strong></td>
                 <td>${displayId}</td>
-                <td>${data.role || 'Farmer'}</td>
+                <td>${data.farmlocation || 'N/A'}</td>
                 <td>${data.crop || 'N/A'}</td>
-                <td>${statusBadge}</td>
+                <td>${data.phone || 'N/A'}</td>
                 <td>
                     <button class="view-btn" onclick="toggleDrawer(
                         true, 
