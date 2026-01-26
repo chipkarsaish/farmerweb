@@ -254,24 +254,7 @@
                     </tr>
                 </thead>
                 <tbody id="farmerTableBody">
-                    <tr>
-                        <td><strong>Rajesh Kumar</strong></td>
-                        <td>#FC-9921</td>
-                        <td>Individual</td>
-                        <td>Wheat, Corn</td>
-                        <td><span class="badge success">Verified</span></td>
-                        <td><button class="view-btn" onclick="toggleDrawer(true, 'Rajesh Kumar', '#FC-9921')">View
-                                Details</button></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Lakeside Coop</strong></td>
-                        <td>#GP-4402</td>
-                        <td>Group</td>
-                        <td>Rice, Soy</td>
-                        <td><span class="badge warning">Pending</span></td>
-                        <td><button class="view-btn" onclick="toggleDrawer(true, 'Lakeside Coop', '#GP-4402')">View
-                                Details</button></td>
-                    </tr>
+                    <!-- Data will be loaded dynamically via JS -->
                 </tbody>
             </table>
         </section>
@@ -294,27 +277,22 @@
         </div>
     </div>
 
-    <script>
-        function toggleDrawer(show, name = '', id = '') {
-            const drawer = document.getElementById('profileDrawer');
-            if (show) {
-                document.getElementById('pName').innerText = name;
-                document.getElementById('pID').innerText = "ID: " + id;
-                drawer.classList.add('active');
-            } else {
-                drawer.classList.remove('active');
+    <!-- Firebase Import Map - Ensure this path is correct relative to this file location -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+                "firebase/analytics": "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"
             }
         }
+    </script>
 
-        // Search Logic
-        document.getElementById('farmerSearch').addEventListener('keyup', function () {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll("#farmerTableBody tr");
-            rows.forEach(row => {
-                row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
-            });
-        });
+    <!-- Custom Logic -->
+    <script type="module" src="../../js/admin-management.js"></script>
 
+    <script>
         // Logout function
         function handleLogout(event) {
             event.preventDefault();
