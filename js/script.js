@@ -12,6 +12,7 @@ import {
     setDoc,
     getDoc
 } from "firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
 
 // Modal and Authentication State Management
 let currentAuthMode = 'login'; // 'login' or 'register'
@@ -265,9 +266,9 @@ async function handleRegister(e) {
 
     if (selectedRole === 'farmer') {
         roleSpecificData = {
-            farmLocation: document.getElementById('farmLocation')?.value || '',
-            farmSize: document.getElementById('farmSize')?.value || '',
-            cropsGrown: document.getElementById('cropsGrown')?.value || ''
+            farmlocation: document.getElementById('farmLocation')?.value || '',
+            farmsize: document.getElementById('farmSize')?.value || '',
+            crop: document.getElementById('cropsGrown')?.value || ''
         };
     } else if (selectedRole === 'administrator') {
         roleSpecificData = {
@@ -281,6 +282,8 @@ async function handleRegister(e) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
+
+
         submitBtn.textContent = 'Saving Profile...';
         // Prepare User Data for Firestore
         const userData = {
@@ -289,28 +292,17 @@ async function handleRegister(e) {
             name: name,
             email: email,
             phone: phone,
-            registrationTime: new Date().toISOString(),
+            createdAt: serverTimestamp(), // Changed to createdAt and using Date object (Firestore handles it well, or use toISOString if preferred string format)
             ...roleSpecificData
         };
 
         // Remove undefined/null values
         Object.keys(userData).forEach(key => userData[key] === undefined && delete userData[key]);
 
-        // Save User Data to Firestore (TEMPORARILY DISABLED TO FIX HANG)
-        // We suspect environment issues are blocking the DB write indefinitely.
-        /*
-        const saveProfilePromise = setDoc(doc(db, "users", user.uid), userData);
-        const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Database write timed out')), 5000)
-        );
+        // Save User Data to Firestore
+        await setDoc(doc(db, "users", user.uid), userData);
 
-        try {
-            await Promise.race([saveProfilePromise, timeoutPromise]);
-        } catch (dbError) {
-            console.warn("Profile save warning:", dbError);
-        }
-        */
-        console.log("Skipped Firestore write for debugging. User Data:", userData);
+        console.log("Firestore write successful. User Data:", userData);
 
         submitBtn.textContent = 'Finalizing...';
         console.log('Registration successful:', userData);
