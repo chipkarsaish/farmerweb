@@ -30,6 +30,16 @@
     padding: var(--spacing-md) 0;
 }
 
+/* Top Actions Container */
+.top-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 .back-link {
     color: var(--primary-green);
     text-decoration: none;
@@ -43,6 +53,38 @@
 .back-link:hover {
     color: var(--primary-green-light);
     transform: translateX(-4px);
+}
+
+/* Rent Out Button */
+.btn-rent-out {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary-green), #059669);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-rent-out:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669, var(--primary-green));
+}
+
+.btn-rent-out:active {
+    transform: translateY(0);
+}
+
+.btn-rent-out .btn-icon {
+    font-size: 1.2rem;
 }
 
 .header-main {

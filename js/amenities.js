@@ -28,6 +28,7 @@ const amenitiesGrid = document.getElementById("amenitiesGrid");
 const loadMoreBtn = document.getElementById("loadMoreBtn");
 const incentiveClose = document.querySelector(".incentive-close");
 const langBtns = document.querySelectorAll(".lang-btn");
+const rentOutBtn = document.getElementById("rentOutBtn");
 
 // ===============================
 // Init
@@ -104,6 +105,10 @@ function setupEventListeners() {
             langBtns.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
         });
+    });
+
+    rentOutBtn?.addEventListener("click", () => {
+        window.location.href = "your-rented-items.html";
     });
 }
 

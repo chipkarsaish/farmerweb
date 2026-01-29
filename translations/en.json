@@ -123,6 +123,7 @@
   "amenities": {
     "pageTitle": "\ud83c\udf31 Amenities Rental",
     "pageSubtitle": "Rent seeds, fertilizers \u0026 equipment at affordable rates",
+    "rentOutItems": "Rent out your items",
     "incentive": {
       "specialOffer": "Special Offer:",
       "discount": "Sell crops via marketplace \u0026 get",
@@ -201,5 +202,72 @@
     "error": "An error occurred",
     "success": "Success!",
     "backToDashboard": "Back to Dashboard"
+  },
+  "rentalItems": {
+    "backToAmenities": "← Back to Amenities",
+    "pageTitle": "📦 Your Rented Items",
+    "pageSubtitle": "Manage your rental listings and track earnings",
+    "stats": {
+      "totalListings": "Total Listings",
+      "activeRentals": "Active Rentals",
+      "totalEarnings": "Total Earnings",
+      "avgRating": "Avg Rating"
+    },
+    "addNewItem": "Add New Item",
+    "viewAll": "All Items",
+    "viewActive": "Active",
+    "viewRented": "Rented Out",
+    "viewInactive": "Inactive",
+    "emptyTitle": "No items listed yet",
+    "emptyMessage": "Start earning by listing your farming items for rent",
+    "addFirstItem": "Add Your First Item",
+    "modal": {
+      "title": "List Your Item for Rent",
+      "subtitle": "Fill in the details to create your rental listing",
+      "section1": "Basic Item Information",
+      "section2": "Pricing & Rental Terms",
+      "section3": "Condition & Logistics",
+      "section4": "Verification & Ownership",
+      "itemName": "Item Name",
+      "category": "Category",
+      "season": "Best Season",
+      "description": "Description",
+      "cropCompatibility": "Primary Crop Compatibility",
+      "crops": {
+        "wheat": "Wheat",
+        "rice": "Rice",
+        "cotton": "Cotton",
+        "sugarcane": "Sugarcane",
+        "vegetables": "Vegetables",
+        "all": "All Crops"
+      },
+      "rentalRate": "Rental Rate (₹)",
+      "priceUnit": "Price Unit",
+      "paymentModes": "Payment Modes Accepted",
+      "payment": {
+        "cash": "💰 Cash/Digital Payment",
+        "produce": "🌾 Produce Adjustment"
+      },
+      "securityDeposit": "Security Deposit (₹)",
+      "depositHint": "Optional refundable amount",
+      "condition": "Item Condition",
+      "photos": "Item Photos",
+      "uploadPhotos": "Upload Photos",
+      "photoHint": "Upload up to 5 high-quality images",
+      "pickupLocation": "Pickup Location",
+      "useMyLocation": "Use My Farm Location",
+      "availableFrom": "Available From",
+      "availableUntil": "Available Until",
+      "ownershipType": "Ownership Type",
+      "ownership": {
+        "individual": "Individual",
+        "group": "Group/Cooperative"
+      },
+      "verificationDocs": "Verification Documents",
+      "uploadDocs": "Upload Documents",
+      "docsHint": "Optional: Purchase receipts, maintenance logs (Get \"Verified\" badge)",
+      "cancel": "Cancel",
+      "submit": "List Item for Rent"
+    }
   }
 }

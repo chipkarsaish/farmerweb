@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Rented Items - AgriSahay</title>
+    <meta name="description" content="Manage your rental listings and earnings">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/farmer-sidebar.css">
+    <link rel="stylesheet" href="../css/your-rented-items-styles.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
+</head>
+
+<body class="rental-items-body">
+    <!-- Mobile Sidebar Toggle -->
+    <button class="mobile-sidebar-toggle" style="display: none;">☰</button>
+
+    <!-- Farmer Sidebar -->
+    <aside class="farmer-sidebar">
+        <button class="sidebar-toggle">◀</button>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="amenities.html" data-tooltip="Amenities"><span class="nav-icon">🌱</span><span
+                            class="nav-text" data-i18n="sidebar.amenities">Amenities</span></a></li>
+                <li><a href="carbon-credits.html" data-tooltip="Carbon Credits"><span class="nav-icon">🌍</span><span
+                            class="nav-text" data-i18n="sidebar.carbonCredits">Carbon Credits</span></a></li>
+                <li><a href="group-farming.html" data-tooltip="Group Farming"><span class="nav-icon">🤝</span><span
+                            class="nav-text" data-i18n="sidebar.groupFarming">Group Farming</span></a></li>
+                <li><a href="funds.html" data-tooltip="Funds & Loans"><span class="nav-icon">💰</span><span
+                            class="nav-text" data-i18n="sidebar.funds">Funds & Loans</span></a></li>
+                <li><a href="availability.html" data-tooltip="Availability"><span class="nav-icon">📅</span><span
+                            class="nav-text" data-i18n="sidebar.availability">Availability</span></a></li>
+                <li><a href="my-orders.html" data-tooltip="My Orders"><span class="nav-icon">📦</span><span
+                            class="nav-text" data-i18n="sidebar.myOrders">My Orders</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="header-actions">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="mr">मराठी</button>
+                </div>
+                <button class="icon-btn" id="notificationBtn" title="Notifications">
+                    🔔
+                    <span class="notification-badge">2</span>
+                </button>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userMenuBtn">
+                        <span id="userInitials">F</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="rental-items-main main-content-with-sidebar">
+        <div class="rental-items-container">
+            <a href="./amenities.html" class="back-link" data-i18n="rentalItems.backToAmenities">← Back to
+                Amenities</a>
+
+            <!-- Page Title Section -->
+            <section class="page-title-section-main">
+                <h1 class="page-main-title" data-i18n="rentalItems.pageTitle">📦 Your Rented Items</h1>
+                <p class="page-main-subtitle" data-i18n="rentalItems.pageSubtitle">Manage your rental listings and
+                    track earnings</p>
+            </section>
+
+            <!-- Stats Overview -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-content">
+                        <h3 class="stat-value" id="totalListings">0</h3>
+                        <p class="stat-label" data-i18n="rentalItems.stats.totalListings">Total Listings</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3 class="stat-value" id="activeRentals">0</h3>
+                        <p class="stat-label" data-i18n="rentalItems.stats.activeRentals">Active Rentals</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <h3 class="stat-value">₹<span id="totalEarnings">0</span></h3>
+                        <p class="stat-label" data-i18n="rentalItems.stats.totalEarnings">Total Earnings</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-content">
+                        <h3 class="stat-value" id="avgRating">0.0</h3>
+                        <p class="stat-label" data-i18n="rentalItems.stats.avgRating">Avg Rating</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Bar -->
+            <section class="action-bar">
+                <button class="btn-add-item" id="addItemBtn">
+                    <span class="btn-icon">➕</span>
+                    <span data-i18n="rentalItems.addNewItem">Add New Item</span>
+                </button>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="all">
+                        <span data-i18n="rentalItems.viewAll">All Items</span>
+                    </button>
+                    <button class="view-btn" data-view="active">
+                        <span data-i18n="rentalItems.viewActive">Active</span>
+                    </button>
+                    <button class="view-btn" data-view="rented">
+                        <span data-i18n="rentalItems.viewRented">Rented Out</span>
+                    </button>
+                    <button class="view-btn" data-view="inactive">
+                        <span data-i18n="rentalItems.viewInactive">Inactive</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Items Grid -->
+            <section class="items-section">
+                <div class="items-grid" id="itemsGrid">
+                    <!-- Items will be dynamically loaded here -->
+                </div>
+                <div class="empty-state hidden" id="emptyState">
+                    <div class="empty-icon">📦</div>
+                    <h3 data-i18n="rentalItems.emptyTitle">No items listed yet</h3>
+                    <p data-i18n="rentalItems.emptyMessage">Start earning by listing your farming items for rent</p>
+                    <button class="btn-primary" id="emptyAddBtn">
+                        <span data-i18n="rentalItems.addFirstItem">Add Your First Item</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Add/Edit Item Modal -->
+    <div class="modal hidden" id="itemModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content-large">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2 class="modal-title" data-i18n="rentalItems.modal.title">List Your Item for Rent</h2>
+            <p class="modal-subtitle" data-i18n="rentalItems.modal.subtitle">Fill in the details to create your rental
+                listing</p>
+
+            <form class="listing-form" id="listingForm">
+                <!-- Section 1: Basic Item Information -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <span class="section-number">1</span>
+                        <span data-i18n="rentalItems.modal.section1">Basic Item Information</span>
+                    </h3>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="itemName" data-i18n="rentalItems.modal.itemName">Item Name *</label>
+                            <input type="text" id="itemName" placeholder="e.g., Mahindra 575 Tractor" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="category" data-i18n="rentalItems.modal.category">Category *</label>
+                            <select id="category" required>
+                                <option value="">Select category</option>
+                                <option value="seeds">🌱 Seeds</option>
+                                <option value="fertilizers">🧪 Fertilizers</option>
+                                <option value="machinery">🚜 Machinery</option>
+                                <option value="irrigation">💧 Irrigation</option>
+                                <option value="organic">♻️ Organic</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="season" data-i18n="rentalItems.modal.season">Best Season</label>
+                            <select id="season">
+                                <option value="all">All Seasons</option>
+                                <option value="kharif">Kharif</option>
+                                <option value="rabi">Rabi</option>
+                                <option value="zaid">Zaid</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="description" data-i18n="rentalItems.modal.description">Description *</label>
+                            <textarea id="description" rows="4"
+                                placeholder="Describe the item, its features, and usage instructions..."
+                                required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="rentalItems.modal.cropCompatibility">Primary Crop Compatibility</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="crops" value="wheat">
+                                <span data-i18n="rentalItems.modal.crops.wheat">Wheat</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="crops" value="rice">
+                                <span data-i18n="rentalItems.modal.crops.rice">Rice</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="crops" value="cotton">
+                                <span data-i18n="rentalItems.modal.crops.cotton">Cotton</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="crops" value="sugarcane">
+                                <span data-i18n="rentalItems.modal.crops.sugarcane">Sugarcane</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="crops" value="vegetables">
+                                <span data-i18n="rentalItems.modal.crops.vegetables">Vegetables</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="crops" value="all">
+                                <span data-i18n="rentalItems.modal.crops.all">All Crops</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Pricing & Rental Terms -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <span class="section-number">2</span>
+                        <span data-i18n="rentalItems.modal.section2">Pricing & Rental Terms</span>
+                    </h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rentalRate" data-i18n="rentalItems.modal.rentalRate">Rental Rate (₹) *</label>
+                            <input type="number" id="rentalRate" placeholder="500" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="priceUnit" data-i18n="rentalItems.modal.priceUnit">Price Unit *</label>
+                            <select id="priceUnit" required>
+                                <option value="day">Per Day</option>
+                                <option value="week">Per Week</option>
+                                <option value="season">Per Season</option>
+                                <option value="kg">Per Kg</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="rentalItems.modal.paymentModes">Payment Modes Accepted *</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="payment" value="cash" checked>
+                                <span data-i18n="rentalItems.modal.payment.cash">💰 Cash/Digital Payment</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="payment" value="produce">
+                                <span data-i18n="rentalItems.modal.payment.produce">🌾 Produce Adjustment</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="securityDeposit" data-i18n="rentalItems.modal.securityDeposit">Security Deposit
+                                (₹)</label>
+                            <input type="number" id="securityDeposit" placeholder="1000" min="0">
+                            <small class="form-hint" data-i18n="rentalItems.modal.depositHint">Optional refundable
+                                amount</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Condition & Logistics -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <span class="section-number">3</span>
+                        <span data-i18n="rentalItems.modal.section3">Condition & Logistics</span>
+                    </h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="condition" data-i18n="rentalItems.modal.condition">Item Condition *</label>
+                            <select id="condition" required>
+                                <option value="">Select condition</option>
+                                <option value="new">Brand New</option>
+                                <option value="excellent">Excellent</option>
+                                <option value="good">Good</option>
+                                <option value="fair">Needs Minor Repair</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photos" data-i18n="rentalItems.modal.photos">Item Photos</label>
+                        <div class="photo-upload-container">
+                            <input type="file" id="photos" accept="image/*" multiple hidden>
+                            <button type="button" class="btn-upload" id="uploadPhotosBtn">
+                                <span>📷</span>
+                                <span data-i18n="rentalItems.modal.uploadPhotos">Upload Photos</span>
+                            </button>
+                            <small class="form-hint" data-i18n="rentalItems.modal.photoHint">Upload up to 5 high-quality
+                                images</small>
+                        </div>
+                        <div class="photo-preview-grid" id="photoPreview"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pickupLocation" data-i18n="rentalItems.modal.pickupLocation">Pickup Location
+                            *</label>
+                        <div class="location-input-group">
+                            <input type="text" id="pickupLocation" placeholder="Village, Taluka, District" required>
+                            <button type="button" class="btn-secondary" id="useMyLocationBtn">
+                                <span>📍</span>
+                                <span data-i18n="rentalItems.modal.useMyLocation">Use My Farm Location</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="availabilityStart" data-i18n="rentalItems.modal.availableFrom">Available From
+                                *</label>
+                            <input type="date" id="availabilityStart" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="availabilityEnd" data-i18n="rentalItems.modal.availableUntil">Available Until
+                                *</label>
+                            <input type="date" id="availabilityEnd" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Verification & Ownership -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <span class="section-number">4</span>
+                        <span data-i18n="rentalItems.modal.section4">Verification & Ownership</span>
+                    </h3>
+
+                    <div class="form-group">
+                        <label data-i18n="rentalItems.modal.ownershipType">Ownership Type *</label>
+                        <div class="toggle-group">
+                            <label class="toggle-option">
+                                <input type="radio" name="ownershipType" value="individual" checked>
+                                <span class="toggle-label">
+                                    <span class="toggle-icon">👤</span>
+                                    <span data-i18n="rentalItems.modal.ownership.individual">Individual</span>
+                                </span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="radio" name="ownershipType" value="group">
+                                <span class="toggle-label">
+                                    <span class="toggle-icon">👥</span>
+                                    <span data-i18n="rentalItems.modal.ownership.group">Group/Cooperative</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="verificationDocs" data-i18n="rentalItems.modal.verificationDocs">Verification
+                            Documents</label>
+                        <div class="photo-upload-container">
+                            <input type="file" id="verificationDocs" accept=".pdf,.jpg,.jpeg,.png" multiple hidden>
+                            <button type="button" class="btn-upload" id="uploadDocsBtn">
+                                <span>📄</span>
+                                <span data-i18n="rentalItems.modal.uploadDocs">Upload Documents</span>
+                            </button>
+                            <small class="form-hint" data-i18n="rentalItems.modal.docsHint">Optional: Purchase receipts,
+                                maintenance logs (Get "Verified" badge)</small>
+                        </div>
+                        <div class="docs-preview" id="docsPreview"></div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn-outline" id="cancelBtn"
+                        data-i18n="rentalItems.modal.cancel">Cancel</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span data-i18n="rentalItems.modal.submit">List Item for Rent</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Import Map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+                "firebase/analytics": "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js",
+                "firebase/storage": "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"
+            }
+        }
+    </script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/farmer-sidebar.js"></script>
+    <script type="module" src="../js/your-rented-items.js"></script>
+</body>
+
+</html>
