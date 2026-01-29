@@ -4,7 +4,7 @@
 // ===============================
 
 import { db } from "./firebase-config.js";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 
 // ===============================
 // State
@@ -104,6 +104,70 @@ function setupEventListeners() {
             langBtns.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
         });
+    });
+
+    // Rent Product Form Logic
+    const rentProductBtn = document.getElementById("rentProductBtn");
+    const rentProductFormContainer = document.getElementById("rentProductFormContainer");
+    const rentProductForm = document.getElementById("rentProductForm");
+
+    rentProductBtn?.addEventListener("click", () => {
+        rentProductFormContainer.classList.toggle("hidden");
+        // Update button text accordingly (optional)
+        const btnText = rentProductFormContainer.classList.contains("hidden")
+            ? '<span>➕</span> <span data-i18n="amenities.rent.button">Rent Out Your Product</span>'
+            : '<span>➖</span> <span data-i18n="amenities.rent.cancel">Cancel Rental Listing</span>';
+        rentProductBtn.innerHTML = btnText;
+    });
+
+    rentProductForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById("submitRentBtn");
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+
+        try {
+            // Collect form data
+            const paymentOptions = [];
+            document.querySelectorAll('input[name="rentPayment"]:checked').forEach(cb => {
+                paymentOptions.push(cb.value);
+            });
+
+            const newItem = {
+                name: document.getElementById("rentName").value,
+                category: document.getElementById("rentCategory").value,
+                crops: document.getElementById("rentCrops").value,
+                supplier: document.getElementById("rentSupplier").value,
+                price: Number(document.getElementById("rentPrice").value),
+                priceUnit: document.getElementById("rentPriceUnit").value,
+                season: document.getElementById("rentSeason").value,
+                availability: document.getElementById("rentAvailability").value,
+                image: document.getElementById("rentImage").value || "assets/placeholder.jpg",
+                paymentOptions: paymentOptions,
+                rating: Number(document.getElementById("rentRating").value) || 0,
+                createdAt: new Date().toISOString() // Or serverTimestamp() if imported
+            };
+
+            await addDoc(collection(db, "amenities"), newItem);
+
+            alert("✅ Rental item listed successfully!");
+            rentProductForm.reset();
+            rentProductFormContainer.classList.add("hidden");
+            rentProductBtn.innerHTML = '<span>➕</span> <span data-i18n="amenities.rent.button">Rent Out Your Product</span>';
+
+            // Refresh list
+            await fetchAmenitiesFromFirebase();
+            renderAmenities();
+
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            alert("❌ Failed to list item. Please try again.");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     });
 }
 
