@@ -1,6 +1,6 @@
 // ===============================
 // Amenities Page JavaScript
-// Firebase Powered
+// Firebase Powered (FINAL)
 // ===============================
 
 import { db } from "./firebase-config.js";
@@ -45,13 +45,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function fetchAmenitiesFromFirebase() {
     try {
         const snapshot = await getDocs(collection(db, "amenities"));
+
         amenitiesData = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
         }));
-        console.log("Amenities loaded:", amenitiesData.length);
+
+        console.log("✅ Amenities loaded:", amenitiesData.length);
     } catch (error) {
-        console.error("Error fetching amenities:", error);
+        console.error("❌ Firestore fetch failed:", error);
+        amenitiesGrid.innerHTML = "<p class='empty-msg'>Failed to load amenities</p>";
     }
 }
 
@@ -70,24 +73,24 @@ function setupEventListeners() {
         });
     });
 
-    filterToggleBtn.addEventListener("click", () => {
+    filterToggleBtn?.addEventListener("click", () => {
         filterPanel.classList.toggle("hidden");
     });
 
-    applyFilterBtn.addEventListener("click", () => {
+    applyFilterBtn?.addEventListener("click", () => {
         applyFilters();
         filterPanel.classList.add("hidden");
     });
 
-    cancelFilterBtn.addEventListener("click", () => {
+    cancelFilterBtn?.addEventListener("click", () => {
         filterPanel.classList.add("hidden");
     });
 
-    clearFiltersBtn.addEventListener("click", clearAllFilters);
+    clearFiltersBtn?.addEventListener("click", clearAllFilters);
 
-    searchInput.addEventListener("input", debounce(renderAmenities, 300));
+    searchInput?.addEventListener("input", debounce(renderAmenities, 300));
 
-    loadMoreBtn.addEventListener("click", () => {
+    loadMoreBtn?.addEventListener("click", () => {
         displayedItems += 8;
         renderAmenities();
     });
@@ -116,7 +119,7 @@ function renderAmenities() {
     }
 
     // Search
-    const term = searchInput.value.toLowerCase();
+    const term = searchInput.value.trim().toLowerCase();
     if (term) {
         data = data.filter(i =>
             (i.name || "").toLowerCase().includes(term) ||
@@ -139,11 +142,6 @@ function renderAmenities() {
         );
     }
 
-    // Duration
-    if (currentFilters.duration) {
-        data = data.filter(i => i.duration === currentFilters.duration);
-    }
-
     // Price
     if (currentFilters.minPrice !== null) {
         data = data.filter(i => i.price >= currentFilters.minPrice);
@@ -152,16 +150,22 @@ function renderAmenities() {
         data = data.filter(i => i.price <= currentFilters.maxPrice);
     }
 
-    // Sorting
-    if (currentFilters.sort === "priceLow") {
+    // Sorting (FIXED)
+    if (currentFilters.sort === "price-low") {
         data.sort((a, b) => a.price - b.price);
-    } else if (currentFilters.sort === "priceHigh") {
+    } else if (currentFilters.sort === "price-high") {
         data.sort((a, b) => b.price - a.price);
     } else if (currentFilters.sort === "rating") {
         data.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     }
 
     document.getElementById("itemCount").textContent = data.length;
+
+    if (data.length === 0) {
+        amenitiesGrid.innerHTML = "<p class='empty-msg'>No amenities found</p>";
+        loadMoreBtn.style.display = "none";
+        return;
+    }
 
     const visibleItems = data.slice(0, displayedItems);
     amenitiesGrid.innerHTML = visibleItems.map(createAmenityCard).join("");
@@ -200,7 +204,7 @@ function createAmenityCard(item) {
         <div class="amenity-content">
             <span class="amenity-category">${item.category}</span>
             <h3>${item.name}</h3>
-            <p>🌾 ${item.crops}</p>
+            <p>🌾 ${item.crops || "All Crops"}</p>
             <p>₹${item.price?.toLocaleString()} <small>${item.priceUnit || ""}</small></p>
             <div>${payments}</div>
             <div>⭐ ${item.rating || 0} • ${item.supplier || "Unknown"}</div>
@@ -217,7 +221,6 @@ function applyFilters() {
     currentFilters = {
         cropType: document.getElementById("cropTypeFilter").value,
         season: document.getElementById("seasonFilter").value,
-        duration: document.getElementById("durationFilter").value,
         minPrice: parseInt(document.getElementById("minPrice").value) || null,
         maxPrice: parseInt(document.getElementById("maxPrice").value) || null,
         sort: document.getElementById("sortFilter").value
