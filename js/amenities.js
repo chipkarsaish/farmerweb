@@ -143,10 +143,10 @@ function renderAmenities() {
     }
 
     // Price
-    if (currentFilters.minPrice !== null) {
+    if (currentFilters.minPrice != null) {
         data = data.filter(i => i.price >= currentFilters.minPrice);
     }
-    if (currentFilters.maxPrice !== null) {
+    if (currentFilters.maxPrice != null) {
         data = data.filter(i => i.price <= currentFilters.maxPrice);
     }
 
