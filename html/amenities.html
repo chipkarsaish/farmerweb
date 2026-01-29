@@ -97,105 +97,6 @@
                 <button class="incentive-close">×</button>
             </div>
 
-            <!-- Rent Products Section -->
-            <section class="rent-product-section">
-                <button class="btn btn-primary btn-large btn-full-width" id="rentProductBtn">
-                    <span>➕</span> <span data-i18n="amenities.rent.button">Rent Out Your Product</span>
-                </button>
-
-                <div class="rent-form-container hidden" id="rentProductFormContainer">
-                    <h3 class="form-title" data-i18n="amenities.rent.title">List Item for Rent</h3>
-                    <form id="rentProductForm" class="rent-form">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="rentName" data-i18n="amenities.rent.name">Item Name</label>
-                                <input type="text" id="rentName" class="form-input"
-                                    placeholder="e.g., John Deere Tractor" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="rentCategory" data-i18n="amenities.rent.category">Category</label>
-                                <select id="rentCategory" class="form-input" required>
-                                    <option value="seeds">Seeds</option>
-                                    <option value="fertilizers">Fertilizers</option>
-                                    <option value="machinery">Machinery</option>
-                                    <option value="irrigation">Irrigation</option>
-                                    <option value="organic">Organic</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="rentCrops" data-i18n="amenities.rent.crops">Suitable Crops</label>
-                                <input type="text" id="rentCrops" class="form-input" placeholder="e.g., Wheat, Rice"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <label for="rentSupplier" data-i18n="amenities.rent.supplier">Supplier Name</label>
-                                <input type="text" id="rentSupplier" class="form-input"
-                                    placeholder="Your Name or Farm Name" required>
-                            </div>
-                        </div>
-
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="rentPrice" data-i18n="amenities.rent.price">Price (₹)</label>
-                                <input type="number" id="rentPrice" class="form-input" placeholder="500" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="rentPriceUnit" data-i18n="amenities.rent.unit">Price Unit</label>
-                                <input type="text" id="rentPriceUnit" class="form-input" placeholder="e.g., /hour, /kg"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <label for="rentSeason" data-i18n="amenities.rent.season">Season</label>
-                                <select id="rentSeason" class="form-input">
-                                    <option value="all">All Seasons</option>
-                                    <option value="kharif">Kharif</option>
-                                    <option value="rabi">Rabi</option>
-                                    <option value="zaid">Zaid</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="rentAvailability"
-                                    data-i18n="amenities.rent.availability">Availability</label>
-                                <select id="rentAvailability" class="form-input">
-                                    <option value="available">Available Now</option>
-                                    <option value="limited">Limited Stock</option>
-                                    <option value="booked">Fully Booked</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="rentImage" data-i18n="amenities.rent.image">Image Link</label>
-                            <input type="url" id="rentImage" class="form-input"
-                                placeholder="https://example.com/image.jpg">
-                        </div>
-
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label data-i18n="amenities.rent.payment">Payment Options</label>
-                                <div class="checkbox-group-row">
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="rentPayment" value="cash" checked> Cash
-                                    </label>
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="rentPayment" value="produce"> Produce (Barter)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="rentRating" data-i18n="amenities.rent.rating">Initial Rating (0-5)</label>
-                                <input type="number" id="rentRating" class="form-input" min="0" max="5" step="0.1"
-                                    value="5">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-full-width" id="submitRentBtn"
-                            data-i18n="amenities.rent.submit">Submit Rental</button>
-                    </form>
-                </div>
-            </section>
-
             <!-- Category Selection -->
             <section class="category-section">
                 <h2 class="section-title" data-i18n="amenities.categories.title">Browse by Category</h2>
@@ -203,33 +104,33 @@
                     <div class="category-card active" data-category="all">
                         <div class="category-icon">🌾</div>
                         <h3 class="category-name" data-i18n="amenities.categories.all">All Items</h3>
-
+            
                     </div>
                     <div class="category-card" data-category="seeds">
                         <div class="category-icon">🌱</div>
                         <h3 class="category-name" data-i18n="amenities.categories.seeds">Seeds</h3>
-
+                        
                     </div>
                     <div class="category-card" data-category="fertilizers">
                         <div class="category-icon">🧪</div>
                         <h3 class="category-name" data-i18n="amenities.categories.fertilizers">Fertilizers</h3>
-
+                        
                     </div>
                     <div class="category-card" data-category="machinery">
                         <div class="category-icon">🚜</div>
                         <h3 class="category-name" data-i18n="amenities.categories.machinery">Machinery</h3>
-
+                        
                     </div>
                     <div class="category-card" data-category="irrigation">
                         <div class="category-icon">💧</div>
                         <h3 class="category-name" data-i18n="amenities.categories.irrigation">Irrigation</h3>
-
+                        
                     </div>
                     <div class="category-card" data-category="organic">
                         <div class="category-icon">♻️</div>
                         <h3 class="category-name" data-i18n="amenities.categories.organic">Organic</h3>
-
-                    </div>
+                     
+                </div>
             </section>
 
             <!-- Search & Filter Section -->
