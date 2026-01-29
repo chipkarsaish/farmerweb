@@ -1,120 +1,13 @@
 // Amenities Page JavaScript
+// Import Firebase module
+import { auth, db } from './firebase-config.js';
+import {
+    collection,
+    getDocs
+} from "firebase/firestore";
 
-// Sample Amenities Data
-const amenitiesData = [
-    {
-        id: 1,
-        name: "Wheat Seeds (HD-2967)",
-        category: "seeds",
-        crops: "Wheat",
-        price: 450,
-        priceUnit: "per kg",
-        availability: "available",
-        rating: 4.5,
-        image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400",
-        paymentOptions: ["cash", "produce"],
-        season: "rabi",
-        supplier: "Maharashtra Agro Co-op"
-    },
-    {
-        id: 2,
-        name: "NPK Fertilizer (20:20:20)",
-        category: "fertilizers",
-        crops: "All Crops",
-        price: 1200,
-        priceUnit: "per 50kg bag",
-        availability: "available",
-        rating: 4.7,
-        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400",
-        paymentOptions: ["cash", "produce"],
-        season: "all",
-        supplier: "FarmTech Solutions"
-    },
-    {
-        id: 3,
-        name: "Tractor (Mahindra 575 DI)",
-        category: "machinery",
-        crops: "All Crops",
-        price: 800,
-        priceUnit: "per day",
-        availability: "limited",
-        rating: 4.8,
-        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400",
-        paymentOptions: ["cash"],
-        season: "all",
-        supplier: "Rural Equipment Rentals"
-    },
-    {
-        id: 4,
-        name: "Drip Irrigation Kit",
-        category: "irrigation",
-        crops: "Vegetables, Fruits",
-        price: 5000,
-        priceUnit: "per season",
-        availability: "available",
-        rating: 4.6,
-        image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400",
-        paymentOptions: ["cash", "produce"],
-        season: "all",
-        supplier: "WaterWise Agro"
-    },
-    {
-        id: 5,
-        name: "Rice Seeds (Basmati)",
-        category: "seeds",
-        crops: "Rice",
-        price: 650,
-        priceUnit: "per kg",
-        availability: "available",
-        rating: 4.4,
-        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",
-        paymentOptions: ["cash", "produce"],
-        season: "kharif",
-        supplier: "Premium Seeds Ltd"
-    },
-    {
-        id: 6,
-        name: "Organic Compost",
-        category: "organic",
-        crops: "All Crops",
-        price: 300,
-        priceUnit: "per 25kg bag",
-        availability: "available",
-        rating: 4.9,
-        image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400",
-        paymentOptions: ["cash", "produce"],
-        season: "all",
-        supplier: "Green Earth Organics"
-    },
-    {
-        id: 7,
-        name: "Rotavator",
-        category: "machinery",
-        crops: "All Crops",
-        price: 600,
-        priceUnit: "per day",
-        availability: "available",
-        rating: 4.5,
-        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400",
-        paymentOptions: ["cash"],
-        season: "all",
-        supplier: "Rural Equipment Rentals"
-    },
-    {
-        id: 8,
-        name: "Pesticide Sprayer",
-        category: "machinery",
-        crops: "All Crops",
-        price: 200,
-        priceUnit: "per day",
-        availability: "available",
-        rating: 4.3,
-        image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400",
-        paymentOptions: ["cash"],
-        season: "all",
-        supplier: "AgriTools Hub"
-    }
-];
+
+let amenitiesData = [];
 
 // State Management
 let currentCategory = 'all';
@@ -136,10 +29,11 @@ const langBtns = document.querySelectorAll('.lang-btn');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    renderAmenities();
     setupEventListeners();
     loadUserData();
+    fetchAmenities(); // 🔥 get data from Firestore
 });
+
 
 // Setup Event Listeners
 function setupEventListeners() {
@@ -203,6 +97,27 @@ function setupEventListeners() {
         });
     });
 }
+
+// Fetch form the firestore database
+async function fetchAmenities() {
+    try {
+        amenitiesData = [];
+
+        const querySnapshot = await getDocs(collection(db, "amenities"));
+
+        querySnapshot.forEach(docSnap => {
+            amenitiesData.push({
+                id: docSnap.id,
+                ...docSnap.data()
+            });
+        });
+
+        renderAmenities(); // 🔥 render AFTER data arrives
+    } catch (error) {
+        console.error("Error fetching amenities:", error);
+    }
+}
+
 
 // Render Amenities
 function renderAmenities() {
