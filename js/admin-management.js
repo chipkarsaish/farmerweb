@@ -1,5 +1,5 @@
 import { db, auth } from './firebase-config.js';
-import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 const farmerTableBody = document.getElementById('farmerTableBody');
@@ -185,7 +185,7 @@ async function fetchFunds() {
             return;
         }
 
-        fundsTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Loading funds data from Firestore...</td></tr>';
+        fundsTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Loading funds data from Firestore...</td></tr>';
 
         console.log("Querying fund_loan collection...");
         const fundsSnapshot = await getDocs(collection(db, "fund_loan"));
@@ -195,7 +195,7 @@ async function fetchFunds() {
 
         if (fundsSnapshot.empty) {
             console.warn("No funds data found.");
-            fundsTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No funds data found in the database.</td></tr>';
+            fundsTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No funds data found in the database.</td></tr>';
             return;
         }
 
@@ -224,6 +224,11 @@ async function fetchFunds() {
                 <td>₹${(data.outstandingAmount || 0).toLocaleString()}</td>
                 <td>${data.eligibleSubsidies || 0} Schemes</td>
                 <td>${data.carbonCredits || 0} (₹${(data.carbonValue || 0).toLocaleString()})</td>
+                <td>
+                    <button class="edit-btn" onclick="openEditModal('${doc.id}', '${data.userId}', '${farmerName.replace(/'/g, "\\'")}', ${data.creditLimit || 0}, ${data.activeLoans || 0}, ${data.outstandingAmount || 0}, ${data.eligibleSubsidies || 0}, ${data.carbonCredits || 0}, ${data.carbonValue || 0})">
+                        ✏️ Edit
+                    </button>
+                </td>
             `;
             fundsTableBody.appendChild(row);
         });
@@ -240,7 +245,7 @@ async function fetchFunds() {
             errorMsg = `<strong>Network Error</strong><br>Check your internet connection or Firestore quotas.`;
         }
 
-        fundsTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:20px; line-height:1.5;">${errorMsg}</td></tr>`;
+        fundsTableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:red; padding:20px; line-height:1.5;">${errorMsg}</td></tr>`;
     }
 }
 
@@ -256,3 +261,78 @@ if (fundsSearchInput) {
         }
     });
 }
+
+// ========================================
+// EDIT FUNDS MODAL FUNCTIONS
+// ========================================
+
+// Make functions globally accessible
+window.openEditModal = function (docId, userId, farmerName, creditLimit, activeLoans, outstanding, subsidies, carbonCredits, carbonValue) {
+    console.log("📝 Opening edit modal for:", farmerName);
+
+    // Populate form fields
+    document.getElementById('editDocId').value = docId;
+    document.getElementById('editUserId').value = userId;
+    document.getElementById('editFarmerName').value = farmerName;
+    document.getElementById('editCreditLimit').value = creditLimit;
+    document.getElementById('editActiveLoans').value = activeLoans;
+    document.getElementById('editOutstanding').value = outstanding;
+    document.getElementById('editSubsidies').value = subsidies;
+    document.getElementById('editCarbonCredits').value = carbonCredits;
+    document.getElementById('editCarbonValue').value = carbonValue;
+
+    // Show modal
+    document.getElementById('editFundsModal').classList.add('active');
+};
+
+window.closeEditModal = function () {
+    console.log("❌ Closing edit modal");
+    document.getElementById('editFundsModal').classList.remove('active');
+    document.getElementById('editFundsForm').reset();
+};
+
+// Handle form submission
+document.getElementById('editFundsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const docId = document.getElementById('editDocId').value;
+    const userId = document.getElementById('editUserId').value;
+    const farmerName = document.getElementById('editFarmerName').value;
+
+    const updatedData = {
+        userId: userId,
+        creditLimit: parseInt(document.getElementById('editCreditLimit').value),
+        activeLoans: parseInt(document.getElementById('editActiveLoans').value),
+        outstandingAmount: parseInt(document.getElementById('editOutstanding').value),
+        eligibleSubsidies: parseInt(document.getElementById('editSubsidies').value),
+        carbonCredits: parseInt(document.getElementById('editCarbonCredits').value),
+        carbonValue: parseInt(document.getElementById('editCarbonValue').value)
+    };
+
+    console.log("💾 Saving changes for:", farmerName, updatedData);
+
+    try {
+        // Update Firestore document
+        await updateDoc(doc(db, "fund_loan", docId), updatedData);
+
+        console.log("✅ Successfully updated fund_loan document");
+        alert(`Successfully updated financial data for ${farmerName}!`);
+
+        // Close modal
+        closeEditModal();
+
+        // Refresh the table
+        fetchFunds();
+
+    } catch (error) {
+        console.error("❌ Error updating fund_loan:", error);
+        alert(`Failed to update data: ${error.message}`);
+    }
+});
+
+// Close modal when clicking outside
+document.getElementById('editFundsModal').addEventListener('click', function (e) {
+    if (e.target === this) {
+        closeEditModal();
+    }
+});

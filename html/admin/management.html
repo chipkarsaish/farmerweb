@@ -200,6 +200,126 @@
             border: none;
             float: right;
         }
+
+        /* --- EDIT MODAL --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h2 {
+            color: var(--dark-green);
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-save {
+            flex: 1;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-save:hover {
+            background: var(--dark-green);
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background: #ddd;
+            color: #666;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-cancel:hover {
+            background: #ccc;
+        }
+
+        .edit-btn {
+            background: var(--accent-green);
+            color: var(--dark-green);
+            border: none;
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-left: 5px;
+        }
+
+        .edit-btn:hover {
+            background: var(--primary-green);
+            color: white;
+        }
     </style>
 </head>
 
@@ -279,6 +399,7 @@
                         <th>Outstanding</th>
                         <th>Subsidies</th>
                         <th>Carbon Credits</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="fundsTableBody">
@@ -302,6 +423,61 @@
             </div>
             <button class="view-btn" style="width: 100%; margin-top: 30px; padding: 15px;">Approve Resource
                 Grant</button>
+        </div>
+    </div>
+
+    <!-- Edit Funds Modal -->
+    <div id="editFundsModal" class="modal-overlay">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Edit Financial Data</h2>
+                <button class="close-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+
+            <form id="editFundsForm">
+                <input type="hidden" id="editDocId">
+                <input type="hidden" id="editUserId">
+
+                <div class="form-group">
+                    <label>Farmer Name</label>
+                    <input type="text" id="editFarmerName" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Credit Limit (₹)</label>
+                    <input type="number" id="editCreditLimit" required min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Active Loans</label>
+                    <input type="number" id="editActiveLoans" required min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Outstanding Amount (₹)</label>
+                    <input type="number" id="editOutstanding" required min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Eligible Subsidies</label>
+                    <input type="number" id="editSubsidies" required min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Carbon Credits</label>
+                    <input type="number" id="editCarbonCredits" required min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Carbon Credits Value (₹)</label>
+                    <input type="number" id="editCarbonValue" required min="0">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
 
