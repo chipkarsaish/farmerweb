@@ -255,6 +255,7 @@ function renderItems() {
 // Card
 // ===============================
 function createItemCard(item) {
+    console.log("🎨 Rendering card with new format:", item.itemName);
 
     const statusMap = {
         active: "🟢 Available",
