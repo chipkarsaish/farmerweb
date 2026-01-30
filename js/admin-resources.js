@@ -3,8 +3,9 @@
 // Rental Requests Management
 // ===============================
 
-import { db, auth } from "./firebase-config.js";
-import { collection, getDocs, doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { db } from "./firebase-config.js";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { auth } from "./firebase-config.js";
 import { onAuthStateChanged } from "firebase/auth";
 
 // DOM Elements
