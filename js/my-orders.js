@@ -165,7 +165,7 @@ const mockOrders = {
 };
 
 // State
-let currentTab = 'amenities';
+let currentTab = 'rentals';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
