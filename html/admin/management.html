@@ -258,6 +258,34 @@
                 </tbody>
             </table>
         </section>
+
+        <!-- Funds Management Section -->
+        <header class="dash-header" style="margin-top: 40px;">
+            <h1>Funds & Loan Management</h1>
+        </header>
+
+        <section class="filter-bar card-smooth">
+            <input type="text" id="fundsSearch" placeholder="Search by Farmer Name or ID...">
+        </section>
+
+        <section class="table-container card-smooth">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Farmer Name</th>
+                        <th>User ID</th>
+                        <th>Credit Limit</th>
+                        <th>Active Loans</th>
+                        <th>Outstanding</th>
+                        <th>Subsidies</th>
+                        <th>Carbon Credits</th>
+                    </tr>
+                </thead>
+                <tbody id="fundsTableBody">
+                    <!-- Data will be loaded dynamically via JS -->
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <div id="profileDrawer" class="drawer-overlay" onclick="toggleDrawer(false)">

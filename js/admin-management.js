@@ -105,13 +105,103 @@ async function fetchFarmers() {
 }
 
 // Initial fetch
-document.addEventListener('DOMContentLoaded', fetchFarmers);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchFarmers();
+    fetchFunds();
+});
 
 // Search Logic (Client-side filtering of the fetched table)
 if (searchInput) {
     searchInput.addEventListener('keyup', function () {
         let filter = this.value.toLowerCase();
         let rows = farmerTableBody.getElementsByTagName('tr');
+
+        for (let row of rows) {
+            let text = row.innerText.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+        }
+    });
+}
+
+// ========================================
+// FUNDS MANAGEMENT
+// ========================================
+
+const fundsTableBody = document.getElementById('fundsTableBody');
+const fundsSearchInput = document.getElementById('fundsSearch');
+
+async function fetchFunds() {
+    console.log("Starting fetchFunds...");
+    try {
+        if (!fundsTableBody) {
+            console.error("Critical Error: fundsTableBody element not found!");
+            return;
+        }
+
+        fundsTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Loading funds data from Firestore...</td></tr>';
+
+        console.log("Querying fund_loan collection...");
+        const fundsSnapshot = await getDocs(collection(db, "fund_loan"));
+
+        console.log(`Query completed. Documents found: ${fundsSnapshot.size}`);
+        fundsTableBody.innerHTML = ''; // Clear loading message
+
+        if (fundsSnapshot.empty) {
+            console.warn("No funds data found.");
+            fundsTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No funds data found in the database.</td></tr>';
+            return;
+        }
+
+        // Fetch all users to map userId to farmer name
+        const usersSnapshot = await getDocs(collection(db, "users"));
+        const usersMap = {};
+        usersSnapshot.forEach(doc => {
+            usersMap[doc.id] = doc.data().name || 'Unknown';
+        });
+
+        fundsSnapshot.forEach((doc) => {
+            const data = doc.data();
+            console.log("Processing funds doc:", doc.id, data);
+
+            const row = document.createElement('tr');
+
+            // Get farmer name from users map
+            const farmerName = usersMap[data.userId] || 'Unknown Farmer';
+            const displayId = data.userId ? '#' + data.userId.substring(0, 6).toUpperCase() : '#UNKNOWN';
+
+            row.innerHTML = `
+                <td><strong>${farmerName}</strong></td>
+                <td>${displayId}</td>
+                <td>₹${(data.creditLimit || 0).toLocaleString()}</td>
+                <td>${data.activeLoans || 0}</td>
+                <td>₹${(data.outstandingAmount || 0).toLocaleString()}</td>
+                <td>${data.eligibleSubsidies || 0} Schemes</td>
+                <td>${data.carbonCredits || 0} (₹${(data.carbonValue || 0).toLocaleString()})</td>
+            `;
+            fundsTableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Error fetching funds:", error);
+
+        let errorMsg = `Error loading data: ${error.message}`;
+        if (error.code === 'permission-denied' || error.message.includes('permission-denied')) {
+            errorMsg = `<strong>Permission Denied</strong><br>
+            1. Check Firestore Rules for fund_loan collection.<br>
+            2. Ensure admin has read access.`;
+        } else if (error.code === 'unavailable') {
+            errorMsg = `<strong>Network Error</strong><br>Check your internet connection or Firestore quotas.`;
+        }
+
+        fundsTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:20px; line-height:1.5;">${errorMsg}</td></tr>`;
+    }
+}
+
+// Search Logic for Funds Table
+if (fundsSearchInput) {
+    fundsSearchInput.addEventListener('keyup', function () {
+        let filter = this.value.toLowerCase();
+        let rows = fundsTableBody.getElementsByTagName('tr');
 
         for (let row of rows) {
             let text = row.innerText.toLowerCase();
