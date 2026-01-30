@@ -3,8 +3,9 @@
 // Firebase Powered (FINAL)
 // ===============================
 
-import { db } from "./firebase-config.js";
-import { collection, getDocs } from "firebase/firestore";
+import { db, auth } from "./firebase-config.js";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 // ===============================
 // State
@@ -13,6 +14,7 @@ let amenitiesData = [];
 let currentCategory = "all";
 let currentFilters = {};
 let displayedItems = 8;
+let currentUser = null; // Store current authenticated user
 
 // ===============================
 // DOM
@@ -38,6 +40,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadUserData();
     await fetchAmenitiesFromFirebase();
     renderAmenities();
+
+    // Listen for auth state changes
+    onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        console.log("🔐 Current user:", user ? user.email : "Not logged in");
+    });
 });
 
 // ===============================
@@ -466,12 +474,37 @@ sendRentRequestBtn.addEventListener('click', async () => {
         createdAt: new Date().toISOString()
     };
 
+    // Check if user is logged in
+    if (!currentUser) {
+        alert('⚠️ Please log in to send a rent request');
+        return;
+    }
+
+    // Get farmer name from localStorage
+    const userData = JSON.parse(localStorage.getItem("farmerConnectUser"));
+    const farmerName = userData?.name || currentUser.displayName || "Unknown";
+
+    // Add farmer information
+    rentRequest.farmerId = currentUser.uid;
+    rentRequest.farmerName = farmerName;
+    rentRequest.farmerEmail = currentUser.email;
+    rentRequest.ownerId = currentRentItem.ownerId || currentRentItem.userId;
+    rentRequest.ownerName = currentRentItem.ownerName || currentRentItem.supplier;
+    rentRequest.updatedAt = new Date().toISOString();
+
     console.log('📤 Sending rent request:', rentRequest);
 
-    // TODO: Save to Firestore (rental_requests collection)
-    // For now, show success message
-    alert(`✅ Request sent to owner!\n\nYou will be notified when the owner responds.\n\nItem: ${rentRequest.itemName}\nDates: ${rentRequest.startDate} to ${rentRequest.endDate}\nTotal: ₹${rentRequest.totalAmount.toLocaleString()}`);
+    try {
+        // Save to Firestore
+        const docRef = await addDoc(collection(db, "rental_requests"), rentRequest);
+        console.log("✅ Rent request saved with ID:", docRef.id);
 
-    closeRentModal();
+        alert(`✅ Request sent successfully!\n\nItem: ${rentRequest.itemName}\nDates: ${rentRequest.startDate} to ${rentRequest.endDate}\nTotal: ₹${rentRequest.totalAmount.toLocaleString()}\n\nRequest ID: ${docRef.id}`);
+
+        closeRentModal();
+    } catch (error) {
+        console.error("❌ Error saving rent request:", error);
+        alert(`Failed to send request: ${error.message}\n\nPlease try again.`);
+    }
 });
 
