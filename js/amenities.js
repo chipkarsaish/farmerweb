@@ -230,7 +230,7 @@ function createAmenityCard(item) {
             <div>${payments}</div>
             <div>⭐ ${item.rating || 0} • ${item.supplier || "Unknown"}</div>
             <button class="btn-view-details">View Details</button>
-            <button class="btn-rent-now" onclick='openRentModal(${JSON.stringify(item)})'>Rent Now</button>
+            <button class="btn-rent-now">Rent Now</button>
         </div>
     </div>`;
 }
@@ -266,7 +266,7 @@ function viewDetails(item) {
 }
 
 function rentNow(item) {
-    alert(`Renting ${item.name} for ₹${item.price}`);
+    openRentModal(item);
 }
 
 // ===============================
