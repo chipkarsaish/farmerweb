@@ -112,11 +112,7 @@
                         <h3 class="category-name" data-i18n="amenities.categories.all">All Items</h3>
 
                     </div>
-                    <div class="category-card" data-category="seeds">
-                        <div class="category-icon">🌱</div>
-                        <h3 class="category-name" data-i18n="amenities.categories.seeds">Seeds</h3>
 
-                    </div>
                     <div class="category-card" data-category="fertilizers">
                         <div class="category-icon">🧪</div>
                         <h3 class="category-name" data-i18n="amenities.categories.fertilizers">Fertilizers</h3>
@@ -132,11 +128,7 @@
                         <h3 class="category-name" data-i18n="amenities.categories.irrigation">Irrigation</h3>
 
                     </div>
-                    <div class="category-card" data-category="organic">
-                        <div class="category-icon">♻️</div>
-                        <h3 class="category-name" data-i18n="amenities.categories.organic">Organic</h3>
 
-                    </div>
             </section>
 
             <!-- Search & Filter Section -->
@@ -148,92 +140,10 @@
                             placeholder="Search seed, tractor, fertilizer..." class="search-input">
                         <button class="voice-search-btn" title="Voice Search">🎤</button>
                     </div>
-                    <button class="filter-toggle-btn" id="filterToggleBtn">
-                        <span>⚙️</span> <span data-i18n="amenities.search.filters">Filters</span>
-                        <span class="filter-count hidden" id="filterCount">0</span>
-                    </button>
+
                 </div>
 
-                <!-- Filter Panel -->
-                <div class="filter-panel hidden" id="filterPanel">
-                    <div class="filter-header">
-                        <h3 data-i18n="amenities.search.filters">Filters</h3>
-                        <button class="clear-filters-btn" id="clearFiltersBtn"
-                            data-i18n="amenities.search.clearAll">Clear All</button>
-                    </div>
-                    <div class="filter-content">
-                        <div class="filter-group">
-                            <label class="filter-label" data-i18n="amenities.filters.cropType">Crop Type</label>
-                            <select class="filter-select" id="cropTypeFilter">
-                                <option value="" data-i18n="amenities.filters.allCrops">All Crops</option>
-                                <option value="wheat" data-i18n="amenities.filters.wheat">Wheat</option>
-                                <option value="rice" data-i18n="amenities.filters.rice">Rice</option>
-                                <option value="cotton" data-i18n="amenities.filters.cotton">Cotton</option>
-                                <option value="sugarcane" data-i18n="amenities.filters.sugarcane">Sugarcane</option>
-                                <option value="vegetables" data-i18n="amenities.filters.vegetables">Vegetables</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label" data-i18n="amenities.filters.season">Season</label>
-                            <select class="filter-select" id="seasonFilter">
-                                <option value="" data-i18n="amenities.filters.allSeasons">All Seasons</option>
-                                <option value="kharif" data-i18n="amenities.filters.kharif">Kharif</option>
-                                <option value="rabi" data-i18n="amenities.filters.rabi">Rabi</option>
-                                <option value="zaid" data-i18n="amenities.filters.zaid">Zaid</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label" data-i18n="amenities.filters.rentalDuration">Rental
-                                Duration</label>
-                            <select class="filter-select" id="durationFilter">
-                                <option value="" data-i18n="amenities.filters.anyDuration">Any Duration</option>
-                                <option value="day" data-i18n="amenities.filters.perDay">Per Day</option>
-                                <option value="week" data-i18n="amenities.filters.perWeek">Per Week</option>
-                                <option value="season" data-i18n="amenities.filters.perSeason">Per Season</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label" data-i18n="amenities.filters.priceRange">Price Range (₹)</label>
-                            <div class="price-range">
-                                <input type="number" id="minPrice" data-i18n-placeholder="amenities.filters.min"
-                                    placeholder="Min" class="price-input">
-                                <span>-</span>
-                                <input type="number" id="maxPrice" data-i18n-placeholder="amenities.filters.max"
-                                    placeholder="Max" class="price-input">
-                            </div>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label" data-i18n="amenities.filters.availability">Availability</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="available"> <span
-                                        data-i18n="amenities.filters.availableNow">Available Now</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="nearby"> <span
-                                        data-i18n="amenities.filters.nearby">Nearby (< 10km)</span> </label>
-                            </div>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label" data-i18n="amenities.filters.sortBy">Sort By</label>
-                            <select class="filter-select" id="sortFilter">
-                                <option value="popular" data-i18n="amenities.filters.mostPopular">Most Popular</option>
-                                <option value="price-low" data-i18n="amenities.filters.priceLowToHigh">Price: Low to
-                                    High</option>
-                                <option value="price-high" data-i18n="amenities.filters.priceHighToLow">Price: High to
-                                    Low</option>
-                                <option value="rating" data-i18n="amenities.filters.highestRated">Highest Rated</option>
-                                <option value="newest" data-i18n="amenities.filters.newestFirst">Newest First</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn btn-outline" id="cancelFilterBtn"
-                            data-i18n="amenities.search.cancel">Cancel</button>
-                        <button class="btn btn-primary" id="applyFilterBtn"
-                            data-i18n="amenities.search.applyFilters">Apply Filters</button>
-                    </div>
-                </div>
+
 
                 <!-- Active Filters Chips -->
                 <div class="active-filters hidden" id="activeFilters"></div>
