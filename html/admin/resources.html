@@ -248,40 +248,9 @@
         </div>
 
         <section id="requests" class="content-section active">
-            <div class="resource-grid">
-                <div class="resource-card">
-                    <div class="card-header">
-                        <h3>Aman Sharma</h3>
-                        <span class="farmer-type">Individual</span>
-                    </div>
-                    <div class="resource-info">
-                        <p><strong>Resource:</strong> Organic Nitrogen Fertilizer</p>
-                        <p><strong>Quantity:</strong> 500 KG</p>
-                        <p><strong>Priority:</strong> High (Sowing Season)</p>
-                    </div>
-                    <div class="btn-group">
-                        <button class="approve-btn"
-                            onclick="this.parentElement.parentElement.style.opacity='0.5'">Approve</button>
-                        <button class="reject-btn"
-                            onclick="this.parentElement.parentElement.style.display='none'">Reject</button>
-                    </div>
-                </div>
-
-                <div class="resource-card">
-                    <div class="card-header">
-                        <h3>North Valley Group</h3>
-                        <span class="farmer-type">Cooperative</span>
-                    </div>
-                    <div class="resource-info">
-                        <p><strong>Resource:</strong> Solar Powered Water Pump</p>
-                        <p><strong>Quantity:</strong> 3 Units</p>
-                        <p><strong>Priority:</strong> Standard</p>
-                    </div>
-                    <div class="btn-group">
-                        <button class="approve-btn">Approve</button>
-                        <button class="reject-btn">Reject</button>
-                    </div>
-                </div>
+            <div class="resource-grid" id="requestsGrid">
+                <!-- Rental requests will be loaded dynamically -->
+                <p style="text-align:center; color:#666; padding:40px;">Loading rental requests...</p>
             </div>
         </section>
 
@@ -302,6 +271,17 @@
             </div>
         </section>
     </main>
+
+    <!-- Firebase Import Map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"
+            }
+        }
+    </script>
 
     <script>
         function switchTab(evt, tabName) {
@@ -328,6 +308,9 @@
             }
         }
     </script>
+
+    <!-- Admin Resources Script -->
+    <script type="module" src="../../js/admin-resources.js"></script>
 </body>
 
 </html>
