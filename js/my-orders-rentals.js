@@ -87,74 +87,104 @@ function renderRentals() {
 // ===============================
 function createRentalCard(rental) {
     // Format dates
-    const startDate = new Date(rental.startDate).toLocaleDateString('en-IN');
-    const endDate = new Date(rental.endDate).toLocaleDateString('en-IN');
+    const startDate = new Date(rental.startDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+    const endDate = new Date(rental.endDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 
     // Calculate days
     const start = new Date(rental.startDate);
     const end = new Date(rental.endDate);
     const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
 
-    // Format created date
-    const createdDate = new Date(rental.createdAt).toLocaleDateString('en-IN');
-
     return `
-        <div class="order-card" data-rental-id="${rental.id}">
-            <div class="order-header">
-                <div class="order-title-section">
-                    <h3 class="order-item-name">${rental.itemName}</h3>
-                    <p class="order-category">${rental.itemCategory}</p>
+        <div class="order-card" data-rental-id="${rental.id}" style="border-left: 4px solid #4a7c2c; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'">
+            
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                <div style="flex: 1;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1.1rem; color: #2c3e50; font-weight: 600;">${rental.itemName}</h3>
+                    <p style="margin: 0; font-size: 0.85rem; color: #7f8c8d;">${rental.itemCategory}</p>
                 </div>
-                <span class="status-badge status-approved" style="background:#d4edda; color:#155724; padding:6px 12px; border-radius:8px; font-size:0.75rem; font-weight:700;">
+                <span style="background: #d4edda; color: #155724; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap;">
                     ✅ Approved
                 </span>
             </div>
             
-            <div class="order-details">
-                <div class="detail-row">
-                    <span class="detail-icon">📅</span>
-                    <span class="detail-text"><strong>Rental Period:</strong> ${startDate} → ${endDate}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-icon">⏱️</span>
-                    <span class="detail-text"><strong>Duration:</strong> ${days} day${days > 1 ? 's' : ''}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-icon">💰</span>
-                    <span class="detail-text"><strong>Total Amount:</strong> ₹${rental.totalAmount?.toLocaleString()}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-icon">📍</span>
-                    <span class="detail-text"><strong>Location:</strong> ${rental.usageLocation}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-icon">${rental.deliveryOption === 'pickup' ? '🚶' : '🏠'}</span>
-                    <span class="detail-text"><strong>Delivery:</strong> ${rental.deliveryOption === 'pickup' ? 'Self Pickup' : 'Home Delivery'}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-icon">💳</span>
-                    <span class="detail-text"><strong>Payment:</strong> ${formatPaymentMethod(rental.paymentMethod)}</span>
-                </div>
-                ${rental.ownerName ? `
-                    <div class="detail-row">
-                        <span class="detail-icon">👤</span>
-                        <span class="detail-text"><strong>Owner:</strong> ${rental.ownerName}</span>
+            <!-- Rental Period - Highlighted -->
+            <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 12px 16px; border-radius: 8px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 0.7rem; color: #6c757d; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Start</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; color: #2c3e50;">📅 ${startDate}</div>
                     </div>
-                ` : ''}
+                    <div style="color: #6c757d; font-size: 1.2rem;">→</div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 0.7rem; color: #6c757d; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">End</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; color: #2c3e50;">📅 ${endDate}</div>
+                    </div>
+                    <div style="flex: 1; text-align: center; border-left: 2px solid #dee2e6; padding-left: 12px;">
+                        <div style="font-size: 0.7rem; color: #6c757d; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Duration</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; color: #4a7c2c;">⏱️ ${days} day${days > 1 ? 's' : ''}</div>
+                    </div>
+                </div>
             </div>
-
-            <div class="order-meta">
-                <span class="order-id">Request ID: ${rental.id.substring(0, 8)}</span>
-                <span class="order-date">Approved: ${createdDate}</span>
+            
+            <!-- Details Grid - Compact -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.2rem;">💰</span>
+                    <div>
+                        <div style="font-size: 0.7rem; color: #6c757d;">Amount</div>
+                        <div style="font-size: 0.9rem; font-weight: 600; color: #2c3e50;">₹${rental.totalAmount?.toLocaleString()}</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.2rem;">${rental.deliveryOption === 'pickup' ? '🚶' : '🏠'}</span>
+                    <div>
+                        <div style="font-size: 0.7rem; color: #6c757d;">Delivery</div>
+                        <div style="font-size: 0.9rem; font-weight: 600; color: #2c3e50;">${rental.deliveryOption === 'pickup' ? 'Pickup' : 'Delivery'}</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.2rem;">📍</span>
+                    <div style="overflow: hidden;">
+                        <div style="font-size: 0.7rem; color: #6c757d;">Location</div>
+                        <div style="font-size: 0.9rem; font-weight: 600; color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${rental.usageLocation}</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.2rem;">💳</span>
+                    <div>
+                        <div style="font-size: 0.7rem; color: #6c757d;">Payment</div>
+                        <div style="font-size: 0.9rem; font-weight: 600; color: #2c3e50;">${formatPaymentMethod(rental.paymentMethod)}</div>
+                    </div>
+                </div>
             </div>
-
-            <div class="order-actions">
-                <button class="btn btn-outline btn-small" onclick="viewRentalDetails('${rental.id}')">
-                    📄 View Details
-                </button>
-                <button class="btn btn-outline btn-small" onclick="downloadReceipt('${rental.id}')">
-                    ⬇️ Receipt
-                </button>
+            
+            ${rental.ownerName ? `
+            <div style="background: #fff3cd; padding: 10px 12px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid #ffc107;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1rem;">👤</span>
+                    <div>
+                        <span style="font-size: 0.75rem; color: #856404; font-weight: 600;">Owner:</span>
+                        <span style="font-size: 0.85rem; color: #856404; margin-left: 6px;">${rental.ownerName}</span>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+            
+            <!-- Footer -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid #e9ecef;">
+                <div style="font-size: 0.75rem; color: #6c757d;">
+                    ID: ${rental.id.substring(0, 8)}
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="viewRentalDetails('${rental.id}')" style="background: white; border: 1px solid #4a7c2c; color: #4a7c2c; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-weight: 500;" onmouseover="this.style.background='#4a7c2c'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#4a7c2c'">
+                        📄 Details
+                    </button>
+                    <button onclick="downloadReceipt('${rental.id}')" style="background: #4a7c2c; border: none; color: white; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-weight: 500;" onmouseover="this.style.background='#3d6624'" onmouseout="this.style.background='#4a7c2c'">
+                        ⬇️ Receipt
+                    </button>
+                </div>
             </div>
         </div>
     `;
