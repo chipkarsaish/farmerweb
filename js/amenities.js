@@ -215,7 +215,7 @@ function createAmenityCard(item) {
     ).join("");
 
     return `
-    <div class="amenity-card">
+    <div class="amenity-card" data-item='${JSON.stringify(item)}'>
         <div class="amenity-image-container">
             <img src="${item.image || "assets/placeholder.jpg"}" alt="${item.name}">
             <span class="availability-badge badge-${item.availability}">
@@ -230,7 +230,7 @@ function createAmenityCard(item) {
             <div>${payments}</div>
             <div>⭐ ${item.rating || 0} • ${item.supplier || "Unknown"}</div>
             <button class="btn-view-details">View Details</button>
-            <button class="btn-rent-now">Rent Now</button>
+            <button class="btn-rent-now" onclick='openRentModal(${JSON.stringify(item)})'>Rent Now</button>
         </div>
     </div>`;
 }
@@ -290,3 +290,188 @@ function debounce(fn, delay) {
         timer = setTimeout(() => fn(...args), delay);
     };
 }
+
+// ===============================
+// Rent Modal Functionality
+// ===============================
+let currentRentItem = null;
+
+// Modal Elements
+const rentModal = document.getElementById('rentModal');
+const closeRentModalBtn = document.getElementById('closeRentModal');
+const cancelRentBtn = document.getElementById('cancelRent');
+const sendRentRequestBtn = document.getElementById('sendRentRequest');
+
+// Form Elements
+const startDateInput = document.getElementById('startDate');
+const endDateInput = document.getElementById('endDate');
+const quantityInput = document.getElementById('quantity');
+const decreaseQtyBtn = document.getElementById('decreaseQty');
+const increaseQtyBtn = document.getElementById('increaseQty');
+const totalAmountSpan = document.getElementById('totalAmount');
+const requestDiscountCheckbox = document.getElementById('requestDiscount');
+const discountReasonSection = document.getElementById('discountReasonSection');
+const agreeTermsCheckbox = document.getElementById('agreeTerms');
+
+// Open Rent Modal
+window.openRentModal = function (item) {
+    currentRentItem = item;
+
+    // Populate item summary
+    document.getElementById('rentItemImage').src = item.image || '../public/farmer.png';
+    document.getElementById('rentItemName').textContent = item.name;
+    document.getElementById('rentItemCategory').textContent = item.category;
+    document.getElementById('rentItemPrice').textContent = item.price?.toLocaleString() || '0';
+    document.getElementById('rentItemUnit').textContent = item.priceUnit || 'per day';
+
+    const availabilityMap = {
+        available: '🟢 Available',
+        limited: '🟡 Limited',
+        booked: '🔴 Booked'
+    };
+    document.getElementById('rentItemAvailability').textContent = availabilityMap[item.availability] || '⚪ Unknown';
+
+    // Set minimum dates
+    const today = new Date().toISOString().split('T')[0];
+    startDateInput.min = today;
+    startDateInput.value = today;
+    endDateInput.min = today;
+
+    // Reset form
+    quantityInput.value = 1;
+    document.getElementById('yourPrice').value = '';
+    document.getElementById('messageToOwner').value = '';
+    document.getElementById('usageLocation').value = '';
+    requestDiscountCheckbox.checked = false;
+    discountReasonSection.classList.add('hidden');
+    agreeTermsCheckbox.checked = false;
+
+    // Calculate initial total
+    calculateTotal();
+
+    // Show modal
+    rentModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+};
+
+// Close Rent Modal
+function closeRentModal() {
+    rentModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+    currentRentItem = null;
+}
+
+closeRentModalBtn.addEventListener('click', closeRentModal);
+cancelRentBtn.addEventListener('click', closeRentModal);
+
+// Close on outside click
+rentModal.addEventListener('click', (e) => {
+    if (e.target === rentModal) {
+        closeRentModal();
+    }
+});
+
+// Quantity Controls
+decreaseQtyBtn.addEventListener('click', () => {
+    const currentQty = parseInt(quantityInput.value);
+    if (currentQty > 1) {
+        quantityInput.value = currentQty - 1;
+        calculateTotal();
+    }
+});
+
+increaseQtyBtn.addEventListener('click', () => {
+    const currentQty = parseInt(quantityInput.value);
+    quantityInput.value = currentQty + 1;
+    calculateTotal();
+});
+
+// Calculate Total Amount
+function calculateTotal() {
+    if (!currentRentItem) return;
+
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+    const quantity = parseInt(quantityInput.value) || 1;
+    const pricePerUnit = currentRentItem.price || 0;
+
+    let days = 1;
+    if (startDateInput.value && endDateInput.value && endDate >= startDate) {
+        days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+    }
+
+    const total = days * quantity * pricePerUnit;
+    totalAmountSpan.textContent = total.toLocaleString();
+}
+
+// Update total when dates change
+startDateInput.addEventListener('change', () => {
+    if (startDateInput.value) {
+        endDateInput.min = startDateInput.value;
+    }
+    calculateTotal();
+});
+
+endDateInput.addEventListener('change', calculateTotal);
+
+// Toggle Discount Reason Section
+requestDiscountCheckbox.addEventListener('change', () => {
+    if (requestDiscountCheckbox.checked) {
+        discountReasonSection.classList.remove('hidden');
+    } else {
+        discountReasonSection.classList.add('hidden');
+    }
+});
+
+// Send Rent Request
+sendRentRequestBtn.addEventListener('click', async () => {
+    // Validation
+    if (!startDateInput.value || !endDateInput.value) {
+        alert('⚠️ Please select start and end dates');
+        return;
+    }
+
+    if (!document.getElementById('usageLocation').value.trim()) {
+        alert('⚠️ Please enter usage location');
+        return;
+    }
+
+    if (!agreeTermsCheckbox.checked) {
+        alert('⚠️ Please agree to the terms');
+        return;
+    }
+
+    // Get form data
+    const deliveryOption = document.querySelector('input[name="delivery"]:checked').value;
+    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+    const rentRequest = {
+        itemId: currentRentItem.id,
+        itemName: currentRentItem.name,
+        itemCategory: currentRentItem.category,
+        itemPrice: currentRentItem.price,
+        priceUnit: currentRentItem.priceUnit,
+        startDate: startDateInput.value,
+        endDate: endDateInput.value,
+        quantity: parseInt(quantityInput.value),
+        totalAmount: parseInt(totalAmountSpan.textContent.replace(/,/g, '')),
+        yourPrice: document.getElementById('yourPrice').value ? parseInt(document.getElementById('yourPrice').value) : null,
+        requestDiscount: requestDiscountCheckbox.checked,
+        discountReason: requestDiscountCheckbox.checked ? document.getElementById('discountReason').value : null,
+        messageToOwner: document.getElementById('messageToOwner').value.trim(),
+        deliveryOption: deliveryOption,
+        usageLocation: document.getElementById('usageLocation').value.trim(),
+        paymentMethod: paymentMethod,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+    };
+
+    console.log('📤 Sending rent request:', rentRequest);
+
+    // TODO: Save to Firestore (rental_requests collection)
+    // For now, show success message
+    alert(`✅ Request sent to owner!\n\nYou will be notified when the owner responds.\n\nItem: ${rentRequest.itemName}\nDates: ${rentRequest.startDate} to ${rentRequest.endDate}\nTotal: ₹${rentRequest.totalAmount.toLocaleString()}`);
+
+    closeRentModal();
+});
+

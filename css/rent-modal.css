@@ -1,0 +1,391 @@
+/* ===============================
+   Rent Confirmation Modal Styles
+   =============================== */
+
+.rent-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.rent-modal-overlay.active {
+    display: flex;
+}
+
+.rent-modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Header */
+.rent-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 2px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+.rent-modal-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #2d5016;
+}
+
+.rent-modal-close {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: #666;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.rent-modal-close:hover {
+    color: #d32f2f;
+}
+
+/* Body */
+.rent-modal-body {
+    padding: 30px;
+}
+
+.rent-section {
+    background: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    margin: 0 0 15px 0;
+    color: #2d5016;
+    font-weight: 600;
+}
+
+/* Section 1: Item Summary Card */
+.item-summary-card {
+    display: flex;
+    gap: 20px;
+    background: linear-gradient(135deg, #d8f3dc 0%, #95d5b2 100%);
+    border: 2px solid #4a7c2c;
+}
+
+.item-summary-image {
+    flex-shrink: 0;
+}
+
+.item-summary-image img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid white;
+}
+
+.item-summary-details h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    color: #2d5016;
+}
+
+.item-summary-details p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+.item-category,
+.item-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item-price {
+    font-weight: 600;
+    color: #2d5016;
+    font-size: 1.3rem !important;
+}
+
+.item-availability {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Form Elements */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1.05rem;
+}
+
+.form-group input[type="date"],
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4a7c2c;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Quantity Control */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 200px;
+}
+
+.qty-btn {
+    width: 45px;
+    height: 45px;
+    border: 2px solid #4a7c2c;
+    background: white;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a7c2c;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.qty-btn:hover {
+    background: #4a7c2c;
+    color: white;
+}
+
+.quantity-control input {
+    width: 70px;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* Total Amount Box */
+.total-amount-box {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 12px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.total-amount-box span:first-child {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.total-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2d5016;
+}
+
+/* Checkbox & Radio Groups */
+.checkbox-label,
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.checkbox-label:hover,
+.radio-label:hover {
+    border-color: #4a7c2c;
+    background: #f0f7f0;
+}
+
+.checkbox-label input[type="checkbox"],
+.radio-label input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Discount Reason Section */
+.discount-reason {
+    margin-top: 15px;
+    padding: 15px;
+    background: #e8f5e9;
+    border-radius: 10px;
+}
+
+.discount-reason.hidden {
+    display: none;
+}
+
+/* Agreement Section */
+.agreement-section {
+    background: #fff9e6;
+    border: 2px solid #ffc107;
+}
+
+.agreement-checkbox {
+    font-size: 1.15rem;
+    font-weight: 600;
+    border: none;
+    padding: 0;
+}
+
+.agreement-checkbox:hover {
+    background: transparent;
+}
+
+/* Footer */
+.rent-modal-footer {
+    display: flex;
+    gap: 15px;
+    padding: 20px 30px;
+    border-top: 2px solid #f0f0f0;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 10;
+}
+
+.btn-cancel-rent,
+.btn-send-request {
+    flex: 1;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-cancel-rent {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.btn-cancel-rent:hover {
+    background: #e0e0e0;
+}
+
+.btn-send-request {
+    background: linear-gradient(135deg, #4a7c2c 0%, #2d5016 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(74, 124, 44, 0.3);
+}
+
+.btn-send-request:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 124, 44, 0.4);
+}
+
+.btn-icon {
+    font-size: 1.3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .rent-modal-content {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .rent-modal-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .item-summary-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .rent-modal-footer {
+        flex-direction: column;
+    }
+}

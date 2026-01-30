@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/farmer-sidebar.css">
     <link rel="stylesheet" href="../css/amenities-styles.css">
+    <link rel="stylesheet" href="../css/rent-modal.css">
     <link rel="stylesheet" href="../css/language-switcher.css">
 </head>
 
@@ -169,6 +170,153 @@
             </section>
         </div>
     </main>
+
+    <!-- Rent Confirmation Modal -->
+    <div id="rentModal" class="rent-modal-overlay">
+        <div class="rent-modal-content">
+            <div class="rent-modal-header">
+                <h2>📦 Confirm Your Rent</h2>
+                <button class="rent-modal-close" id="closeRentModal">&times;</button>
+            </div>
+
+            <div class="rent-modal-body">
+                <!-- Section 1: Item Summary -->
+                <div class="rent-section item-summary-card">
+                    <div class="item-summary-image">
+                        <img id="rentItemImage" src="" alt="Item">
+                    </div>
+                    <div class="item-summary-details">
+                        <h3 id="rentItemName">Item Name</h3>
+                        <p class="item-category"><span class="icon">🏷️</span> <span
+                                id="rentItemCategory">Category</span></p>
+                        <p class="item-price"><span class="icon">💰</span> ₹<span id="rentItemPrice">0</span> <small
+                                id="rentItemUnit">per day</small></p>
+                        <p class="item-availability"><span id="rentItemAvailability">🟢 Available</span></p>
+                    </div>
+                </div>
+
+                <!-- Section 2: Rental Details -->
+                <div class="rent-section">
+                    <h3 class="section-title">📅 Rental Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity Needed</label>
+                        <div class="quantity-control">
+                            <button type="button" class="qty-btn" id="decreaseQty">−</button>
+                            <input type="number" id="quantity" value="1" min="1" readonly>
+                            <button type="button" class="qty-btn" id="increaseQty">+</button>
+                        </div>
+                    </div>
+                    <div class="total-amount-box">
+                        <span>Total Amount:</span>
+                        <span class="total-price">₹<span id="totalAmount">0</span></span>
+                    </div>
+                </div>
+
+                <!-- Section 3: Price & Negotiation -->
+                <div class="rent-section negotiation-section">
+                    <h3 class="section-title">💬 Price & Negotiation (Optional)</h3>
+                    <div class="form-group">
+                        <label for="yourPrice">Your Price (Optional)</label>
+                        <input type="number" id="yourPrice" placeholder="Enter the price you want to offer">
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="requestDiscount">
+                            <span>Request Discount</span>
+                        </label>
+                    </div>
+                    <div id="discountReasonSection" class="discount-reason hidden">
+                        <div class="form-group">
+                            <label for="discountReason">Reason for Discount</label>
+                            <select id="discountReason">
+                                <option value="">Select reason...</option>
+                                <option value="long-term">Long-term rental</option>
+                                <option value="bulk">Bulk quantity</option>
+                                <option value="nearby">Nearby location</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="messageToOwner">Message to Owner (Optional)</label>
+                        <textarea id="messageToOwner" rows="3"
+                            placeholder="I need this for 5 days. Please reduce price if possible."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 4: Delivery & Location -->
+                <div class="rent-section">
+                    <h3 class="section-title">🚚 Delivery & Location</h3>
+                    <div class="form-group">
+                        <label>Delivery Option</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="delivery" value="pickup" checked>
+                                <span>🚶 Self Pickup</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="delivery" value="home">
+                                <span>🏠 Home Delivery</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="usageLocation">Usage Location</label>
+                        <input type="text" id="usageLocation" placeholder="Enter village / area name" required>
+                    </div>
+                </div>
+
+                <!-- Section 5: Payment Preference -->
+                <div class="rent-section">
+                    <h3 class="section-title">💳 Payment Preference</h3>
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="payment" value="cash" checked>
+                                <span>💵 Cash</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="payment" value="online">
+                                <span>📱 Online</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="payment" value="after-return">
+                                <span>⏰ Pay after return</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 6: Agreement -->
+                <div class="rent-section agreement-section">
+                    <label class="checkbox-label agreement-checkbox">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span>I agree to return the item on time and in good condition</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Bottom Action Bar -->
+            <div class="rent-modal-footer">
+                <button type="button" class="btn-cancel-rent" id="cancelRent">Cancel</button>
+                <button type="button" class="btn-send-request" id="sendRentRequest">
+                    <span class="btn-icon">📤</span> Send Rent Request
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Firebase Import Map -->
     <script type="importmap">
