@@ -5,7 +5,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    signOut
+    signOut,
+    updateProfile
 } from "firebase/auth";
 import {
     doc,
@@ -282,7 +283,11 @@ async function handleRegister(e) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-
+        // Update Firebase Auth Profile with display name
+        await updateProfile(user, {
+            displayName: name
+        });
+        console.log("✅ Firebase Auth profile updated with displayName:", name);
 
         submitBtn.textContent = 'Saving Profile...';
         // Prepare User Data for Firestore

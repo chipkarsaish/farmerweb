@@ -11,7 +11,9 @@ import {
     getDocs,
     query,
     where,
-    serverTimestamp
+    serverTimestamp,
+    doc,
+    getDoc
 } from "firebase/firestore";
 
 import {
@@ -77,9 +79,26 @@ document.addEventListener("DOMContentLoaded", () => {
             displayName: user.displayName
         });
 
+        // If displayName is not set, fetch from Firestore (for users registered before the fix)
+        if (!user.displayName) {
+            console.log("🔍 Fetching user name from Firestore...");
+            try {
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    // Attach the name to currentUser for use in the app
+                    currentUser.displayName = userData.name || "Farmer";
+                    console.log("✅ Fetched name from Firestore:", currentUser.displayName);
+                }
+            } catch (error) {
+                console.error("❌ Error fetching user data from Firestore:", error);
+            }
+        }
+
         document.getElementById("userInitials").textContent =
-            user.displayName
-                ? user.displayName.split(" ").map(n => n[0]).join("").toUpperCase()
+            currentUser.displayName
+                ? currentUser.displayName.split(" ").map(n => n[0]).join("").toUpperCase()
                 : "F";
 
         setupEventListeners();
@@ -158,6 +177,7 @@ async function handleFormSubmit(e) {
 
         await addDoc(collection(db, "rental_listings"), {
             ...formData,
+
             ownerId: currentUser.uid,
             ownerName: currentUser.displayName || "Farmer",
             photos: [],
