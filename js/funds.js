@@ -1,11 +1,142 @@
 // ========================================
-// FUNDS PAGE JAVASCRIPT
+// FUNDS PAGE JAVASCRIPT - Firebase Powered
 // ========================================
+
+import { db, auth } from "./firebase-config.js";
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    getDoc
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
+// State
+let currentUser = null;
+let financialData = null;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function () {
-    initializeFundsPage();
+    console.log("🚀 Funds page loading...");
+
+    onAuthStateChanged(auth, async (user) => {
+        console.log("🔐 Auth state changed:", user ? "User logged in" : "No user");
+
+        if (!user) {
+            console.warn("⚠️ No user authenticated, redirecting to login...");
+            window.location.href = "../index.html";
+            return;
+        }
+
+        currentUser = user;
+        console.log("✅ User authenticated:", {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName
+        });
+
+        // Set user initials
+        document.getElementById("userInitials").textContent =
+            user.displayName
+                ? user.displayName.split(" ").map(n => n[0]).join("").toUpperCase()
+                : "F";
+
+        // Load financial data
+        await loadFinancialData();
+
+        // Initialize UI components
+        initializeFundsPage();
+    });
 });
+
+// ========================================
+// FIREBASE DATA LOADING
+// ========================================
+
+async function loadFinancialData() {
+    try {
+        console.log("🔍 Loading financial data for user:", currentUser.uid);
+
+        // Query fund_loan collection for this user's data
+        const q = query(
+            collection(db, "fund_loan"),
+            where("userId", "==", currentUser.uid)
+        );
+
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+            console.log("📭 No financial data found, using defaults");
+            financialData = getDefaultFinancialData();
+        } else {
+            // Get the first document (assuming one record per user)
+            const docData = snapshot.docs[0].data();
+            financialData = docData;
+            console.log("✅ Financial data loaded:", financialData);
+        }
+
+        // Update the UI with the data
+        updateFinancialSnapshot();
+
+    } catch (error) {
+        console.error("❌ Error loading financial data:", error);
+        financialData = getDefaultFinancialData();
+        updateFinancialSnapshot();
+    }
+}
+
+function getDefaultFinancialData() {
+    return {
+        creditLimit: 50000,
+        activeLoans: 0,
+        outstandingAmount: 0,
+        eligibleSubsidies: 0,
+        carbonCredits: 0,
+        carbonValue: 0
+    };
+}
+
+function updateFinancialSnapshot() {
+    console.log("🎨 Updating financial snapshot UI");
+
+    // Update Credit Limit
+    const creditEl = document.querySelector('.card-credit .snapshot-value');
+    if (creditEl) {
+        creditEl.textContent = `₹${(financialData.creditLimit || 0).toLocaleString()}`;
+    }
+
+    // Update Active Loans
+    const loansValueEl = document.querySelector('.card-loans .snapshot-value');
+    const loansDetailEl = document.querySelector('.card-loans .snapshot-detail');
+    if (loansValueEl) {
+        const loanCount = financialData.activeLoans || 0;
+        loansValueEl.textContent = `${loanCount} Loan${loanCount !== 1 ? 's' : ''}`;
+    }
+    if (loansDetailEl) {
+        loansDetailEl.textContent = `₹${(financialData.outstandingAmount || 0).toLocaleString()} outstanding`;
+    }
+
+    // Update Eligible Subsidies
+    const subsidiesEl = document.querySelector('.card-subsidies .snapshot-value');
+    if (subsidiesEl) {
+        const schemeCount = financialData.eligibleSubsidies || 0;
+        subsidiesEl.textContent = `${schemeCount} Scheme${schemeCount !== 1 ? 's' : ''}`;
+    }
+
+    // Update Carbon Credits
+    const carbonValueEl = document.querySelector('.card-carbon .snapshot-value');
+    const carbonDetailEl = document.querySelector('.card-carbon .snapshot-detail');
+    if (carbonValueEl) {
+        carbonValueEl.textContent = `${financialData.carbonCredits || 0} Credits`;
+    }
+    if (carbonDetailEl) {
+        carbonDetailEl.textContent = `= ₹${(financialData.carbonValue || 0).toLocaleString()}`;
+    }
+
+    console.log("✅ Financial snapshot updated");
+}
 
 function initializeFundsPage() {
     // Initialize all components
