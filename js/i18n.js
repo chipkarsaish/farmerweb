@@ -14,6 +14,12 @@ class I18n {
             // Automatically detect base path for GitHub Pages or local server
             let basePath = '/translations/';
 
+            // Check if we're in a subdirectory (like html/)
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/html/')) {
+                basePath = '../translations/';
+            }
+
             // If on GitHub Pages, extract repository name from URL
             if (window.location.hostname.includes('github.io')) {
                 const pathParts = window.location.pathname.split('/').filter(p => p);
@@ -25,6 +31,7 @@ class I18n {
             const response = await fetch(`${basePath}${lang}.json`);
             if (!response.ok) throw new Error(`Failed to load ${lang}.json`);
             this.translations[lang] = await response.json();
+            console.log(`✅ Loaded translations for ${lang}:`, this.translations[lang]);
             return true;
         } catch (error) {
             console.error(`Error loading translations for ${lang}:`, error);
