@@ -44,8 +44,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Listen for auth state changes
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
-        console.log("🔐 Current user:", user ? user.email : "Not logged in");
+        if (user) {
+            console.log("🔐 Current user logged in:", user.email, "UID:", user.uid);
+        } else {
+            console.log("🔐 No user logged in");
+        }
     });
+
+    // Also check current user immediately
+    currentUser = auth.currentUser;
+    if (currentUser) {
+        console.log("🔐 Initial user check:", currentUser.email);
+    }
 });
 
 // ===============================
@@ -475,14 +485,21 @@ sendRentRequestBtn.addEventListener('click', async () => {
     };
 
     // Check if user is logged in
+    console.log("🔍 Checking auth state. currentUser:", currentUser);
+
     if (!currentUser) {
+        console.error("❌ No user logged in!");
         alert('⚠️ Please log in to send a rent request');
         return;
     }
 
+    console.log("✅ User is logged in:", currentUser.email);
+
     // Get farmer name from localStorage
     const userData = JSON.parse(localStorage.getItem("farmerConnectUser"));
     const farmerName = userData?.name || currentUser.displayName || "Unknown";
+
+    console.log("👤 Farmer name:", farmerName);
 
     // Add farmer information
     rentRequest.farmerId = currentUser.uid;
@@ -493,6 +510,7 @@ sendRentRequestBtn.addEventListener('click', async () => {
     rentRequest.updatedAt = new Date().toISOString();
 
     console.log('📤 Sending rent request:', rentRequest);
+    console.log('🔥 Attempting to save to Firestore...');
 
     try {
         // Save to Firestore
@@ -504,7 +522,8 @@ sendRentRequestBtn.addEventListener('click', async () => {
         closeRentModal();
     } catch (error) {
         console.error("❌ Error saving rent request:", error);
+        console.error("❌ Error code:", error.code);
+        console.error("❌ Error message:", error.message);
         alert(`Failed to send request: ${error.message}\n\nPlease try again.`);
     }
 });
-
