@@ -45,14 +45,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 // ===============================
 async function fetchAmenitiesFromFirebase() {
     try {
-        const snapshot = await getDocs(collection(db, "amenities"));
+        console.log("🔍 Fetching rental listings from Firestore...");
+        const snapshot = await getDocs(collection(db, "rental_listings"));
 
-        amenitiesData = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        amenitiesData = snapshot.docs.map(doc => {
+            const data = doc.data();
+            // Map rental_listings fields to amenities card fields
+            return {
+                id: doc.id,
+                name: data.itemName,
+                category: data.category,
+                price: data.rentalRate,
+                priceUnit: data.priceUnit,
+                paymentOptions: data.paymentModes || [],
+                crops: data.cropCompatibility?.join(", ") || "All Crops",
+                rating: data.rating || 0,
+                supplier: data.ownerName || "Unknown",
+                availability: data.status === "active" ? "available" : data.status === "rented" ? "booked" : "limited",
+                image: data.photos?.[0] || "../public/farmer.png",
+                ...data // Include all other fields
+            };
+        });
 
-        console.log("✅ Amenities loaded:", amenitiesData.length);
+        console.log("✅ Rental listings loaded:", amenitiesData.length);
+        console.log("📦 Sample item:", amenitiesData[0]);
     } catch (error) {
         console.error("❌ Firestore fetch failed:", error);
         amenitiesGrid.innerHTML = "<p class='empty-msg'>Failed to load amenities</p>";
