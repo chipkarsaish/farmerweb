@@ -48,22 +48,24 @@ async function fetchApprovedRentals() {
 
         const querySnapshot = await getDocs(q);
 
-        // Filter for pending and approved only
+        // Filter for pending, approved, and rejected
         approvedRentals = querySnapshot.docs
             .map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }))
-            .filter(rental => rental.status === 'approved' || rental.status === 'pending')
+            .filter(rental => ['approved', 'pending', 'rejected'].includes(rental.status))
             .sort((a, b) => {
-                // Sort: pending first, then approved
-                if (a.status === 'pending' && b.status === 'approved') return -1;
-                if (a.status === 'approved' && b.status === 'pending') return 1;
+                // Sort: pending first, then approved, then rejected
+                const statusOrder = { pending: 1, approved: 2, rejected: 3 };
+                if (statusOrder[a.status] !== statusOrder[b.status]) {
+                    return statusOrder[a.status] - statusOrder[b.status];
+                }
                 // Then by date (newest first)
                 return new Date(b.createdAt) - new Date(a.createdAt);
             });
 
-        console.log(`✅ Loaded ${approvedRentals.length} rental requests (pending + approved)`);
+        console.log(`✅ Loaded ${approvedRentals.length} rental requests (pending + approved + rejected)`);
 
         if (approvedRentals.length === 0) {
             rentalsGrid.innerHTML = `
@@ -106,21 +108,37 @@ function createRentalCard(rental) {
 
     // Status styling
     const isPending = rental.status === 'pending';
-    const statusConfig = isPending ? {
-        borderColor: '#ffc107',
-        bgColor: '#fff3cd',
-        textColor: '#856404',
-        label: '🟡 Pending Approval',
-        gradientStart: '#fffbf0',
-        gradientEnd: '#fff8e1'
-    } : {
-        borderColor: '#4a7c2c',
-        bgColor: '#d4edda',
-        textColor: '#155724',
-        label: '✅ Approved',
-        gradientStart: '#f8f9fa',
-        gradientEnd: '#e9ecef'
-    };
+    const isRejected = rental.status === 'rejected';
+
+    let statusConfig;
+    if (isPending) {
+        statusConfig = {
+            borderColor: '#ffc107',
+            bgColor: '#fff3cd',
+            textColor: '#856404',
+            label: '🟡 Pending Approval',
+            gradientStart: '#fffbf0',
+            gradientEnd: '#fff8e1'
+        };
+    } else if (isRejected) {
+        statusConfig = {
+            borderColor: '#dc3545',
+            bgColor: '#f8d7da',
+            textColor: '#721c24',
+            label: '🔴 Rejected',
+            gradientStart: '#fff5f5',
+            gradientEnd: '#ffe5e5'
+        };
+    } else {
+        statusConfig = {
+            borderColor: '#4a7c2c',
+            bgColor: '#d4edda',
+            textColor: '#155724',
+            label: '✅ Approved',
+            gradientStart: '#f8f9fa',
+            gradientEnd: '#e9ecef'
+        };
+    }
 
     return `
         <div class="order-card" data-rental-id="${rental.id}" style="border-left: 4px solid ${statusConfig.borderColor}; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'">
@@ -196,6 +214,18 @@ function createRentalCard(rental) {
             </div>
             ` : ''}
             
+            ${isRejected ? `
+            <div style="background: #ffebee; padding: 10px 12px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid #dc3545;">
+                <div style="display: flex; align-items: start; gap: 8px;">
+                    <span style="font-size: 1rem;">❌</span>
+                    <div>
+                        <div style="font-size: 0.85rem; color: #c62828; font-weight: 600; margin-bottom: 4px;">Request Rejected</div>
+                        ${rental.rejectionReason ? `<div style="font-size: 0.8rem; color: #d32f2f;">Reason: ${rental.rejectionReason}</div>` : ''}
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+            
             ${rental.ownerName ? `
             <div style="background: #fff3cd; padding: 10px 12px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid #ffc107;">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -217,7 +247,7 @@ function createRentalCard(rental) {
                     <button onclick="viewRentalDetails('${rental.id}')" style="background: white; border: 1px solid ${statusConfig.borderColor}; color: ${statusConfig.borderColor}; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-weight: 500;" onmouseover="this.style.background='${statusConfig.borderColor}'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='${statusConfig.borderColor}'">
                         📄 Details
                     </button>
-                    ${!isPending ? `
+                    ${!isPending && !isRejected ? `
                     <button onclick="downloadReceipt('${rental.id}')" style="background: ${statusConfig.borderColor}; border: none; color: white; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-weight: 500;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
                         ⬇️ Receipt
                     </button>
