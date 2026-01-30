@@ -59,13 +59,24 @@ const avgRatingEl = document.getElementById("avgRating");
 // Init (AUTH SAFE)
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("🚀 Page loaded, waiting for auth...");
+
     onAuthStateChanged(auth, async (user) => {
+        console.log("🔐 Auth state changed:", user ? "User logged in" : "No user");
+
         if (!user) {
+            console.warn("⚠️ No user authenticated, redirecting to login...");
             window.location.href = "../index.html";
             return;
         }
 
         currentUser = user;
+        console.log("✅ User authenticated:", {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName
+        });
+
         document.getElementById("userInitials").textContent =
             user.displayName
                 ? user.displayName.split(" ").map(n => n[0]).join("").toUpperCase()
@@ -211,22 +222,33 @@ function getFormData() {
 // ===============================
 async function loadRentalListings() {
     try {
+        console.log("🔍 Loading rental listings...");
+        console.log("👤 Current user:", currentUser);
+        console.log("🆔 User UID:", currentUser?.uid);
+
         const q = query(
             collection(db, "rental_listings"),
             where("ownerId", "==", currentUser.uid)
         );
 
+        console.log("📊 Querying rental_listings where ownerId ==", currentUser.uid);
+
         const snapshot = await getDocs(q);
 
-        rentalListings = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        console.log("📦 Documents found:", snapshot.docs.length);
 
+        rentalListings = snapshot.docs.map(doc => {
+            const data = { id: doc.id, ...doc.data() };
+            console.log("📄 Item:", data);
+            return data;
+        });
+
+        console.log("✅ Total rental listings loaded:", rentalListings.length);
         renderItems();
 
     } catch (error) {
-        console.error("Error loading listings:", error);
+        console.error("❌ Error loading listings:", error);
+        console.error("Error details:", error.message);
     }
 }
 
@@ -234,19 +256,25 @@ async function loadRentalListings() {
 // Render
 // ===============================
 function renderItems() {
+    console.log("🎨 Rendering items...");
+    console.log("📋 Total items:", rentalListings.length);
+    console.log("🔍 Current view filter:", currentView);
 
     let items = rentalListings;
 
     if (currentView !== "all") {
         items = items.filter(item => item.status === currentView);
+        console.log(`🔎 Filtered to ${currentView}:`, items.length, "items");
     }
 
     if (items.length === 0) {
+        console.log("📭 No items to display, showing empty state");
         itemsGrid.innerHTML = "";
         emptyState.classList.remove("hidden");
         return;
     }
 
+    console.log("✅ Rendering", items.length, "cards");
     emptyState.classList.add("hidden");
     itemsGrid.innerHTML = items.map(createItemCard).join("");
 }
