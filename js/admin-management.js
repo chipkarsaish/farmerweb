@@ -1,8 +1,58 @@
-import { db } from './firebase-config.js';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { db, auth } from './firebase-config.js';
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const farmerTableBody = document.getElementById('farmerTableBody');
 const searchInput = document.getElementById('farmerSearch');
+
+// Add authentication check
+let currentUser = null;
+let isAdmin = false;
+
+// Wait for authentication before loading data
+onAuthStateChanged(auth, async (user) => {
+    console.log("🔐 Auth state changed:", user ? "User logged in" : "No user");
+
+    if (!user) {
+        console.warn("⚠️ No user authenticated, redirecting to login...");
+        window.location.href = "../../index.html";
+        return;
+    }
+
+    currentUser = user;
+    console.log("✅ User authenticated:", {
+        uid: user.uid,
+        email: user.email
+    });
+
+    // Check if user is admin
+    try {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            isAdmin = userData.role === "administrator";
+            console.log("👤 User role:", userData.role);
+            console.log("🔑 Is Admin:", isAdmin);
+
+            if (!isAdmin) {
+                alert("Access Denied: You must be an administrator to access this page.");
+                window.location.href = "../../index.html";
+                return;
+            }
+
+            // User is admin, load data
+            fetchFarmers();
+            fetchFunds();
+        } else {
+            console.error("❌ User document not found");
+            alert("User profile not found. Please contact support.");
+            window.location.href = "../../index.html";
+        }
+    } catch (error) {
+        console.error("❌ Error checking user role:", error);
+        alert("Error verifying permissions. Please try again.");
+    }
+});
 
 // Ensure the drawer toggle function is globally accessible
 window.toggleDrawer = function (show, name = '', id = '', role = '', crop = '', location = '', size = '') {
@@ -104,11 +154,8 @@ async function fetchFarmers() {
     }
 }
 
-// Initial fetch
-document.addEventListener('DOMContentLoaded', () => {
-    fetchFarmers();
-    fetchFunds();
-});
+// DOMContentLoaded is no longer needed - auth callback handles initialization
+// Data will be fetched after authentication is verified
 
 // Search Logic (Client-side filtering of the fetched table)
 if (searchInput) {
