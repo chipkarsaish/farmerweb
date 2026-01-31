@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../css/farmer-sidebar.css">
     <link rel="stylesheet" href="../css/availability-styles.css">
     <link rel="stylesheet" href="../css/language-switcher.css">
+    <link rel="stylesheet" href="../css/buy-now-modal.css">
 </head>
 
 <body class="dashboard-body">
@@ -447,9 +448,323 @@
         </div>
     </div>
 
+
+    <!-- Buy Now Modal -->
+    <div class="buy-now-modal hidden" id="buyNowModal">
+        <div class="buy-now-overlay" id="buyNowOverlay"></div>
+
+        <!-- Loading State -->
+        <div class="buy-now-loading hidden" id="buyNowLoading">
+            <div class="loading-spinner"></div>
+            <p>Processing your order...</p>
+        </div>
+
+        <div class="buy-now-container">
+            <!-- Progress Indicator -->
+            <div class="buy-now-progress">
+                <div class="progress-step active" data-step="1">
+                    <div class="progress-circle">1</div>
+                    <span>Confirm</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="progress-circle">2</div>
+                    <span>Address</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="progress-circle">3</div>
+                    <span>Payment</span>
+                </div>
+            </div>
+
+            <!-- Step 1: Product Confirmation -->
+            <div class="buy-now-step active" id="buyNowStep1">
+                <div class="step-header">
+                    <h2>Confirm Your Purchase</h2>
+                    <button class="close-modal-btn" onclick="closeBuyNowModal()">×</button>
+                </div>
+
+                <div class="step-content">
+                    <!-- Product Summary -->
+                    <div class="product-summary-card">
+                        <img id="buyProductImage" src="" alt="Product">
+                        <div class="product-info">
+                            <h3 id="buyProductName"></h3>
+                            <p class="seller-info">
+                                <span class="seller-icon">👨‍🌾</span>
+                                <span id="buySellerName"></span>
+                                <span id="buySellerLocation"></span>
+                            </p>
+                            <p class="product-price">
+                                <span class="price-label">Price:</span>
+                                <span class="price-value" id="buyProductPrice"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Quantity Selector -->
+                    <div class="quantity-section">
+                        <label>Quantity</label>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="updateBuyQuantity(-1)">−</button>
+                            <input type="number" id="buyQuantity" value="1" min="1" readonly>
+                            <button class="qty-btn" onclick="updateBuyQuantity(1)">+</button>
+                        </div>
+                        <p class="stock-info">Total available: <span id="buyStockAvailable"></span></p>
+                    </div>
+
+                    <!-- Price Negotiation -->
+                    <div class="negotiation-section">
+                        <label class="negotiation-toggle">
+                            <input type="checkbox" id="negotiationToggle" onchange="toggleNegotiation()">
+                            <span>☑️ Request better price</span>
+                        </label>
+                        <div class="negotiation-input hidden" id="negotiationInput">
+                            <input type="number" id="offerPrice" placeholder="Your offer price">
+                            <button class="btn-send-offer" onclick="sendPriceOffer()">Send Offer</button>
+                        </div>
+                    </div>
+
+                    <!-- Price Breakdown -->
+                    <div class="price-breakdown-card">
+                        <h4>Price Breakdown</h4>
+                        <div class="breakdown-row">
+                            <span>Item Price</span>
+                            <span id="breakdownItemPrice">₹0</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Quantity</span>
+                            <span id="breakdownQuantity">1</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Subtotal</span>
+                            <span id="breakdownSubtotal">₹0</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Delivery Fee</span>
+                            <span id="breakdownDelivery">₹50</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Platform Fee</span>
+                            <span id="breakdownPlatform">₹20</span>
+                        </div>
+                        <div class="breakdown-divider"></div>
+                        <div class="breakdown-row breakdown-total">
+                            <span>Total Payable</span>
+                            <span id="breakdownTotal">₹0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn-cancel" onclick="closeBuyNowModal()">Cancel</button>
+                    <button class="btn-primary" onclick="proceedToAddress()">Continue to Address</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Address Selection -->
+            <div class="buy-now-step" id="buyNowStep2">
+                <div class="step-header">
+                    <button class="back-btn" onclick="goToStep(1)">← Back</button>
+                    <h2>Delivery Address</h2>
+                    <button class="close-modal-btn" onclick="closeBuyNowModal()">×</button>
+                </div>
+
+                <div class="step-content">
+                    <!-- Address Form -->
+                    <div class="address-form">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="addressName" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="tel" id="addressMobile" placeholder="10-digit mobile number">
+                        </div>
+                        <div class="form-group">
+                            <label>Address Line 1</label>
+                            <input type="text" id="addressLine1" placeholder="House No., Building Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Address Line 2</label>
+                            <input type="text" id="addressLine2" placeholder="Road name, Area, Colony">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" id="addressCity" placeholder="City">
+                            </div>
+                            <div class="form-group">
+                                <label>Pincode</label>
+                                <input type="text" id="addressPincode" placeholder="6-digit pincode">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Options -->
+                    <div class="delivery-options">
+                        <h4>Delivery Option</h4>
+                        <label class="radio-option">
+                            <input type="radio" name="deliveryOption" value="home" checked>
+                            <div class="option-content">
+                                <span class="option-icon">🏠</span>
+                                <div>
+                                    <strong>Home Delivery</strong>
+                                    <p>Delivered to your doorstep</p>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="deliveryOption" value="pickup">
+                            <div class="option-content">
+                                <span class="option-icon">🚜</span>
+                                <div>
+                                    <strong>Farm Pickup</strong>
+                                    <p>Collect from farmer's location</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Delivery Details -->
+                    <div class="delivery-details-card">
+                        <div class="detail-row">
+                            <span>📅 Estimated Delivery</span>
+                            <span id="estimatedDelivery"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span>🚚 Delivery Charge</span>
+                            <span id="deliveryCharge">₹50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn-cancel" onclick="goToStep(1)">Back</button>
+                    <button class="btn-primary" onclick="proceedToPayment()">Continue to Payment</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Payment Selection -->
+            <div class="buy-now-step" id="buyNowStep3">
+                <div class="step-header">
+                    <button class="back-btn" onclick="goToStep(2)">← Back</button>
+                    <h2>Payment Method</h2>
+                    <button class="close-modal-btn" onclick="closeBuyNowModal()">×</button>
+                </div>
+
+                <div class="step-content">
+                    <div class="payment-methods">
+                        <!-- UPI -->
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="upi" checked>
+                            <div class="payment-card">
+                                <div class="payment-icon">📱</div>
+                                <div class="payment-info">
+                                    <strong>UPI</strong>
+                                    <p>GPay, PhonePe, Paytm</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Card -->
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="card">
+                            <div class="payment-card">
+                                <div class="payment-icon">💳</div>
+                                <div class="payment-info">
+                                    <strong>Debit / Credit Card</strong>
+                                    <p>Visa, Mastercard, RuPay</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Net Banking -->
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="netbanking">
+                            <div class="payment-card">
+                                <div class="payment-icon">🏦</div>
+                                <div class="payment-info">
+                                    <strong>Net Banking</strong>
+                                    <p>All major banks</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- COD -->
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="cod">
+                            <div class="payment-card">
+                                <div class="payment-icon">💵</div>
+                                <div class="payment-info">
+                                    <strong>Cash on Delivery</strong>
+                                    <p>Pay when you receive</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Final Amount -->
+                    <div class="final-amount-card">
+                        <span>Amount to Pay</span>
+                        <span class="final-amount" id="finalAmount">₹0</span>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn-cancel" onclick="goToStep(2)">Back</button>
+                    <button class="btn-primary btn-pay" onclick="processPayment()">
+                        Pay <span id="payButtonAmount">₹0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Order Success -->
+            <div class="buy-now-step" id="buyNowStep4">
+                <div class="step-content success-content">
+                    <div class="success-animation">
+                        <div class="success-checkmark">✓</div>
+                    </div>
+                    <h2 class="success-title">Order Placed Successfully! 🎉</h2>
+
+                    <div class="order-details-card">
+                        <div class="order-detail-row">
+                            <span>Order ID</span>
+                            <strong id="successOrderId"></strong>
+                        </div>
+                        <div class="order-detail-row">
+                            <span>Delivery Date</span>
+                            <strong id="successDeliveryDate"></strong>
+                        </div>
+                        <div class="order-detail-row">
+                            <span>Total Amount</span>
+                            <strong id="successAmount"></strong>
+                        </div>
+                        <div class="order-detail-row">
+                            <span>Seller Contact</span>
+                            <strong id="successSellerContact"></strong>
+                        </div>
+                    </div>
+
+                    <div class="success-message">
+                        <p>Your order has been confirmed and the seller has been notified.</p>
+                        <p>You will receive updates via SMS and notifications.</p>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn-outline" onclick="trackOrder()">📦 Track Order</button>
+                    <button class="btn-primary" onclick="continueShopping()">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/i18n.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/availability.js"></script>
+    <script src="../js/buy-now-flow.js"></script>
 </body>
 
 </html>
