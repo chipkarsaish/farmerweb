@@ -1,9 +1,13 @@
 // ===============================
-// PRICE AND QUANTITY FILTER HANDLERS
+// FILTER MODAL AND HANDLERS
 // ===============================
 
 // Initialize filter controls
 document.addEventListener('DOMContentLoaded', function () {
+    const filterToggleBtn = document.getElementById("filterToggleBtn");
+    const filterModalOverlay = document.getElementById("filterModalOverlay");
+    const filterModalClose = document.getElementById("filterModalClose");
+    const applyFiltersBtn = document.getElementById("applyFiltersBtn");
     const minPriceInput = document.getElementById("minPrice");
     const maxPriceInput = document.getElementById("maxPrice");
     const priceRangeMin = document.getElementById("priceRangeMin");
@@ -13,6 +17,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const minQuantitySelect = document.getElementById("minQuantity");
     const sortBySelect = document.getElementById("sortBy");
     const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+
+    // Open filter modal
+    if (filterToggleBtn) {
+        filterToggleBtn.addEventListener("click", () => {
+            filterModalOverlay.classList.remove("hidden");
+        });
+    }
+
+    // Close filter modal
+    if (filterModalClose) {
+        filterModalClose.addEventListener("click", () => {
+            filterModalOverlay.classList.add("hidden");
+        });
+    }
+
+    // Close on overlay click
+    if (filterModalOverlay) {
+        filterModalOverlay.addEventListener("click", (e) => {
+            if (e.target === filterModalOverlay) {
+                filterModalOverlay.classList.add("hidden");
+            }
+        });
+    }
+
+    // Apply filters and close
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener("click", () => {
+            filterModalOverlay.classList.add("hidden");
+        });
+    }
 
     // Price Range Handlers
     if (minPriceInput && priceRangeMin) {
