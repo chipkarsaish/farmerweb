@@ -144,6 +144,60 @@
 
                 </div>
 
+                <!-- Filter Panel -->
+                <div class="filter-panel" id="filterPanel">
+                    <div class="filter-header">
+                        <h3>🔍 Filters</h3>
+                        <button class="btn-clear-filters" id="clearFiltersBtn">Clear All</button>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">💰 Price Range (₹/day)</label>
+                        <div class="price-range-container">
+                            <div class="price-inputs">
+                                <input type="number" id="minPrice" placeholder="Min" min="0" class="price-input">
+                                <span class="price-separator">-</span>
+                                <input type="number" id="maxPrice" placeholder="Max" min="0" class="price-input">
+                            </div>
+                            <div class="price-slider-container">
+                                <input type="range" id="priceRangeMin" min="0" max="5000" value="0" step="50"
+                                    class="price-slider">
+                                <input type="range" id="priceRangeMax" min="0" max="5000" value="5000" step="50"
+                                    class="price-slider">
+                            </div>
+                            <div class="price-labels">
+                                <span id="minPriceLabel">₹0</span>
+                                <span id="maxPriceLabel">₹5000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quantity Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">📦 Minimum Quantity Available</label>
+                        <select id="minQuantity" class="filter-select">
+                            <option value="">Any Quantity</option>
+                            <option value="1">1+</option>
+                            <option value="5">5+</option>
+                            <option value="10">10+</option>
+                            <option value="20">20+</option>
+                            <option value="50">50+</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort By -->
+                    <div class="filter-group">
+                        <label class="filter-label">🔄 Sort By</label>
+                        <select id="sortBy" class="filter-select">
+                            <option value="">Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="quantity-high">Quantity: High to Low</option>
+                            <option value="rating">Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
 
 
                 <!-- Active Filters Chips -->
@@ -333,6 +387,7 @@
     <script src="../js/common.js"></script>
     <script src="../js/farmer-sidebar.js"></script>
     <script type="module" src="../js/amenities.js"></script>
+    <script src="../js/amenities-filters.js"></script>
 </body>
 
 </html>

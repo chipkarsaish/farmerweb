@@ -16,6 +16,10 @@ let currentFilters = {};
 let displayedItems = 8;
 let currentUser = null; // Store current authenticated user
 
+// Expose to window for filter handlers
+window.currentFilters = currentFilters;
+window.renderAmenities = null; // Will be set after function definition
+
 // ===============================
 // DOM
 // ===============================
@@ -189,11 +193,18 @@ function renderAmenities() {
         data = data.filter(i => i.price <= currentFilters.maxPrice);
     }
 
+    // Quantity
+    if (currentFilters.minQuantity != null) {
+        data = data.filter(i => (i.quantity || 0) >= currentFilters.minQuantity);
+    }
+
     // Sorting (FIXED)
     if (currentFilters.sort === "price-low") {
         data.sort((a, b) => a.price - b.price);
     } else if (currentFilters.sort === "price-high") {
         data.sort((a, b) => b.price - a.price);
+    } else if (currentFilters.sort === "quantity-high") {
+        data.sort((a, b) => (b.quantity || 0) - (a.quantity || 0));
     } else if (currentFilters.sort === "rating") {
         data.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     }
@@ -527,3 +538,6 @@ sendRentRequestBtn.addEventListener('click', async () => {
         alert(`Failed to send request: ${error.message}\n\nPlease try again.`);
     }
 });
+
+// Expose renderAmenities to window for filter handlers
+window.renderAmenities = renderAmenities;
