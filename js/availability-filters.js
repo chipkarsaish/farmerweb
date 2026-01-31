@@ -186,11 +186,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to apply filters to products
     function applyFiltersToProducts() {
-        // Call the main filtering function from availability.js if it exists
-        if (typeof window.filterProducts === 'function') {
-            window.filterProducts();
-        } else if (typeof window.renderProducts === 'function') {
-            window.renderProducts();
+        // Reload all product grids with new filters
+        if (typeof window.loadCropsData === 'function') {
+            window.loadCropsData();
+        }
+        if (typeof window.loadEquipmentData === 'function') {
+            window.loadEquipmentData();
+        }
+        if (typeof window.loadInputsData === 'function') {
+            window.loadInputsData();
         }
     }
 });

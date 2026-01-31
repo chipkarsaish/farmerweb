@@ -801,6 +801,27 @@ function applyFilters() {
 
 function filterResources(resources) {
     return resources.filter(resource => {
+        // Get filters from modal (window.currentFilters) if they exist
+        const modalFilters = window.currentFilters || {};
+        
+        // Price range filter
+        if (modalFilters.minPrice != null && modalFilters.minPrice > 0) {
+            if (resource.price < modalFilters.minPrice) return false;
+        }
+        if (modalFilters.maxPrice != null && modalFilters.maxPrice > 0 && modalFilters.maxPrice < 10000) {
+            if (resource.price > modalFilters.maxPrice) return false;
+        }
+        
+        // Quantity filter
+        if (modalFilters.minQuantity != null) {
+            if ((resource.quantity || 0) < modalFilters.minQuantity) return false;
+        }
+        
+        // Rating filter
+        if (modalFilters.minRating != null) {
+            if ((resource.rating || 0) < modalFilters.minRating) return false;
+        }
+        
         // Filter by status
         if (activeFilters.status.length > 0 && !activeFilters.status.includes(resource.status)) {
             return false;
@@ -1078,3 +1099,4 @@ window.filterProducts = function() {
     // The actual filtering logic should be in the existing render functions
     console.log('Filters applied:', window.currentFilters);
 };
+
