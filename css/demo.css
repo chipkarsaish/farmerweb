@@ -285,3 +285,58 @@ body {
         width: 100%;
     }
 }
+/* Language Switcher in Header */
+.demo-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.demo-header-container .language-switcher {
+    margin-left: auto;
+}
+
+/* Video Language Label */
+.video-language-label {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.video-language-label span {
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+.current-language {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.current-language span {
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+/* Video Player Wrapper */
+.video-player-wrapper {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .demo-header-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .demo-header-container .language-switcher {
+        margin-left: 0;
+        justify-content: center;
+    }
+}
