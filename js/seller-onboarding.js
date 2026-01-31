@@ -389,32 +389,43 @@ window.addEventListener('DOMContentLoaded', function () {
 
 // Logout handler
 const logoutBtn = document.getElementById('logoutBtn');
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', function () {
-        if (confirm('Are you sure you want to logout?')) {
-            // Clear state
-            sellerState = {
-                currentScreen: 'screenLanding',
-                mobile: null,
-                otpVerified: false,
-                sellerType: null,
-                profile: {},
-                kyc: {},
-                bankDetails: {},
-                products: [],
-                orders: [],
-                earnings: 0
-            };
+const logoutBtnHeader = document.getElementById('logoutBtnHeader');
 
-            // In production, sign out from Firebase
-            window.location.href = 'farmer-dashboard.html';
-        }
+function handleLogout() {
+    if (confirm('Are you sure you want to logout?')) {
+        // Clear state
+        sellerState = {
+            currentScreen: 'screenLanding',
+            mobile: null,
+            otpVerified: false,
+            sellerType: null,
+            profile: {},
+            kyc: {},
+            bankDetails: {},
+            products: [],
+            orders: [],
+            earnings: 0
+        };
+
+        // In production, sign out from Firebase
+        window.location.href = 'farmer-dashboard.html';
+    }
+}
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', handleLogout);
+}
+
+if (logoutBtnHeader) {
+    logoutBtnHeader.addEventListener('click', function (e) {
+        e.preventDefault();
+        handleLogout();
     });
 }
 
 // Mobile sidebar toggle
 const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
-const sidebar = document.getElementById('sidebar');
+const sidebar = document.querySelector('.farmer-sidebar');
 
 if (mobileSidebarToggle && sidebar) {
     mobileSidebarToggle.addEventListener('click', function () {
