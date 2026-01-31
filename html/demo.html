@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platform Demo - FarmerConnect</title>
     <link rel="stylesheet" href="../css/demo.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
 </head>
 
 <body>
@@ -17,6 +18,13 @@
                 <span>Back to Dashboard</span>
             </a>
             <h1>Platform Demo</h1>
+
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="hi">हिंदी</button>
+                <button class="lang-btn" data-lang="mr">मराठी</button>
+            </div>
         </div>
     </header>
 
@@ -26,18 +34,24 @@
             <!-- Demo Video Section -->
             <section class="video-section">
                 <div class="video-container">
-                    <div class="video-placeholder">
+                    <!-- Video Placeholder (shown when no video is available) -->
+                    <div class="video-placeholder" id="videoPlaceholder">
                         <div class="placeholder-icon">🎥</div>
                         <h2>Demo Video Coming Soon</h2>
                         <p>We're preparing an exciting demo video to showcase all the features of FarmerConnect
                             platform.</p>
                         <p class="placeholder-note">The video will be added here shortly.</p>
+                        <p class="current-language">Current Language: <span id="currentLangName">English</span></p>
                     </div>
-                    <!-- Uncomment when video is ready -->
-                    <!-- <video controls class="demo-video">
-                        <source src="../videos/demo.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video> -->
+
+                    <!-- Video Player (hidden by default, shown when video is available) -->
+                    <div class="video-player-wrapper" id="videoPlayerWrapper" style="display: none;">
+                        <video controls class="demo-video" id="demoVideo">
+                            <source id="videoSource" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="video-language-label">Language: <span id="videoLangName">English</span></p>
+                    </div>
                 </div>
             </section>
 
