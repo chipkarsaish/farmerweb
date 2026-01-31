@@ -1070,3 +1070,11 @@ function rateProduct(productId) {
     // Navigate to product feedback page with product ID
     window.location.href = `product-feedback.html?productId=${productId}`;
 }
+
+// Expose filters globally for filter handlers
+window.currentFilters = window.currentFilters || {};
+window.filterProducts = function() {
+    // This will be called by availability-filters.js
+    // The actual filtering logic should be in the existing render functions
+    console.log('Filters applied:', window.currentFilters);
+};

@@ -369,6 +369,154 @@
         </div>
     </main>
 
+    <!-- Filter Modal Sidebar -->
+    <div class="filter-modal-overlay hidden" id="filterModalOverlay">
+        <div class="filter-modal-sidebar" id="filterModalSidebar">
+            <div class="filter-modal-header">
+                <h2>Filters</h2>
+                <button class="filter-modal-close" id="filterModalClose">✕</button>
+            </div>
+
+            <div class="filter-modal-body">
+                <!-- Price Range Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">💰 Price Range (₹)</h3>
+                    <div class="price-range-container">
+                        <div class="price-inputs">
+                            <input type="number" id="minPrice" placeholder="Min" min="0" class="price-input">
+                            <span class="price-separator">-</span>
+                            <input type="number" id="maxPrice" placeholder="Max" min="0" class="price-input">
+                        </div>
+                        <div class="price-slider-container">
+                            <input type="range" id="priceRangeMin" min="0" max="10000" value="0" step="100"
+                                class="price-slider">
+                            <input type="range" id="priceRangeMax" min="0" max="10000" value="10000" step="100"
+                                class="price-slider">
+                        </div>
+                        <div class="price-labels">
+                            <span id="minPriceLabel">₹0</span>
+                            <span id="maxPriceLabel">₹10000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quantity Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">📦 Minimum Quantity</h3>
+                    <select id="minQuantity" class="filter-select">
+                        <option value="">Any Quantity</option>
+                        <option value="1">1+ kg/units</option>
+                        <option value="10">10+ kg/units</option>
+                        <option value="50">50+ kg/units</option>
+                        <option value="100">100+ kg/units</option>
+                        <option value="500">500+ kg/units</option>
+                    </select>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">⭐ Minimum Rating</h3>
+                    <div class="rating-filter-options">
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="" checked>
+                            <span class="rating-label">Any Rating</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="4">
+                            <span class="rating-label">⭐⭐⭐⭐ 4+ Stars</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="3">
+                            <span class="rating-label">⭐⭐⭐ 3+ Stars</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="2">
+                            <span class="rating-label">⭐⭐ 2+ Stars</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Availability Status -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">Availability Status</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="availability" value="available" checked>
+                            <span class="checkbox-label">Available Now</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="availability" value="reserved">
+                            <span class="checkbox-label">Reserved</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="availability" value="unavailable">
+                            <span class="checkbox-label">Unavailable</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Condition -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">Condition</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="condition" value="good" checked>
+                            <span class="status-indicator status-good"></span>
+                            <span class="checkbox-label">Good</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="condition" value="maintenance">
+                            <span class="status-indicator status-maintenance"></span>
+                            <span class="checkbox-label">Maintenance Soon</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="condition" value="poor">
+                            <span class="status-indicator status-poor"></span>
+                            <span class="checkbox-label">Poor</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Ownership -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">Ownership</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="ownership" value="individual" checked>
+                            <span class="checkbox-label">Individual</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="ownership" value="group" checked>
+                            <span class="checkbox-label">Group</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="ownership" value="platform">
+                            <span class="checkbox-label">Platform</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Sort By -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">🔄 Sort By</h3>
+                    <select id="sortBy" class="filter-select">
+                        <option value="">Default</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="quantity-high">Quantity: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-modal-footer">
+                <button class="btn-clear-filters" id="clearFiltersBtn">Clear All</button>
+                <button class="btn-apply-filters" id="applyFiltersBtn">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Reservation Modal -->
     <div class="modal hidden" id="reservationModal">
         <div class="modal-overlay" id="modalOverlay"></div>
@@ -769,6 +917,7 @@
     <script src="../js/common.js"></script>
     <script src="../js/availability.js"></script>
     <script src="../js/buy-now-flow.js"></script>
+    <script src="../js/availability-filters.js"></script>
 </body>
 
 </html>
