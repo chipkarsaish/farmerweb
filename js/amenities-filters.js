@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const minQuantitySelect = document.getElementById("minQuantity");
     const sortBySelect = document.getElementById("sortBy");
     const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+    const ratingInputs = document.querySelectorAll('input[name="minRating"]');
+    const availabilityInputs = document.querySelectorAll('input[name="availability"]');
+    const conditionInputs = document.querySelectorAll('input[name="condition"]');
+    const ownershipInputs = document.querySelectorAll('input[name="ownership"]');
 
     // Open filter modal
     if (filterToggleBtn) {
@@ -103,6 +107,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Rating Filter
+    ratingInputs.forEach(input => {
+        input.addEventListener("change", (e) => {
+            if (window.currentFilters) {
+                window.currentFilters.minRating = e.target.value ? parseFloat(e.target.value) : null;
+                if (window.renderAmenities) window.renderAmenities();
+            }
+        });
+    });
+
+    // Availability Filter
+    availabilityInputs.forEach(input => {
+        input.addEventListener("change", () => {
+            if (window.currentFilters) {
+                const selected = Array.from(availabilityInputs)
+                    .filter(i => i.checked)
+                    .map(i => i.value);
+                window.currentFilters.availability = selected.length > 0 ? selected : null;
+                if (window.renderAmenities) window.renderAmenities();
+            }
+        });
+    });
+
+    // Condition Filter
+    conditionInputs.forEach(input => {
+        input.addEventListener("change", () => {
+            if (window.currentFilters) {
+                const selected = Array.from(conditionInputs)
+                    .filter(i => i.checked)
+                    .map(i => i.value);
+                window.currentFilters.condition = selected.length > 0 ? selected : null;
+                if (window.renderAmenities) window.renderAmenities();
+            }
+        });
+    });
+
+    // Ownership Filter
+    ownershipInputs.forEach(input => {
+        input.addEventListener("change", () => {
+            if (window.currentFilters) {
+                const selected = Array.from(ownershipInputs)
+                    .filter(i => i.checked)
+                    .map(i => i.value);
+                window.currentFilters.ownership = selected.length > 0 ? selected : null;
+                if (window.renderAmenities) window.renderAmenities();
+            }
+        });
+    });
+
     // Sort By
     if (sortBySelect) {
         sortBySelect.addEventListener("change", (e) => {
@@ -125,6 +178,20 @@ document.addEventListener('DOMContentLoaded', function () {
             if (maxPriceLabel) maxPriceLabel.textContent = "₹5000";
             if (minQuantitySelect) minQuantitySelect.value = "";
             if (sortBySelect) sortBySelect.value = "";
+
+            // Reset rating
+            ratingInputs.forEach(input => input.checked = false);
+
+            // Reset checkboxes to default
+            availabilityInputs.forEach(input => {
+                input.checked = input.value === "available";
+            });
+            conditionInputs.forEach(input => {
+                input.checked = input.value === "good";
+            });
+            ownershipInputs.forEach(input => {
+                input.checked = input.value === "individual" || input.value === "group";
+            });
 
             // Clear filters
             if (window.currentFilters) {

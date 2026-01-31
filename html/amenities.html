@@ -220,6 +220,89 @@
                     </select>
                 </div>
 
+                <!-- Rating Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">⭐ Minimum Rating</h3>
+                    <div class="rating-filter-options">
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="">
+                            <span class="rating-label">Any Rating</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="4">
+                            <span class="rating-label">⭐⭐⭐⭐ 4+ Stars</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="3">
+                            <span class="rating-label">⭐⭐⭐ 3+ Stars</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="minRating" value="2">
+                            <span class="rating-label">⭐⭐ 2+ Stars</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Availability Status -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">Availability Status</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="availability" value="available" checked>
+                            <span class="checkbox-label">Available Now</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="availability" value="reserved">
+                            <span class="checkbox-label">Reserved</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="availability" value="unavailable">
+                            <span class="checkbox-label">Unavailable</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Condition -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">Condition</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="condition" value="good" checked>
+                            <span class="status-indicator status-good"></span>
+                            <span class="checkbox-label">Good</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="condition" value="maintenance">
+                            <span class="status-indicator status-maintenance"></span>
+                            <span class="checkbox-label">Maintenance Soon</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="condition" value="poor">
+                            <span class="status-indicator status-poor"></span>
+                            <span class="checkbox-label">Poor</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Ownership -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">Ownership</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="ownership" value="individual" checked>
+                            <span class="checkbox-label">Individual</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="ownership" value="group" checked>
+                            <span class="checkbox-label">Group</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="ownership" value="platform">
+                            <span class="checkbox-label">Platform</span>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Sort By -->
                 <div class="filter-section">
                     <h3 class="filter-section-title">🔄 Sort By</h3>
