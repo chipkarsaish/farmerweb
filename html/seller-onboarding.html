@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Your Products - AgriSahay</title>
+    <meta name="description" content="Start selling your agricultural products">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/farmer-sidebar.css">
+    <link rel="stylesheet" href="../css/seller-onboarding.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Mobile Sidebar Toggle -->
+    <button class="mobile-sidebar-toggle" id="mobileSidebarToggle">☰</button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-logo">🌾 AgriSahay</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="farmer-dashboard.html" class="sidebar-link">
+                <span class="sidebar-icon">📊</span>
+                <span class="sidebar-text">Dashboard</span>
+            </a>
+            <a href="availability.html" class="sidebar-link">
+                <span class="sidebar-icon">🛒</span>
+                <span class="sidebar-text">Marketplace</span>
+            </a>
+            <a href="seller-onboarding.html" class="sidebar-link active">
+                <span class="sidebar-icon">💰</span>
+                <span class="sidebar-text">Sell Products</span>
+            </a>
+            <a href="my-orders.html" class="sidebar-link">
+                <span class="sidebar-icon">📦</span>
+                <span class="sidebar-text">My Orders</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="sidebar-link" id="logoutBtn">
+                <span class="sidebar-icon">🚪</span>
+                <span class="sidebar-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="seller-main main-content-with-sidebar">
+        <div class="seller-container">
+            <a href="availability.html" class="back-link">← Back to Marketplace</a>
+
+            <!-- Screen 1: Landing Page (Sell With Us) -->
+            <div class="seller-screen active" id="screenLanding">
+                <div class="landing-hero">
+                    <h1 class="landing-title">🌾 Sell Your Crops & Equipment Directly to Buyers</h1>
+                    <p class="landing-subtitle">No middlemen · Fair prices · Fast payments</p>
+                </div>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">💰</div>
+                        <h3>Better Price</h3>
+                        <p>Get fair market prices without middlemen taking cuts</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🧾</div>
+                        <h3>Transparent Payments</h3>
+                        <p>Direct bank transfers with clear transaction history</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🚚</div>
+                        <h3>Easy Delivery</h3>
+                        <p>Flexible delivery options - pickup or home delivery</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📱</div>
+                        <h3>Simple App</h3>
+                        <p>Easy to use platform designed for farmers</p>
+                    </div>
+                </div>
+
+                <button class="btn-cta-large" onclick="goToSellerScreen('screenRegister')">
+                    Start Selling
+                </button>
+            </div>
+
+            <!-- Screen 2: Registration -->
+            <div class="seller-screen" id="screenRegister">
+                <div class="screen-header">
+                    <h2>📱 Register as Seller</h2>
+                    <p>Enter your mobile number to get started</p>
+                </div>
+
+                <div class="form-container">
+                    <div class="form-group-large">
+                        <label>Mobile Number</label>
+                        <input type="tel" id="sellerMobile" placeholder="Enter 10-digit mobile number" maxlength="10">
+                    </div>
+
+                    <div class="form-group-large hidden" id="otpGroup">
+                        <label>Enter OTP</label>
+                        <input type="text" id="sellerOTP" placeholder="Enter 6-digit OTP" maxlength="6">
+                        <p class="form-hint">OTP sent to your mobile number</p>
+                    </div>
+
+                    <button class="btn-cta-large" onclick="sendOTP()">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Screen 3: Seller Type Selection -->
+            <div class="seller-screen" id="screenType">
+                <div class="screen-header">
+                    <h2>🏪 Select Seller Type</h2>
+                    <p>Choose what you want to sell</p>
+                </div>
+
+                <div class="seller-type-grid">
+                    <div class="type-card" onclick="selectSellerType('crop')">
+                        <div class="type-icon">🌾</div>
+                        <h3>Crop / Seed Seller</h3>
+                        <p>Sell crops, grains, and seeds</p>
+                    </div>
+                    <div class="type-card" onclick="selectSellerType('equipment')">
+                        <div class="type-icon">🚜</div>
+                        <h3>Equipment Seller</h3>
+                        <p>Sell farming equipment and tools</p>
+                    </div>
+                    <div class="type-card" onclick="selectSellerType('fertilizer')">
+                        <div class="type-icon">🧪</div>
+                        <h3>Fertilizer / Pesticide Seller</h3>
+                        <p>Sell fertilizers and pesticides</p>
+                    </div>
+                    <div class="type-card" onclick="selectSellerType('shop')">
+                        <div class="type-icon">🏪</div>
+                        <h3>Agro Shop Owner</h3>
+                        <p>Sell multiple agricultural products</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 4: Profile Setup -->
+            <div class="seller-screen" id="screenProfile">
+                <div class="screen-header">
+                    <h2>👤 Complete Your Profile</h2>
+                    <p>Tell us about yourself</p>
+                </div>
+
+                <div class="form-container">
+                    <!-- Basic Details -->
+                    <div class="form-section">
+                        <h3 class="section-title">🧑‍🌾 Basic Details</h3>
+
+                        <div class="form-group-large">
+                            <label>Full Name</label>
+                            <input type="text" id="sellerName" placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group-large">
+                            <label>Shop / Farm Name</label>
+                            <input type="text" id="sellerShopName" placeholder="Enter shop or farm name">
+                        </div>
+
+                        <div class="form-group-large">
+                            <label>Profile Photo</label>
+                            <input type="file" id="sellerPhoto" accept="image/*">
+                            <p class="form-hint">Upload a clear photo of yourself</p>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-section">
+                        <h3 class="section-title">📍 Location</h3>
+
+                        <div class="form-row">
+                            <div class="form-group-large">
+                                <label>State</label>
+                                <select id="sellerState">
+                                    <option value="">Select State</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Haryana">Haryana</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group-large">
+                                <label>District</label>
+                                <input type="text" id="sellerDistrict" placeholder="Enter district">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-large">
+                                <label>Village / City</label>
+                                <input type="text" id="sellerCity" placeholder="Enter village or city">
+                            </div>
+
+                            <div class="form-group-large">
+                                <label>PIN Code</label>
+                                <input type="text" id="sellerPincode" placeholder="6-digit PIN" maxlength="6">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Farming Details -->
+                    <div class="form-section">
+                        <h3 class="section-title">🌱 Farming Details</h3>
+
+                        <div class="form-group-large">
+                            <label>Crops Grown</label>
+                            <input type="text" id="sellerCrops" placeholder="e.g., Wheat, Rice, Cotton">
+                            <p class="form-hint">Separate multiple crops with commas</p>
+                        </div>
+
+                        <div class="form-group-large">
+                            <label>Farm Size (Optional)</label>
+                            <input type="text" id="sellerFarmSize" placeholder="e.g., 5 acres">
+                        </div>
+                    </div>
+
+                    <button class="btn-cta-large" onclick="saveProfile()">
+                        Save & Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Screen 5: KYC & Verification -->
+            <div class="seller-screen" id="screenKYC">
+                <div class="screen-header">
+                    <h2>✅ KYC & Verification</h2>
+                    <p>Upload documents for verification</p>
+                </div>
+
+                <div class="kyc-grid">
+                    <div class="kyc-card">
+                        <div class="kyc-icon">📄</div>
+                        <h3>Aadhaar / ID Proof</h3>
+                        <input type="file" id="kycAadhaar" accept="image/*,.pdf" class="file-input">
+                        <label for="kycAadhaar" class="btn-upload">Upload Document</label>
+                        <div class="verification-badge pending">⏳ Pending</div>
+                    </div>
+
+                    <div class="kyc-card">
+                        <div class="kyc-icon">🏦</div>
+                        <h3>Bank Passbook</h3>
+                        <input type="file" id="kycBank" accept="image/*,.pdf" class="file-input">
+                        <label for="kycBank" class="btn-upload">Upload Document</label>
+                        <div class="verification-badge pending">⏳ Pending</div>
+                    </div>
+
+                    <div class="kyc-card">
+                        <div class="kyc-icon">🌾</div>
+                        <h3>Seed Certification (Optional)</h3>
+                        <input type="file" id="kycCert" accept="image/*,.pdf" class="file-input">
+                        <label for="kycCert" class="btn-upload">Upload Document</label>
+                        <div class="verification-badge optional">Optional</div>
+                    </div>
+                </div>
+
+                <button class="btn-cta-large" onclick="goToSellerScreen('screenBank')">
+                    Continue
+                </button>
+            </div>
+
+            <!-- Screen 6: Bank & Payment Setup -->
+            <div class="seller-screen" id="screenBank">
+                <div class="screen-header">
+                    <h2>💳 Bank & Payment Setup</h2>
+                    <p>Add your bank details for payments</p>
+                </div>
+
+                <div class="form-container">
+                    <div class="info-box">
+                        <p>💡 Payments will be credited directly to your bank account</p>
+                    </div>
+
+                    <div class="form-group-large">
+                        <label>Account Holder Name</label>
+                        <input type="text" id="bankHolderName" placeholder="As per bank records">
+                    </div>
+
+                    <div class="form-group-large">
+                        <label>Bank Name</label>
+                        <input type="text" id="bankName" placeholder="Enter bank name">
+                    </div>
+
+                    <div class="form-group-large">
+                        <label>Account Number</label>
+                        <input type="text" id="bankAccount" placeholder="Enter account number">
+                    </div>
+
+                    <div class="form-group-large">
+                        <label>IFSC Code</label>
+                        <input type="text" id="bankIFSC" placeholder="Enter IFSC code">
+                    </div>
+
+                    <button class="btn-cta-large" onclick="saveBankDetails()">
+                        Save & Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Screen 7: Seller Dashboard -->
+            <div class="seller-screen" id="screenDashboard">
+                <div class="screen-header">
+                    <h2>🏪 Seller Dashboard</h2>
+                    <p>Manage your products and orders</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" onclick="goToSellerScreen('screenProducts')">
+                        <div class="dashboard-icon">📦</div>
+                        <h3>My Products</h3>
+                        <p class="dashboard-value">0</p>
+                        <p class="dashboard-label">Products Listed</p>
+                    </div>
+
+                    <div class="dashboard-card highlight" onclick="goToSellerScreen('screenAddProduct')">
+                        <div class="dashboard-icon">➕</div>
+                        <h3>Add New Product</h3>
+                        <p class="dashboard-label">List a new product</p>
+                    </div>
+
+                    <div class="dashboard-card" onclick="goToSellerScreen('screenOrders')">
+                        <div class="dashboard-icon">🛒</div>
+                        <h3>Orders</h3>
+                        <p class="dashboard-value">0</p>
+                        <p class="dashboard-label">Pending Orders</p>
+                    </div>
+
+                    <div class="dashboard-card" onclick="goToSellerScreen('screenEarnings')">
+                        <div class="dashboard-icon">💰</div>
+                        <h3>Earnings</h3>
+                        <p class="dashboard-value">₹0</p>
+                        <p class="dashboard-label">Total Earnings</p>
+                    </div>
+
+                    <div class="dashboard-card" onclick="goToSellerScreen('screenReviews')">
+                        <div class="dashboard-icon">⭐</div>
+                        <h3>Ratings</h3>
+                        <p class="dashboard-value">0.0</p>
+                        <p class="dashboard-label">Average Rating</p>
+                    </div>
+
+                    <div class="dashboard-card" onclick="goToSellerScreen('screenSupport')">
+                        <div class="dashboard-icon">📞</div>
+                        <h3>Support</h3>
+                        <p class="dashboard-label">Get Help</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 8: Add Product -->
+            <div class="seller-screen" id="screenAddProduct">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goToSellerScreen('screenDashboard')">← Back</button>
+                    <h2>➕ Add New Product</h2>
+                    <p>List your product for sale</p>
+                </div>
+
+                <div class="form-container">
+                    <!-- Product Details -->
+                    <div class="form-section">
+                        <h3 class="section-title">📦 Product Details</h3>
+
+                        <div class="form-group-large">
+                            <label>Product Name</label>
+                            <input type="text" id="productName" placeholder="e.g., Organic Wheat Seeds">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-large">
+                                <label>Category</label>
+                                <select id="productCategory">
+                                    <option value="">Select Category</option>
+                                    <option value="seeds">Seeds</option>
+                                    <option value="crops">Crops</option>
+                                    <option value="equipment">Equipment</option>
+                                    <option value="fertilizer">Fertilizer</option>
+                                    <option value="pesticide">Pesticide</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group-large">
+                                <label>Crop Type</label>
+                                <input type="text" id="productCropType" placeholder="e.g., Wheat">
+                            </div>
+                        </div>
+
+                        <div class="form-group-large">
+                            <label>Product Images</label>
+                            <input type="file" id="productImages" accept="image/*" multiple class="file-input">
+                            <label for="productImages" class="btn-upload">📷 Upload Images (Max 4)</label>
+                            <p class="form-hint">Upload clear photos of your product</p>
+                        </div>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="form-section">
+                        <h3 class="section-title">💰 Pricing</h3>
+
+                        <div class="form-row">
+                            <div class="form-group-large">
+                                <label>Price per Unit</label>
+                                <input type="number" id="productPrice" placeholder="₹">
+                            </div>
+
+                            <div class="form-group-large">
+                                <label>Unit</label>
+                                <select id="productUnit">
+                                    <option value="kg">Kilogram (kg)</option>
+                                    <option value="quintal">Quintal</option>
+                                    <option value="ton">Ton</option>
+                                    <option value="piece">Piece</option>
+                                    <option value="liter">Liter</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-large">
+                                <label>Available Quantity</label>
+                                <input type="number" id="productQuantity" placeholder="Enter quantity">
+                            </div>
+
+                            <div class="form-group-large">
+                                <label>Minimum Order</label>
+                                <input type="number" id="productMinOrder" placeholder="Min quantity">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Negotiation Options -->
+                    <div class="form-section">
+                        <h3 class="section-title">🤝 Negotiation Options</h3>
+
+                        <label class="checkbox-large">
+                            <input type="checkbox" id="allowNegotiation">
+                            <span>☑️ Allow price negotiation</span>
+                        </label>
+
+                        <div class="form-group-large" id="minPriceGroup" style="display: none;">
+                            <label>Minimum Acceptable Price</label>
+                            <input type="number" id="productMinPrice" placeholder="₹">
+                        </div>
+                    </div>
+
+                    <!-- Delivery Options -->
+                    <div class="form-section">
+                        <h3 class="section-title">🚚 Delivery Options</h3>
+
+                        <label class="checkbox-large">
+                            <input type="checkbox" id="deliveryPlatform">
+                            <span>Platform Pickup</span>
+                        </label>
+
+                        <label class="checkbox-large">
+                            <input type="checkbox" id="deliverySelf">
+                            <span>Self Delivery</span>
+                        </label>
+
+                        <label class="checkbox-large">
+                            <input type="checkbox" id="deliveryBuyer">
+                            <span>Buyer Pickup</span>
+                        </label>
+                    </div>
+
+                    <div class="button-row">
+                        <button class="btn-secondary-large" onclick="saveDraft()">
+                            Save Draft
+                        </button>
+                        <button class="btn-cta-large" onclick="publishProduct()">
+                            Publish Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 9: Order Management -->
+            <div class="seller-screen" id="screenOrders">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goToSellerScreen('screenDashboard')">← Back</button>
+                    <h2>🛒 Order Management</h2>
+                    <p>Manage your orders</p>
+                </div>
+
+                <div class="orders-container">
+                    <div class="empty-state">
+                        <div class="empty-icon">📦</div>
+                        <h3>No Orders Yet</h3>
+                        <p>Your orders will appear here once buyers place orders</p>
+                    </div>
+
+                    <!-- Sample Order Card (hidden by default) -->
+                    <div class="order-card" style="display: none;">
+                        <div class="order-header">
+                            <div class="buyer-info">
+                                <span class="buyer-icon">👤</span>
+                                <span class="buyer-name">Ramesh Patil</span>
+                            </div>
+                            <div class="order-status pending">Pending</div>
+                        </div>
+
+                        <div class="order-details">
+                            <p class="order-product">📦 Wheat Seeds - 50 kg</p>
+                            <p class="order-price">💰 ₹2,500 (Negotiated)</p>
+                            <p class="order-location">📍 Pune, Maharashtra</p>
+                        </div>
+
+                        <div class="order-actions">
+                            <button class="btn-accept">Accept</button>
+                            <button class="btn-reject">Reject</button>
+                            <button class="btn-counter">Counter Offer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 10: Earnings & Settlement -->
+            <div class="seller-screen" id="screenEarnings">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goToSellerScreen('screenDashboard')">← Back</button>
+                    <h2>💰 Earnings & Settlement</h2>
+                    <p>Track your earnings</p>
+                </div>
+
+                <div class="earnings-container">
+                    <div class="earnings-summary">
+                        <div class="earnings-card">
+                            <h3>Total Earnings</h3>
+                            <p class="earnings-value">₹0</p>
+                        </div>
+
+                        <div class="earnings-card highlight">
+                            <h3>Available Balance</h3>
+                            <p class="earnings-value">₹0</p>
+                            <button class="btn-withdraw" disabled>Withdraw</button>
+                        </div>
+
+                        <div class="earnings-card">
+                            <h3>Pending Settlement</h3>
+                            <p class="earnings-value">₹0</p>
+                        </div>
+                    </div>
+
+                    <div class="transactions-section">
+                        <h3>Transaction History</h3>
+                        <div class="empty-state">
+                            <p>No transactions yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 11: Reviews & Ratings -->
+            <div class="seller-screen" id="screenReviews">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goToSellerScreen('screenDashboard')">← Back</button>
+                    <h2>⭐ Reviews & Ratings</h2>
+                    <p>See what buyers say</p>
+                </div>
+
+                <div class="reviews-container">
+                    <div class="rating-summary">
+                        <div class="rating-value">0.0</div>
+                        <div class="rating-stars">⭐⭐⭐⭐⭐</div>
+                        <p>No ratings yet</p>
+                    </div>
+
+                    <div class="reviews-list">
+                        <div class="empty-state">
+                            <div class="empty-icon">⭐</div>
+                            <h3>No Reviews Yet</h3>
+                            <p>Reviews from buyers will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 12: Help & Support -->
+            <div class="seller-screen" id="screenSupport">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goToSellerScreen('screenDashboard')">← Back</button>
+                    <h2>📞 Help & Support</h2>
+                    <p>We're here to help</p>
+                </div>
+
+                <div class="support-grid">
+                    <div class="support-card">
+                        <div class="support-icon">📞</div>
+                        <h3>Call Support</h3>
+                        <p>Talk to our support team</p>
+                        <button class="btn-support">Call Now</button>
+                    </div>
+
+                    <div class="support-card">
+                        <div class="support-icon">💬</div>
+                        <h3>Chat Support</h3>
+                        <p>Chat with us online</p>
+                        <button class="btn-support">Start Chat</button>
+                    </div>
+
+                    <div class="support-card">
+                        <div class="support-icon">❓</div>
+                        <h3>FAQs</h3>
+                        <p>Find answers quickly</p>
+                        <button class="btn-support">View FAQs</button>
+                    </div>
+
+                    <div class="support-card">
+                        <div class="support-icon">🚨</div>
+                        <h3>Report Issue</h3>
+                        <p>Report a problem</p>
+                        <button class="btn-support">Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen: My Products List -->
+            <div class="seller-screen" id="screenProducts">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goToSellerScreen('screenDashboard')">← Back</button>
+                    <h2>📦 My Products</h2>
+                    <p>Manage your listed products</p>
+                </div>
+
+                <div class="products-container">
+                    <div class="empty-state">
+                        <div class="empty-icon">📦</div>
+                        <h3>No Products Listed</h3>
+                        <p>Start by adding your first product</p>
+                        <button class="btn-cta-large" onclick="goToSellerScreen('screenAddProduct')">
+                            Add Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../js/i18n.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/seller-onboarding.js"></script>
+</body>
+
+</html>

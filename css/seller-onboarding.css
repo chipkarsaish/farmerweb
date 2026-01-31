@@ -1,0 +1,851 @@
+/* ========================================
+   SELLER ONBOARDING STYLES
+   ======================================== */
+
+/* Main Container */
+.seller-main {
+    padding: 1rem 0;
+    min-height: 100vh;
+}
+
+.seller-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Screen Management */
+.seller-screen {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.seller-screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Screen Header */
+.screen-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.screen-header h2 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.screen-header p {
+    font-size: 1.1rem;
+    color: #6b7280;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: #10b981;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    transform: translateX(-4px);
+}
+
+/* ========================================
+   SCREEN 1: LANDING PAGE
+   ======================================== */
+
+.landing-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+}
+
+.landing-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.landing-subtitle {
+    font-size: 1.3rem;
+    color: #10b981;
+    font-weight: 500;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.benefit-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.benefit-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.benefit-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.benefit-card h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.benefit-card p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-cta-large {
+    width: 100%;
+    max-width: 400px;
+    padding: 1.5rem 3rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-cta-large:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(16, 185, 129, 0.4);
+}
+
+.btn-cta-large:active {
+    transform: translateY(0);
+}
+
+.btn-secondary-large {
+    width: 100%;
+    padding: 1.2rem 2rem;
+    background: white;
+    color: #10b981;
+    border: 2px solid #10b981;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary-large:hover {
+    background: #f0fdf4;
+}
+
+/* ========================================
+   FORMS
+   ======================================== */
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-group-large {
+    margin-bottom: 1.5rem;
+}
+
+.form-group-large label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.75rem;
+}
+
+.form-group-large input,
+.form-group-large select {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+
+.form-group-large input:focus,
+.form-group-large select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-hint {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.info-box {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.info-box p {
+    margin: 0;
+    color: #1e40af;
+    font-weight: 500;
+}
+
+.checkbox-large {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.checkbox-large:hover {
+    background: #f3f4f6;
+}
+
+.checkbox-large input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.checkbox-large span {
+    font-size: 1.1rem;
+    color: #374151;
+    font-weight: 500;
+}
+
+.button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* ========================================
+   SCREEN 3: SELLER TYPE SELECTION
+   ======================================== */
+
+.seller-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.type-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 3px solid transparent;
+}
+
+.type-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    border-color: #10b981;
+}
+
+.type-card.selected {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.type-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.type-card h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.type-card p {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+/* ========================================
+   SCREEN 5: KYC
+   ======================================== */
+
+.kyc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+}
+
+.kyc-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.kyc-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.kyc-card h3 {
+    font-size: 1.2rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.file-input {
+    display: none;
+}
+
+.btn-upload {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #10b981;
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 1rem;
+}
+
+.btn-upload:hover {
+    background: #059669;
+}
+
+.verification-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.verification-badge.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.verification-badge.verified {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.verification-badge.optional {
+    background: #e5e7eb;
+    color: #6b7280;
+}
+
+/* ========================================
+   SCREEN 7: DASHBOARD
+   ======================================== */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 3px solid transparent;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    border-color: #10b981;
+}
+
+.dashboard-card.highlight {
+    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    border-color: #10b981;
+}
+
+.dashboard-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.dashboard-card h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #10b981;
+    margin: 1rem 0;
+}
+
+.dashboard-label {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+/* ========================================
+   SCREEN 9: ORDERS
+   ======================================== */
+
+.orders-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.order-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.buyer-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.buyer-icon {
+    font-size: 2rem;
+}
+
+.buyer-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.order-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.order-status.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.order-status.accepted {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.order-status.rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.order-details {
+    margin-bottom: 1.5rem;
+}
+
+.order-details p {
+    font-size: 1.1rem;
+    color: #374151;
+    margin-bottom: 0.75rem;
+}
+
+.order-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.btn-accept {
+    padding: 0.75rem;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-accept:hover {
+    background: #059669;
+}
+
+.btn-reject {
+    padding: 0.75rem;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-reject:hover {
+    background: #dc2626;
+}
+
+.btn-counter {
+    padding: 0.75rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-counter:hover {
+    background: #2563eb;
+}
+
+/* ========================================
+   SCREEN 10: EARNINGS
+   ======================================== */
+
+.earnings-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.earnings-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.earnings-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.earnings-card.highlight {
+    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    border: 2px solid #10b981;
+}
+
+.earnings-card h3 {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.earnings-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #10b981;
+    margin-bottom: 1rem;
+}
+
+.btn-withdraw {
+    padding: 0.75rem 2rem;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-withdraw:hover:not(:disabled) {
+    background: #059669;
+}
+
+.btn-withdraw:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.transactions-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-section h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+/* ========================================
+   SCREEN 11: REVIEWS
+   ======================================== */
+
+.reviews-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.rating-summary {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.rating-value {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #10b981;
+    margin-bottom: 0.5rem;
+}
+
+.rating-stars {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.reviews-list {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   SCREEN 12: SUPPORT
+   ======================================== */
+
+.support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.support-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.support-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.support-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.support-card h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.support-card p {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.btn-support {
+    padding: 0.75rem 2rem;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-support:hover {
+    background: #059669;
+}
+
+/* ========================================
+   EMPTY STATES
+   ======================================== */
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.empty-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .seller-container {
+        padding: 1rem;
+    }
+
+    .landing-title {
+        font-size: 1.8rem;
+    }
+
+    .landing-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .seller-type-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .button-row {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .earnings-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .support-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kyc-grid {
+        grid-template-columns: 1fr;
+    }
+}
