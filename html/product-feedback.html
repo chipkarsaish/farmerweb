@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Feedback - AgriSahay</title>
+    <meta name="description" content="Share your experience with this product">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/farmer-sidebar.css">
+    <link rel="stylesheet" href="../css/product-feedback.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Mobile Sidebar Toggle -->
+    <button class="mobile-sidebar-toggle" style="display: none;">☰</button>
+
+    <!-- Farmer Sidebar -->
+    <aside class="farmer-sidebar">
+        <button class="sidebar-toggle">◀</button>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="amenities.html" data-tooltip="Amenities"><span class="nav-icon">🌱</span><span
+                            class="nav-text" data-i18n="sidebar.amenities">Amenities</span></a></li>
+                <li><a href="carbon-credits.html" data-tooltip="Carbon Credits"><span class="nav-icon">🌍</span><span
+                            class="nav-text" data-i18n="sidebar.carbonCredits">Carbon Credits</span></a></li>
+                <li><a href="group-farming.html" data-tooltip="Group Farming"><span class="nav-icon">🤝</span><span
+                            class="nav-text" data-i18n="sidebar.groupFarming">Group Farming</span></a></li>
+                <li><a href="funds.html" data-tooltip="Funds & Loans"><span class="nav-icon">💰</span><span
+                            class="nav-text" data-i18n="sidebar.funds">Funds & Loans</span></a></li>
+                <li class="active"><a href="availability.html" data-tooltip="Marketplace"><span
+                            class="nav-icon">🛒</span><span class="nav-text"
+                            data-i18n="sidebar.marketplace">Marketplace</span></a></li>
+                <li><a href="my-orders.html" data-tooltip="My Orders"><span class="nav-icon">📦</span><span
+                            class="nav-text" data-i18n="sidebar.myOrders">My Orders</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">
+                    <span class="logo-agri">Agr<span class="logo-leaf">🌿</span>i</span><span
+                        class="logo-sahay">Sahay</span>
+                </span>
+            </div>
+            <div class="header-actions">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="mr">मराठी</button>
+                </div>
+                <button class="icon-btn" id="notificationBtn" title="Notifications">
+                    🔔
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userMenuBtn">
+                        <span id="userInitials">F</span>
+                    </div>
+                    <div class="user-dropdown hidden" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar">
+                                <span id="dropdownInitials">F</span>
+                            </div>
+                            <div class="dropdown-info">
+                                <p class="dropdown-name" id="dropdownName">Farmer Name</p>
+                                <p class="dropdown-email" id="dropdownEmail">farmer@example.com</p>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <span>👤</span> <span data-i18n="dashboard.myProfile">My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <span>⚙️</span> <span data-i18n="dashboard.settings">Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" id="logoutBtn">
+                            <span>🚪</span> <span data-i18n="dashboard.logout">Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="feedback-main main-content-with-sidebar">
+        <div class="feedback-container">
+            <a href="availability.html" class="back-link">← Back to Marketplace</a>
+
+            <!-- Feedback Form Screen -->
+            <div class="feedback-screen active" id="feedbackForm">
+                <!-- Product Info Section -->
+                <div class="product-info-section">
+                    <div class="product-image-container">
+                        <img id="productImage" src="" alt="Product" class="product-image">
+                    </div>
+                    <div class="product-details">
+                        <h1 id="productName" class="product-name">Loading...</h1>
+                        <p class="order-date">📅 Ordered on: <span id="orderDate">--</span></p>
+                        <div class="verified-badge">✅ Verified Buyer</div>
+                    </div>
+                </div>
+
+                <!-- Rating Section -->
+                <div class="rating-section">
+                    <h2 class="section-heading">⭐ How was your experience?</h2>
+                    <p class="section-subtitle">Tap to rate</p>
+
+                    <div class="emoji-rating-grid">
+                        <button class="emoji-rating-btn" data-rating="1" data-emoji="😡">
+                            <div class="emoji">😡</div>
+                            <div class="rating-label">Very Bad</div>
+                            <div class="stars">★</div>
+                        </button>
+                        <button class="emoji-rating-btn" data-rating="2" data-emoji="😕">
+                            <div class="emoji">😕</div>
+                            <div class="rating-label">Bad</div>
+                            <div class="stars">★★</div>
+                        </button>
+                        <button class="emoji-rating-btn" data-rating="3" data-emoji="😐">
+                            <div class="emoji">😐</div>
+                            <div class="rating-label">Average</div>
+                            <div class="stars">★★★</div>
+                        </button>
+                        <button class="emoji-rating-btn" data-rating="4" data-emoji="🙂">
+                            <div class="emoji">🙂</div>
+                            <div class="rating-label">Good</div>
+                            <div class="stars">★★★★</div>
+                        </button>
+                        <button class="emoji-rating-btn" data-rating="5" data-emoji="😄">
+                            <div class="emoji">😄</div>
+                            <div class="rating-label">Excellent</div>
+                            <div class="stars">★★★★★</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Experience Questions -->
+                <div class="questions-section">
+                    <h2 class="section-heading">🌾 Tell us more</h2>
+                    <p class="section-subtitle">Just tap your answer</p>
+
+                    <!-- Question 1: Germination -->
+                    <div class="question-block">
+                        <h3 class="question-title">🌾 Did the seed germinate well?</h3>
+                        <div class="question-options">
+                            <button class="option-btn" data-question="germination" data-value="yes">
+                                <span class="option-icon">✅</span>
+                                <span class="option-text">Yes</span>
+                            </button>
+                            <button class="option-btn" data-question="germination" data-value="no">
+                                <span class="option-icon">❌</span>
+                                <span class="option-text">No</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 2: Water Condition -->
+                    <div class="question-block">
+                        <h3 class="question-title">💧 Water condition used</h3>
+                        <div class="question-options">
+                            <button class="option-btn" data-question="waterCondition" data-value="rain-fed">
+                                <span class="option-icon">🌧️</span>
+                                <span class="option-text">Rain-fed</span>
+                            </button>
+                            <button class="option-btn" data-question="waterCondition" data-value="irrigated">
+                                <span class="option-icon">🚿</span>
+                                <span class="option-text">Irrigated</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Yield Result -->
+                    <div class="question-block">
+                        <h3 class="question-title">📈 Yield result</h3>
+                        <div class="question-options">
+                            <button class="option-btn" data-question="yieldResult" data-value="low">
+                                <span class="option-icon">⬇️</span>
+                                <span class="option-text">Low</span>
+                            </button>
+                            <button class="option-btn" data-question="yieldResult" data-value="average">
+                                <span class="option-icon">➖</span>
+                                <span class="option-text">Average</span>
+                            </button>
+                            <button class="option-btn" data-question="yieldResult" data-value="high">
+                                <span class="option-icon">⬆️</span>
+                                <span class="option-text">High</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 4: Seed Quality -->
+                    <div class="question-block">
+                        <h3 class="question-title">🧪 Seed quality</h3>
+                        <div class="question-options">
+                            <button class="option-btn" data-question="seedQuality" data-value="poor">
+                                <span class="option-icon">❌</span>
+                                <span class="option-text">Poor</span>
+                            </button>
+                            <button class="option-btn" data-question="seedQuality" data-value="good">
+                                <span class="option-icon">✅</span>
+                                <span class="option-text">Good</span>
+                            </button>
+                            <button class="option-btn" data-question="seedQuality" data-value="excellent">
+                                <span class="option-icon">⭐</span>
+                                <span class="option-text">Excellent</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Upload Section -->
+                <div class="photo-section">
+                    <h2 class="section-heading">📸 Add photos (Optional)</h2>
+                    <p class="section-subtitle">Show your crop growth or field</p>
+
+                    <div class="photo-upload-container">
+                        <input type="file" id="photoInput" accept="image/*" capture="environment" multiple
+                            class="photo-input">
+                        <label for="photoInput" class="photo-upload-btn">
+                            <div class="camera-icon">📷</div>
+                            <div class="upload-text">Add up to 2 photos</div>
+                            <div class="upload-hint">Crop growth • Field • Seed packet</div>
+                        </label>
+
+                        <div class="photo-preview-grid" id="photoPreview"></div>
+                    </div>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="trust-section">
+                    <h3 class="trust-heading">📋 Your feedback details</h3>
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <span class="trust-icon">📍</span>
+                            <span class="trust-label">Location:</span>
+                            <span class="trust-value" id="userLocation">--</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-icon">🌾</span>
+                            <span class="trust-label">Crop Type:</span>
+                            <span class="trust-value" id="cropType">--</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-icon">🧑‍🌾</span>
+                            <span class="trust-label">Status:</span>
+                            <span class="trust-value verified">Verified Purchase</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button class="submit-btn" id="submitBtn" disabled>
+                    🟢 Submit Feedback
+                </button>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="feedback-screen" id="successScreen">
+                <div class="success-container">
+                    <div class="success-icon">✅</div>
+                    <h1 class="success-title">Thank you for your feedback!</h1>
+                    <p class="success-message">🌾 Your experience will help other farmers choose better products.</p>
+
+                    <div class="reward-box">
+                        <div class="reward-icon">🎁</div>
+                        <p class="reward-text">You earned <strong>10 reward points</strong></p>
+                    </div>
+
+                    <button class="return-btn" onclick="window.location.href='availability.html'">
+                        Return to Marketplace
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/i18n.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/product-feedback.js"></script>
+</body>
+
+</html>

@@ -488,6 +488,11 @@ function createCropCard(crop) {
                         Buy Now
                     </button>
                 </div>
+                
+                <!-- Rate Button -->
+                <button onclick="rateProduct('${crop.id}')" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border: none; color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3); margin-top: 8px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(251, 191, 36, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(251, 191, 36, 0.3)'">
+                    ⭐ Rate Product
+                </button>
             </div>
         </div>
     `;
@@ -1055,4 +1060,13 @@ if (userMenuBtn) {
     userMenuBtn.addEventListener('click', function () {
         alert('User Menu:\n\n- Profile Settings\n- Resource History\n- Documents\n- Logout');
     });
+}
+
+// ========================================
+// RATE PRODUCT FUNCTION
+// ========================================
+
+function rateProduct(productId) {
+    // Navigate to product feedback page with product ID
+    window.location.href = `product-feedback.html?productId=${productId}`;
 }
