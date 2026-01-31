@@ -7,96 +7,136 @@ const mockData = {
     crops: [
         {
             id: 1,
-            name: "Wheat",
+            name: "Hybrid Wheat Seeds",
             variety: "HD-2967",
-            category: "Grain",
+            category: "Wheat",
             quantity: 800,
             unit: "kg",
+            price: 450,
+            priceUnit: "kg",
+            rating: 4.8,
+            ratingCount: 526,
+            image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400",
             quality: "A",
             harvestDate: "2026-01-10",
             shelfLife: 45,
             location: "Warehouse A",
             farmer: "Ramesh Patil",
             status: "available",
+            stockStatus: "In Stock",
             condition: "good",
             priceTrend: "rising",
             demand: "high",
+            deliveryDays: "3-5",
+            sellerType: "Farmer Verified",
             sustainable: true,
             organic: true
         },
         {
             id: 2,
-            name: "Rice",
+            name: "Premium Basmati Rice",
             variety: "Basmati",
-            category: "Grain",
+            category: "Rice",
             quantity: 650,
             unit: "kg",
+            price: 850,
+            priceUnit: "kg",
+            rating: 4.9,
+            ratingCount: 324,
+            image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",
             quality: "A",
             harvestDate: "2026-01-05",
             shelfLife: 60,
             location: "Warehouse B",
             farmer: "Suresh Kumar",
             status: "available",
+            stockStatus: "In Stock",
             condition: "good",
             priceTrend: "stable",
             demand: "medium",
+            deliveryDays: "2-4",
+            sellerType: "Local Seller",
             sustainable: false,
             organic: false
         },
         {
             id: 3,
-            name: "Tomatoes",
+            name: "Fresh Tomato Seeds",
             variety: "Hybrid",
             category: "Vegetable",
-            quantity: 500,
+            quantity: 100,
             unit: "kg",
+            price: 1200,
+            priceUnit: "kg",
+            rating: 4.5,
+            ratingCount: 672,
+            image: "https://images.unsplash.com/photo-1592841200221-a6898f307baa?w=400",
             quality: "B",
             harvestDate: "2026-01-12",
             shelfLife: 7,
             location: "Cold Storage",
             farmer: "Anita Desai",
             status: "available",
+            stockStatus: "Limited Stock",
             condition: "good",
             priceTrend: "falling",
             demand: "low",
+            deliveryDays: "1-3",
+            sellerType: "Farmer Verified",
             sustainable: true,
             organic: true
         },
         {
             id: 4,
-            name: "Cotton",
+            name: "BT Cotton Seeds",
             variety: "BT Cotton",
-            category: "Cash Crop",
+            category: "Cotton",
             quantity: 300,
             unit: "kg",
+            price: 680,
+            priceUnit: "kg",
+            rating: 4.2,
+            ratingCount: 458,
+            image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400",
             quality: "A",
             harvestDate: "2025-12-28",
             shelfLife: 90,
             location: "Warehouse A",
             farmer: "Vijay Patil",
             status: "reserved",
+            stockStatus: "Reserved",
             condition: "good",
             priceTrend: "rising",
             demand: "high",
+            deliveryDays: "4-6",
+            sellerType: "Local Seller",
             sustainable: false,
             organic: false
         },
         {
             id: 5,
-            name: "Sugarcane",
+            name: "Sugarcane Seedlings",
             variety: "Co-86032",
             category: "Cash Crop",
             quantity: 200,
-            unit: "kg",
+            unit: "units",
+            price: 15,
+            priceUnit: "unit",
+            rating: 4.6,
+            ratingCount: 213,
+            image: "https://images.unsplash.com/photo-1583484963886-cfe2bff2945f?w=400",
             quality: "B",
             harvestDate: "2026-01-08",
             shelfLife: 14,
             location: "Field Storage",
             farmer: "Prakash Rao",
             status: "available",
+            stockStatus: "In Stock",
             condition: "maintenance",
             priceTrend: "stable",
             demand: "medium",
+            deliveryDays: "5-7",
+            sellerType: "Farmer Verified",
             sustainable: true,
             organic: false
         }
@@ -375,60 +415,79 @@ function createCropCard(crop) {
     card.className = 'resource-card';
 
     const statusClass = `status-${crop.status}`;
-    const conditionClass = `condition-${crop.condition}`;
 
-    const sustainabilityTags = [];
-    if (crop.organic) sustainabilityTags.push('<span class="sustainability-tag">♻️ Organic</span>');
-    if (crop.sustainable) sustainabilityTags.push('<span class="sustainability-tag">🌱 Eco-friendly</span>');
+    // Determine stock status color
+    let stockBadgeColor = '#10b981'; // green for in stock
+    if (crop.stockStatus === 'Limited Stock') stockBadgeColor = '#f59e0b'; // orange
+    if (crop.stockStatus === 'Reserved') stockBadgeColor = '#6b7280'; // gray
+
+    // Seller badge color
+    const sellerBadgeColor = crop.sellerType === 'Farmer Verified' ? '#10b981' : '#3b82f6';
 
     card.innerHTML = `
-        <div class="resource-header">
-            <div class="resource-name-row">
-                <h3 class="resource-name">${crop.name}</h3>
-                <span class="status-badge ${statusClass}">${crop.status}</span>
+        <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; height: 100%;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'">
+            
+            <!-- Product Image -->
+            <div style="position: relative; width: 100%; height: 200px; overflow: hidden; background: #f3f4f6;">
+                <img src="${crop.image}" alt="${crop.name}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">
+                ${crop.organic ? '<div style="position: absolute; top: 12px; left: 12px; background: rgba(16, 185, 129, 0.95); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">♻️ Organic</div>' : ''}
             </div>
-            <p class="resource-category">${crop.variety} • ${crop.category}</p>
-            <p class="resource-quantity">${crop.quantity} ${crop.unit}</p>
-        </div>
-        <div class="resource-body">
-            <div class="resource-details">
-                <div class="detail-row">
-                    <span class="detail-label">Quality Grade</span>
-                    <span class="detail-value">Grade ${crop.quality}</span>
+
+            <!-- Card Content -->
+            <div style="padding: 16px;">
+                
+                <!-- Product Name -->
+                <h3 style="margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 600; color: #1f2937; line-height: 1.3;">
+                    ${crop.name}
+                </h3>
+
+                <!-- Category -->
+                <p style="margin: 0 0 12px 0; font-size: 0.85rem; color: #6b7280;">
+                    ${crop.category}
+                </p>
+
+                <!-- Rating -->
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 2px;">
+                        <span style="color: #fbbf24; font-size: 1rem;">⭐</span>
+                        <span style="font-weight: 600; color: #1f2937; font-size: 0.9rem;">${crop.rating}</span>
+                    </div>
+                    <span style="color: #9ca3af; font-size: 0.8rem;">(${crop.ratingCount})</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Harvest Date</span>
-                    <span class="detail-value">${formatDate(crop.harvestDate)}</span>
+
+                <!-- Price -->
+                <div style="margin-bottom: 12px;">
+                    <span style="font-size: 1.5rem; font-weight: 700; color: #059669;">₹${crop.price}</span>
+                    <span style="font-size: 0.9rem; color: #6b7280;"> / ${crop.priceUnit}</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Shelf Life</span>
-                    <span class="detail-value">${crop.shelfLife} days</span>
+
+                <!-- Stock Status -->
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background: ${stockBadgeColor};"></div>
+                    <span style="font-size: 0.85rem; color: #374151; font-weight: 500;">${crop.stockStatus}</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Location</span>
-                    <span class="detail-value">${crop.location}</span>
+
+                <!-- Delivery Info -->
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+                    <span style="font-size: 1rem;">🚚</span>
+                    <span style="font-size: 0.85rem; color: #6b7280;">Delivery in ${crop.deliveryDays} days</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Farmer</span>
-                    <span class="detail-value">${crop.farmer}</span>
+
+                <!-- Seller Badge -->
+                <div style="display: inline-flex; align-items: center; gap: 6px; background: ${sellerBadgeColor}15; padding: 6px 12px; border-radius: 20px; margin-bottom: 16px;">
+                    <span style="font-size: 0.9rem;">${crop.sellerType === 'Farmer Verified' ? '🟢' : '🔵'}</span>
+                    <span style="font-size: 0.8rem; color: ${sellerBadgeColor}; font-weight: 600;">${crop.sellerType}</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Price Trend</span>
-                    <span class="detail-value">${getTrendIcon(crop.priceTrend)} ${crop.priceTrend}</span>
+
+                <!-- Action Buttons -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <button onclick="addToCart(${crop.id}, 'crop')" style="background: white; border: 2px solid #10b981; color: #10b981; padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#10b981'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#10b981'">
+                        🛒 Add to Cart
+                    </button>
+                    <button onclick="buyNow(${crop.id}, 'crop')" style="background: #10b981; border: none; color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10b981'">
+                        Buy Now
+                    </button>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Demand</span>
-                    <span class="detail-value">${crop.demand}</span>
-                </div>
-            </div>
-            <div class="condition-indicator">
-                <div class="condition-dot ${conditionClass}"></div>
-                <span>Condition: ${crop.condition}</span>
-            </div>
-            ${sustainabilityTags.length > 0 ? `<div class="sustainability-tags">${sustainabilityTags.join('')}</div>` : ''}
-            <div class="resource-actions">
-                <button class="btn-view" onclick="viewResourceDetails(${crop.id}, 'crop')">View Details</button>
-                <button class="btn-reserve" onclick="openReservationModal(${crop.id}, 'crop')">Reserve</button>
             </div>
         </div>
     `;
