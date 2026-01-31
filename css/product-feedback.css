@@ -42,13 +42,14 @@
    ======================================== */
 
 .product-info-section {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
 }
 
@@ -57,11 +58,12 @@
 }
 
 .product-image {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    border-radius: 16px;
-    border: 3px solid #e5e7eb;
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .product-details {
@@ -69,26 +71,28 @@
 }
 
 .product-name {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #1f2937;
     margin-bottom: 0.5rem;
+    line-height: 1.3;
 }
 
 .order-date {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #6b7280;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .verified-badge {
     display: inline-block;
-    background: #d1fae5;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
     color: #065f46;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.9rem;
     border-radius: 20px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    border: 1px solid #6ee7b7;
 }
 
 /* ========================================
@@ -100,23 +104,24 @@
 .photo-section,
 .trust-section {
     background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
 }
 
 .section-heading {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: #1f2937;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 .section-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #6b7280;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 /* ========================================
@@ -125,45 +130,49 @@
 
 .emoji-rating-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    max-width: 650px;
+    margin: 0 auto;
 }
 
 .emoji-rating-btn {
     background: white;
-    border: 3px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 1.5rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1rem 0.5rem;
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
 }
 
 .emoji-rating-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: #d1d5db;
 }
 
 .emoji-rating-btn.selected {
     border-color: #10b981;
-    background: #f0fdf4;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .emoji {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.4rem;
 }
 
 .rating-label {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: #374151;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .stars {
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: #fbbf24;
 }
 
@@ -172,57 +181,63 @@
    ======================================== */
 
 .question-block {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
 }
 
 .question-block:last-child {
     margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .question-title {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: #1f2937;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .question-options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 0.75rem;
 }
 
 .option-btn {
     background: white;
-    border: 3px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1.25rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0.85rem 0.75rem;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    min-height: 80px;
+    gap: 0.4rem;
+    min-height: 65px;
 }
 
 .option-btn:hover {
     border-color: #10b981;
     background: #f9fafb;
+    transform: translateY(-1px);
 }
 
 .option-btn.selected {
     border-color: #10b981;
-    background: #f0fdf4;
-    transform: scale(1.02);
+    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
 }
 
 .option-icon {
-    font-size: 2rem;
+    font-size: 1.6rem;
 }
 
 .option-text {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #374151;
 }
@@ -366,29 +381,32 @@
 
 .submit-btn {
     width: 100%;
-    padding: 1.5rem;
+    max-width: 500px;
+    display: block;
+    margin: 2rem auto 0;
+    padding: 1.2rem;
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border: none;
-    border-radius: 16px;
-    font-size: 1.3rem;
+    border-radius: 12px;
+    font-size: 1.15rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-    margin-top: 2rem;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
 }
 
 .submit-btn:hover:not(:disabled) {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
 }
 
 .submit-btn:disabled {
-    background: #d1d5db;
+    background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
+    opacity: 0.6;
 }
 
 /* ========================================
@@ -482,40 +500,46 @@
     .product-info-section {
         flex-direction: column;
         text-align: center;
+        padding: 1.25rem;
     }
 
     .product-name {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .emoji-rating-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 0.75rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
     }
 
     .emoji {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .rating-label {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
+    }
+
+    .stars {
+        font-size: 0.75rem;
     }
 
     .question-options {
         grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
     }
 
     .option-btn {
-        padding: 1rem 0.75rem;
-        min-height: 70px;
+        padding: 0.75rem 0.5rem;
+        min-height: 60px;
     }
 
     .option-icon {
-        font-size: 1.75rem;
+        font-size: 1.4rem;
     }
 
     .option-text {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
     .photo-upload-btn {
@@ -527,19 +551,24 @@
     }
 
     .success-container {
-        padding: 3rem 1.5rem;
+        padding: 2.5rem 1.5rem;
     }
 
     .success-icon {
-        font-size: 5rem;
+        font-size: 4.5rem;
     }
 
     .success-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .success-message {
         font-size: 1rem;
+    }
+
+    .submit-btn {
+        font-size: 1.05rem;
+        padding: 1.1rem;
     }
 }
 
